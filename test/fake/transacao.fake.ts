@@ -30,3 +30,15 @@ export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDom
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime()
   }))
+
+  export const makeTransacaoEntityFakeNew = (props?: Partial<TransacaoEntity>): TransacaoEntity => TransacaoEntity.fromDomain(new TransacaoDomain({
+    id: null,
+    descricao: props?.descricao || faker.lorem.words({ min: 1, max: 10 }),
+    valor: props?.valor || faker.number.int({ max: 100000 }),
+    data: props?.data || faker.date.anytime(),
+    tipo: props?.tipo || faker.helpers.enumValue(TipoTransacaoModel),
+    categoria: props?.categoria || makeCategoriaEntityFake(),
+    conta: props?.conta || makeContaEntityFake(),
+    createdAt: props?.createdAt || faker.date.anytime(),
+    updatedAt: props?.updatedAt || faker.date.anytime()
+  }))

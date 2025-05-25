@@ -24,3 +24,13 @@ export const makeOrcamentoFake = (props?: Partial<OrcamentoModel>): OrcamentoDom
     tipoCategoria: props?.tipoCategoria || faker.helpers.enumValue(TipoCategoriaModel),
     conta: props?.conta || makeContaEntityFake()
   }))
+
+  export const makeOrcamentoEntityFakeNew = (props?: Partial<OrcamentoEntity>): OrcamentoEntity => OrcamentoEntity.fromDomain(new OrcamentoDomain({
+    id: null,
+    mesReferencia: props?.mesReferencia || faker.date.anytime().getMonth().toString() + '/' + faker.date.anytime().getFullYear().toString(),
+    limite: props?.limite || faker.number.int({ max: 100000 }),
+    createdAt: props?.createdAt || faker.date.anytime(),
+    updatedAt: props?.updatedAt || faker.date.anytime(),
+    tipoCategoria: props?.tipoCategoria || faker.helpers.enumValue(TipoCategoriaModel),
+    conta: props?.conta || makeContaEntityFake()
+  }))

@@ -2,6 +2,7 @@ import { ContaModel } from "./models/conta.model";
 import { OrcamentoModel } from "./models/orcamento.model";
 import { TipoCategoriaModel } from "./models/tipo-categoria.model";
 import { EveryMoneyDomain } from "./every-money.domain";
+import { ContaDomain } from "./conta.domain";
 
 
 export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel {
@@ -16,12 +17,14 @@ export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel 
     get mesReferencia (): string { return this.props?.mesReferencia; }
     get limite (): number { return this.props?.limite ?? 0; }
     get tipoCategoria (): TipoCategoriaModel { return this.props?.tipoCategoria; }
-    get conta (): ContaModel { return this.props?.conta; }
+    get conta (): ContaDomain { return new ContaDomain(this.props?.conta); }
     get createdAt (): Date { return this.props?.createdAt ?? new Date(); }
     get updatedAt (): Date { return this.props?.updatedAt ?? new Date(); }
 
     toModel (): OrcamentoModel {
-        return this.props;
+        return {
+            ...this.props
+        };
     }
 
 }
