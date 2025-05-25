@@ -1,0 +1,22 @@
+export enum ClassificacaoCategoriaModel {
+    Moradia = 'Moradia',
+    Alimentacao = 'Alimentação',
+    Transporte = 'Transporte',
+    Saude = 'Saúde',
+    Entretenimento = 'Entretenimento',
+    Educacao = 'Educação',
+    Trabalho = 'Trabalho',
+    Lazer = 'Lazer',
+    Vestuario = 'Vestuário',
+    CuidadoPessoal = 'Cuidado Pessoal',
+    FamiliaEFilhos = 'Família e Filhos',
+    AnimalEstimacao = 'Animal de Estimação',
+    DividasEObrigações = 'Dividas e Obrigações',
+    Investimentos = 'Investimentos',
+    DoacoesEPresentes = 'Doações e Presentes',
+    OutrosGastos = 'Outros Gastos',
+    OutrosReceitas = 'Outros Receitas',
+    RendaPrincipal = 'Renda Principal',
+    RendaExtra = 'Renda Extra',
+    ReceitaDeInvestimento = 'Receita de Investimento'
+}
