@@ -2,8 +2,9 @@ import { EveryMoneyDomain } from "@domain/every-money.domain";
 import { EveryMoneyEntity } from "@domain/every-money.entity";
 import { EveryMoneyRepository } from "@domain/interfaces/every-money-repository";
 import { FindOptionsWhere, Repository } from "typeorm";
+import { Injectable } from "@nestjs/common";
 
-
+@Injectable()
 export abstract class RepositoryPostgres<E extends EveryMoneyEntity, D extends EveryMoneyDomain> implements EveryMoneyRepository<E, D> {
     
 

@@ -6,9 +6,9 @@ import { RepositoryPostgres } from "./repository.postgres";
 import { OrcamentoEntity } from "@infrastructure/entities/orcamento.entity";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
 import { OrcamentoRepository } from "@domain/interfaces/orcamento.repository";
+import { Injectable } from "@nestjs/common";
 
-
-
+@Injectable()
 export class OrcamentoRepositoryPostgres extends RepositoryPostgres<OrcamentoEntity, OrcamentoDomain> implements OrcamentoRepository {
 
     constructor(

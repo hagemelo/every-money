@@ -4,8 +4,9 @@ import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
+import { Injectable } from "@nestjs/common";
 
-
+@Injectable()
 export class UsuarioRepositoryPostgres extends RepositoryPostgres<UsuarioEntity, UsuarioDomain> implements UsuarioRepository {
     
 

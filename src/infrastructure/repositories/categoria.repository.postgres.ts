@@ -4,9 +4,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
 import { CategoriaRepository } from "@domain/interfaces/categoria.repository";
+import { Injectable } from "@nestjs/common";
 
-
-
+@Injectable()
 export class CategoriaRepositoryPostgres extends RepositoryPostgres<CategoriaEntity, CategoriaDomain> implements CategoriaRepository {
     
 
