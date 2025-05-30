@@ -29,7 +29,7 @@ describe('OrcamentoRepositoryPostgres', () => {
       usuarioFixture = testingModule.get(UsuarioFixture)
       contaFixture = testingModule.get(ContaFixture)
       orcamentoFixture = testingModule.get(OrcamentoFixture)
-      orcamentoRepository = testingModule.get(OrcamentoRepository)
+      orcamentoRepository = await testingModule.resolve(OrcamentoRepository)
       dataSource = testingModule.get(DataSource)
     })
   

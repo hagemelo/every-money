@@ -19,7 +19,7 @@ describe('UsuarioRepositoryPostgres', () => {
     beforeAll(async () => {
       testingModule = await buildTestingModule()
       usuarioFixture = testingModule.get(UsuarioFixture)
-      usuarioRepository = testingModule.get(UsuarioRepository)
+      usuarioRepository = await testingModule.resolve(UsuarioRepository)
       dataSource = testingModule.get(DataSource)
     })
   

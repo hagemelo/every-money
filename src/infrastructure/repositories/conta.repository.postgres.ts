@@ -7,8 +7,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
 import { Injectable } from "@nestjs/common";
+import { Scope } from "@nestjs/common";
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class ContaRepositoryPostgres extends RepositoryPostgres<ContaEntity, ContaDomain> implements ContaRepository {
     
 

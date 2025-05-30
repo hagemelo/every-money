@@ -9,11 +9,12 @@ import { ConfigModule } from '@nestjs/config'
 import { Test, type TestingModule } from '@nestjs/testing'
 import { EveryMoneyModule } from 'src/every-money.module'
 import { DataSource } from 'typeorm'
+import { addTransactionalDataSource } from 'typeorm-transactional'
 
 let testingModule: TestingModule
 
 export const buildTestingModule = async (): Promise<TestingModule> => {
-    const dataSource = await createPostgresDataSourceTest()
+    const dataSource = addTransactionalDataSource(await createPostgresDataSourceTest())
 
     testingModule = await Test.createTestingModule({
         imports: [

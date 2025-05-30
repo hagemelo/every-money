@@ -5,9 +5,10 @@ import { TransacaoDomain } from "@domain/transacao.domain";
 import { TransacaoRepository } from "@domain/interfaces/transacao.repository";
 import { TransacaoEntity } from "@infrastructure/entities/transacao.entity";
 import { Injectable } from "@nestjs/common";
+import { Scope } from "@nestjs/common";
 
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class TransacaoRepositoryPostgres extends RepositoryPostgres<TransacaoEntity, TransacaoDomain> implements TransacaoRepository {
 
     constructor(

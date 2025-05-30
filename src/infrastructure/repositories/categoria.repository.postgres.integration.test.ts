@@ -24,7 +24,7 @@ describe('CategoriaRepositoryPostgres', () => {
       testingModule = await buildTestingModule()
       usuarioFixture = testingModule.get(UsuarioFixture)
       categoriaFixture = testingModule.get(CategoriaFixture)
-      categoriaRepository = testingModule.get(CategoriaRepository)
+      categoriaRepository = await testingModule.resolve(CategoriaRepository)
       dataSource = testingModule.get(DataSource)
     })
   

@@ -5,8 +5,9 @@ import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
 import { CategoriaRepository } from "@domain/interfaces/categoria.repository";
 import { Injectable } from "@nestjs/common";
+import { Scope } from "@nestjs/common";
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class CategoriaRepositoryPostgres extends RepositoryPostgres<CategoriaEntity, CategoriaDomain> implements CategoriaRepository {
     
 

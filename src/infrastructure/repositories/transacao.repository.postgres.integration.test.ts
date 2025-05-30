@@ -33,7 +33,7 @@ describe('TransacaoRepositoryPostgres', () => {
       contaFixture = testingModule.get(ContaFixture)
       categoriaFixture = testingModule.get(CategoriaFixture)
       transacaoFixture = testingModule.get(TransacaoFixture)
-      transacaoRepository = testingModule.get(TransacaoRepository)
+      transacaoRepository = await testingModule.resolve(TransacaoRepository)
       dataSource = testingModule.get(DataSource)
     })
   

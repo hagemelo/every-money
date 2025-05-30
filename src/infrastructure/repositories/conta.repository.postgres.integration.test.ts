@@ -26,9 +26,9 @@ describe('ContaRepositoryPostgres', () => {
     beforeAll(async () => {
       testingModule = await buildTestingModule()
       contaFixture = testingModule.get(ContaFixture)
-      contaRepository = testingModule.get(ContaRepository)
+      contaRepository = await testingModule.resolve(ContaRepository)
       usuarioFixture = testingModule.get(UsuarioFixture)
-      usuarioRepository = testingModule.get(UsuarioRepository)
+      usuarioRepository = await testingModule.resolve(UsuarioRepository)
       dataSource = testingModule.get(DataSource)
     })
   

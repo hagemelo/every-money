@@ -26,7 +26,7 @@ export class UsuarioRepositoryPostgres extends RepositoryPostgres<UsuarioEntity,
         if (!email || !senha) {
            return null;
         }
-        const usuario = await this.repository.findOne({ where: { email, senha } });
+        const usuario = await this.repository.findOneBy({ email, senha } );
         return usuario?.toDomain();
     }
 
