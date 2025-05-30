@@ -5,8 +5,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
 import { Injectable } from "@nestjs/common";
+import { Scope } from "@nestjs/common";
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class UsuarioRepositoryPostgres extends RepositoryPostgres<UsuarioEntity, UsuarioDomain> implements UsuarioRepository {
     
 
@@ -21,8 +22,11 @@ export class UsuarioRepositoryPostgres extends RepositoryPostgres<UsuarioEntity,
         return this.repository;
     }
 
-    async findUserByEmailAndPassword(email: string, password: string): Promise<UsuarioDomain> {
-        const usuario = await this.repository.findOneBy({ email, senha: password });
+    async findUserByEmailAndPassword(email: string, senha: string): Promise<UsuarioDomain> {
+        if (!email || !senha) {
+           return null;
+        }
+        const usuario = await this.repository.findOne({ where: { email, senha } });
         return usuario?.toDomain();
     }
 

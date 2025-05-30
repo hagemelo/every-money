@@ -1,8 +1,9 @@
 import { UsuarioDomain } from "@domain/usuario.domain";
 import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import { Scope } from "@nestjs/common";
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class FindUserByEmailAndPasswordUseCase {
     constructor(
         @Inject(UsuarioRepository) private readonly UsuarioRepository: UsuarioRepository

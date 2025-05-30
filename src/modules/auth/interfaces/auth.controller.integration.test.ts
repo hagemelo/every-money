@@ -5,6 +5,7 @@ import { TestingModule } from '@nestjs/testing';
 import { faker } from '@faker-js/faker/.';
 import { makeUsuarioEntityFakeNew } from '@test/fake/usuario.fake';
 import { UsuarioFixture } from '@infrastructure/database/fixtures/usuario.fixture';
+import { DataSource } from 'typeorm';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
@@ -16,6 +17,9 @@ describe('AuthController (e2e)', () => {
     usuarioFixture = testingModule.get(UsuarioFixture)
     app = testingModule.createNestApplication();
     app.useGlobalPipes(new ValidationPipe()); // If you use validation
+
+    const dataSource = app.get(DataSource);
+    dataSource.setOptions({ logging: true });
     await app.init();
   });
 
@@ -30,7 +34,7 @@ describe('AuthController (e2e)', () => {
     await usuarioFixture.createFixture({...fakeUsuario})
     const response = await request(app.getHttpServer())
       .post('/auth/login')
-      .send({ username: email, password: senha })
+      .send({ email, senha })
       .expect(201);
 
     expect(response.body).toHaveProperty('accessToken');
@@ -40,7 +44,7 @@ describe('AuthController (e2e)', () => {
   it('/auth/login (POST) - fail with wrong credentials', async () => {
     const response = await request(app.getHttpServer())
       .post('/auth/login')
-      .send({ username: 'wronguser', password: 'wrongpass' })
+      .send({ email: 'wronguser', senha: 'wrongpass' })
       .expect(401);
     console.log(response.body)
 

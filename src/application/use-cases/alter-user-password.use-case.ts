@@ -3,8 +3,9 @@ import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { UsuarioDomain } from "@domain/usuario.domain";
 import { AlterUserPasswordData } from "@domain/data/alter-user-password.data";
 import { Transactional } from "typeorm-transactional";
+import { Scope } from "@nestjs/common";
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class AlterUserPasswordUseCase {
     constructor(
         @Inject(UsuarioRepository) private readonly usuarioRepository: UsuarioRepository

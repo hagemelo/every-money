@@ -1,6 +1,7 @@
-import { Controller, Post, Request } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { FindUserByEmailAndPasswordUseCase } from '@application/use-cases/find-user-by-email-and-password.use-case';
 import { TokenService } from '../application/token.service';
+import { AuthData } from '@domain/data/auth.data';
 
 @Controller('auth')
 export class AuthController {
@@ -9,11 +10,11 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(@Request() req) {
+  async login(@Body() data: AuthData) {
     const user = await this.useCase.execute(
-      req.body.email,
-      req.body.senha,
-    );
+      data.email,
+      data.senha,
+    );  
     if (!user) {
       return { message: 'Invalid credentials' };
     }

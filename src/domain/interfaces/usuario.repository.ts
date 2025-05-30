@@ -4,7 +4,7 @@ import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 
 export  interface UsuarioRepository extends EveryMoneyRepository<UsuarioEntity, UsuarioDomain> {
     
-    findUserByEmailAndPassword(email: string, password: string): Promise<UsuarioDomain>;
+    findUserByEmailAndPassword(email: string, senha: string): Promise<UsuarioDomain>;
     findAllWithoutPassword(): Promise<UsuarioDomain[]>
 }
 
