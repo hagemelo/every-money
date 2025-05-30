@@ -4,6 +4,7 @@ import { DatabaseModule } from './infrastructure/database/database.module';
 import { RepositoriesModule } from '@infrastructure/repositories/repositories.module';
 import { ApplicationModule } from '@application/application.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AlterUserPasswordController } from './interface/usuario/alter-user-password.controller';
 
 
 @Module({
@@ -11,6 +12,6 @@ import { AuthModule } from './modules/auth/auth.module';
     isGlobal: true, // makes ConfigService available globally
     envFilePath:  `.env.${process.env.NODE_ENV}` || '.env', // default is '.env'
   }),],
-  controllers: [],
+  controllers: [AlterUserPasswordController],
 })
 export class EveryMoneyModule {}

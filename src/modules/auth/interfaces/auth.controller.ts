@@ -1,6 +1,6 @@
-import { Controller, Post, Request, UseGuards } from '@nestjs/common';
-import { TokenService } from './application/token.service';
+import { Controller, Post, Request } from '@nestjs/common';
 import { FindUserByEmailAndPasswordUseCase } from '@application/use-cases/find-user-by-email-and-password.use-case';
+import { TokenService } from '../application/token.service';
 
 @Controller('auth')
 export class AuthController {
