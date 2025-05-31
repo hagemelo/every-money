@@ -9,7 +9,9 @@ export const makeUsuarioFake = (props?: Partial<UsuarioModel>): UsuarioDomain =>
     email: props?.email ||  faker.lorem.words({ min: 1, max: 10 }),
     senha: props?.senha || faker.lorem.words({ min: 1, max: 10 }),
     createdAt: props?.createdAt || faker.date.anytime(),
-    updatedAt: props?.updatedAt || faker.date.anytime()
+    updatedAt: props?.updatedAt || faker.date.anytime(),
+    contas: props?.contas || [],
+    categorias: props?.categorias || []
   })
 
   export const makeUsuarioEntityFake = (props?: Partial<UsuarioEntity>): UsuarioEntity => UsuarioEntity.fromDomain(new UsuarioDomain({

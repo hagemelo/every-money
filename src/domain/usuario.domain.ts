@@ -38,4 +38,5 @@ export class UsuarioDomain extends EveryMoneyDomain implements UsuarioModel {
     alterarSenha (senha: string): void {
         this.props.senha = senha;
     }
+
 }

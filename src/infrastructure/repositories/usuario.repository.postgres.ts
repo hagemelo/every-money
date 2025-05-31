@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
 import { Injectable } from "@nestjs/common";
 import { Scope } from "@nestjs/common";
+import { UsuarioModel } from "@domain/models/usuario.model";
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class UsuarioRepositoryPostgres extends RepositoryPostgres<UsuarioEntity, UsuarioDomain> implements UsuarioRepository {
@@ -28,6 +29,14 @@ export class UsuarioRepositoryPostgres extends RepositoryPostgres<UsuarioEntity,
         }
         const usuario = await this.repository.findOneBy({ email, senha } );
         return usuario?.toDomain();
+    }
+
+    async findUserBy(usuario: UsuarioModel): Promise<UsuarioDomain> {
+        if (!usuario) {
+           return null;
+        }
+        const usuarioEnt = await this.repository.findOneBy({ ...usuario } );
+        return usuarioEnt?.toDomain();
     }
 
     async save(usuario: UsuarioDomain): Promise<UsuarioDomain> {

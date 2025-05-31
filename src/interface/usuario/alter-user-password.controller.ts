@@ -16,7 +16,7 @@ export class AlterUserPasswordController {
   @UseGuards(AuthGuard('jwt'))
   @Post('alterar-senha')
   async alterarSenha(@Body() data: AlterUserPasswordData): Promise<UsuarioModel> {
-    const user = (await this.useCase.execute(data)).toModel();
-    return user;
+    const user = await this.useCase.execute(data);
+    return user.toModel();
   }
 } 

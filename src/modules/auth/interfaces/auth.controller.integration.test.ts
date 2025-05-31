@@ -46,8 +46,6 @@ describe('AuthController (e2e)', () => {
       .post('/auth/login')
       .send({ email: 'wronguser', senha: 'wrongpass' })
       .expect(401);
-    console.log(response.body)
-
     expect(response.body.message).toBeDefined();
   });
 });

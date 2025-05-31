@@ -13,7 +13,9 @@ export const makeContaFake = (props?: Partial<ContaModel>): ContaDomain => new C
     tipoConta: props?.tipoConta || faker.helpers.enumValue(TipoContaModel),
     usuario: props?.usuario || makeUsuarioFake(),
     createdAt: props?.createdAt || faker.date.anytime(),
-    updatedAt: props?.updatedAt || faker.date.anytime()
+    updatedAt: props?.updatedAt || faker.date.anytime(),
+    orcamentos: props?.orcamentos || [],
+    transacoes: props?.transacoes || []
   })
 
   export const makeContaEntityFake = (props?: Partial<ContaEntity>): ContaEntity => ContaEntity.fromDomain(new ContaDomain({

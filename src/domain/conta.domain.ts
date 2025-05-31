@@ -1,5 +1,4 @@
 import { ContaModel } from "./models/conta.model";
-import { OrcamentoModel } from "./models/orcamento.model";
 import { TipoContaModel } from "./models/tipo-conta.model";
 import { TipoTransacaoModel } from "./models/tipo-transacao.model";
 
@@ -15,6 +14,10 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
         private readonly props: ContaModel,
     ) {
         super();
+        this.props.nome = props.nome ?? '';
+        this.props.saldoRealizado = props.saldoRealizado ?? 0;
+        this.props.saldoPrevisto = props.saldoPrevisto ?? 0;
+        this.props.tipoConta = props.tipoConta ?? TipoContaModel.Outros;
     }
 
     get id (): number { return this.props?.id; }
@@ -22,11 +25,17 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
     get saldoRealizado (): number { return this.props?.saldoRealizado ?? 0; }
     get saldoPrevisto (): number { return this.props?.saldoPrevisto ?? 0; }
     get tipoConta (): TipoContaModel { return this.props?.tipoConta; }
-    get usuario (): UsuarioDomain { return new UsuarioDomain(this.props?.usuario); }
+    get usuario (): UsuarioDomain { return this.props?.usuario ? new UsuarioDomain(this.props?.usuario) : null; }
     get createdAt (): Date { return this.props?.createdAt ?? new Date(); }
     get updatedAt (): Date { return this.props?.updatedAt ?? new Date(); }
     get orcamentos (): OrcamentoDomain[] { return this.props?.orcamentos?.map(orcamento => new OrcamentoDomain(orcamento)) ?? []; }
     get transacoes (): TransacaoDomain[] { return this.props?.transacoes?.map(transacao => new TransacaoDomain(transacao)) ?? []; }
+
+    set nome (nome: string) { this.props.nome = nome; }
+    set saldoRealizado (saldoRealizado: number) { this.props.saldoRealizado = saldoRealizado; }
+    set saldoPrevisto (saldoPrevisto: number) { this.props.saldoPrevisto = saldoPrevisto; }
+    set tipoConta (tipoConta: TipoContaModel) { this.props.tipoConta = tipoConta; }
+    set usuario (usuario: UsuarioDomain) { this.props.usuario = usuario.toModel(); }
 
     toModel (): ContaModel {
         return {
@@ -50,6 +59,12 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
             this.props.orcamentos.reduce((total, orcamento) => total + orcamento.limite, 0)
         : 0;
     }
+
+    addUsuario (usuario: UsuarioDomain): UsuarioDomain { 
+        this.props.usuario = usuario;
+        return usuario;
+    }
+
 }
 
    

@@ -64,7 +64,6 @@ describe('AlterUserPasswordController', () => {
                 novaSenha
             })
             .expect(201);
-            console.dir(response.body)
             expect(response.body).toHaveProperty('email', email);
             expect(response.body).toHaveProperty('senha', novaSenha);
           
@@ -78,8 +77,6 @@ describe('AlterUserPasswordController', () => {
           .set('Authorization', `Bearer ${token}`)
           .send({ email: 'wronguser', senha: 'wrongpass' })
           .expect(401);
-        console.log(response.body)
-    
         expect(response.body.message).toBeDefined();
       });
     });

@@ -68,7 +68,6 @@ describe('UsuarioRepositoryPostgres', () => {
             const senha = faker.internet.password()
             const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
             const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
-            console.dir(usuario)
             await usuarioRepository.delete(usuario.id)
             const result = await usuarioRepository.findUserByEmailAndPassword(email, senha)
             expect(result).toBeUndefined()
@@ -105,7 +104,6 @@ describe('UsuarioRepositoryPostgres', () => {
         })
     })
 
-
     describe('Quando a funcao findById for chamada', () => {
         it('deve retornar um usuario', async () => {
 
@@ -113,6 +111,19 @@ describe('UsuarioRepositoryPostgres', () => {
             const usuario1: UsuarioEntity = await usuarioFixture.createFixture({...fakeUsuario1})
             const result = await usuarioRepository.findById({id: usuario1.id})
             expect(result).toBeInstanceOf(UsuarioEntity)
+            expect(result.email).toBe(usuario1.email)
+        })
+    })
+
+    describe('Quando a funcao findUserBy for chamada', () => {
+        it('deve retornar um usuario', async () => {
+
+            const fakeUsuario1 = makeUsuarioEntityFakeNew({email: faker.internet.email(), senha: faker.internet.password()})
+            const usuario1: UsuarioEntity = await usuarioFixture.createFixture({...fakeUsuario1})
+            const usuarioModel = usuario1.toDomain().toModel()
+            const {email, nome, id} = usuarioModel
+            const result = await usuarioRepository.findUserBy({email, nome, id})
+            expect(result).toBeInstanceOf(UsuarioDomain)
             expect(result.email).toBe(usuario1.email)
         })
     })

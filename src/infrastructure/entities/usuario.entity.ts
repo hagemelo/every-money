@@ -8,7 +8,7 @@ type UsuarioProps = {
     id?: number;
     nome: string;
     email: string;
-    senha: string;
+    senha?: string;
     createdAt?: Date;
     updatedAt?: Date;
     contas?: ContaEntity[]
@@ -53,10 +53,10 @@ export class UsuarioEntity extends EveryMoneyEntity {
     @Column()
     updatedAt: Date;
     
-    @OneToMany(() => ContaEntity, (conta) => conta.usuario, { cascade: true })
+    @OneToMany(() => ContaEntity, (conta) => conta.usuario)
     contas: Relation<ContaEntity[]>
 
-    @OneToMany(() => CategoriaEntity, (categoria) => categoria.usuario, { cascade: true })
+    @OneToMany(() => CategoriaEntity, (categoria) => categoria.usuario)
     categorias: Relation<CategoriaEntity[]>
 
     static fromDomain(usuarioDomain: UsuarioDomain): UsuarioEntity {
