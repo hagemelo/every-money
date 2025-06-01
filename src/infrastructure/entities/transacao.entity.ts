@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import { CategoriaEntity } from "./categoria.entity"
 import { TipoTransacaoModel } from "@domain/models/tipo-transacao.model"
 import { ContaEntity } from "./conta.entity"
@@ -8,8 +8,7 @@ import { EveryMoneyEntity } from "@domain/every-money.entity"
 @Entity('transacao_tb')
 export class TransacaoEntity extends EveryMoneyEntity{
 
-    @Column({name: 'trans_id'})
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name: 'trans_id'})
     id: number
 
     @Column()
@@ -21,14 +20,14 @@ export class TransacaoEntity extends EveryMoneyEntity{
     @Column()
     data: Date;
 
-    @Column()
+    @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
     
-    @Column()
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
 
     @Column({
-    type: 'enum', name: 'tipo', enum: TipoTransacaoModel, default: TipoTransacaoModel.Entrada
+    type: 'varchar', name: 'tipo', enum: TipoTransacaoModel, default: TipoTransacaoModel.Entrada
     })
     tipo: TipoTransacaoModel;
 

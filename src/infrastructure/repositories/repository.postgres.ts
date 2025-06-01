@@ -16,9 +16,7 @@ export abstract class RepositoryPostgres<E extends EveryMoneyEntity, D extends E
         return await this.getRepository().findOneBy(id);
     }
 
-    async save(entity: D): Promise<D> {
-        throw new Error(`Method not implemented to save ${entity}`);
-    }
+    abstract saveDomain(domain: D): Promise<D>;
 
     async delete(id: number): Promise<void> {
         await this.getRepository().delete(id);

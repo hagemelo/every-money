@@ -48,13 +48,13 @@ describe('CreateAccountUseCase', () => {
             const conta = makeContaFake()
             const data: CreateAccountData = {usuario: usuario.toModel(), conta: conta.toModel()}
             jest.spyOn(usuarioRepository, 'findUserBy').mockResolvedValue(usuario)
-            jest.spyOn(contaRepository, 'save').mockRejectedValue(new Error('Erro ao salvar conta'))
+            jest.spyOn(contaRepository, 'saveDomain').mockRejectedValue(new Error('Erro ao salvar conta'))
             let error;
             await useCase.execute(data).catch((e) => error = e)
             const expectedConta = conta
             expectedConta.addUsuario(usuario)
             expect(error.message).toBe('Erro ao salvar conta')
-            expect(contaRepository.save).toHaveBeenCalledWith(expectedConta)
+            expect(contaRepository.saveDomain).toHaveBeenCalledWith(expectedConta)
         })
     })
 
@@ -64,13 +64,13 @@ describe('CreateAccountUseCase', () => {
             const conta = makeContaFake()
             const data: CreateAccountData = {usuario: usuario.toModel(), conta: conta.toModel()}
             jest.spyOn(usuarioRepository, 'findUserBy').mockResolvedValue(usuario)
-            jest.spyOn(contaRepository, 'save').mockResolvedValue(conta)
+            jest.spyOn(contaRepository, 'saveDomain').mockResolvedValue(conta)
             const result = await useCase.execute(data)
             const expectedConta = conta
             expectedConta.addUsuario(usuario)
             expect(result).toBeInstanceOf(ContaDomain)
             expect(result).toEqual(expectedConta)
-            expect(contaRepository.save).toHaveBeenCalledWith(expectedConta)
+            expect(contaRepository.saveDomain).toHaveBeenCalledWith(expectedConta)
         })
     })
 })

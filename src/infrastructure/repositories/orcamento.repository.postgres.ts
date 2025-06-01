@@ -24,8 +24,8 @@ export class OrcamentoRepositoryPostgres extends RepositoryPostgres<OrcamentoEnt
     }
 
     
-    async save(entity: OrcamentoDomain): Promise<OrcamentoDomain> {
-        const orcamentoEntity = OrcamentoEntity.fromDomain(entity)
+    async saveDomain(domain: OrcamentoDomain): Promise<OrcamentoDomain> {
+        const orcamentoEntity = OrcamentoEntity.fromDomain(domain)
         return this.repository.save(orcamentoEntity).then(orcamentoEntity => orcamentoEntity.toDomain());
     }
 

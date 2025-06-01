@@ -37,6 +37,7 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
     set tipoConta (tipoConta: TipoContaModel) { this.props.tipoConta = tipoConta; }
     set usuario (usuario: UsuarioDomain) { this.props.usuario = usuario.toModel(); }
 
+
     toModel (): ContaModel {
         return {
             ...this.props,
@@ -61,7 +62,7 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
     }
 
     addUsuario (usuario: UsuarioDomain): UsuarioDomain { 
-        this.props.usuario = usuario;
+        this.usuario = usuario;
         return usuario;
     }
 

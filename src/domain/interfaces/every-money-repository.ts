@@ -5,6 +5,6 @@ import { FindOptionsWhere } from "typeorm"
 export interface EveryMoneyRepository<E extends EveryMoneyEntity, D extends EveryMoneyDomain> {
     findAll(): Promise<E[]>
     findById(id: FindOptionsWhere<E>): Promise<E>
-    save(entity: D): Promise<D>
+    saveDomain(domain: D): Promise<D>
     delete(id: number): Promise<void>
 }

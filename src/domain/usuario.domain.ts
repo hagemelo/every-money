@@ -9,6 +9,9 @@ export class UsuarioDomain extends EveryMoneyDomain implements UsuarioModel {
         private readonly props: UsuarioModel,
     ) {
         super();
+        this.props.nome = props.nome ?? '';
+        this.props.email = props.email ?? '';
+        this.props.senha = props.senha ?? '';
     }
 
     get id (): number { return this.props?.id; }
@@ -21,6 +24,11 @@ export class UsuarioDomain extends EveryMoneyDomain implements UsuarioModel {
         return this.props?.contas?.map(conta => new ContaDomain(conta)) ?? []; }
     get categorias (): CategoriaDomain[] {
         return this.props?.categorias?.map(categoria => new CategoriaDomain(categoria)) ?? []; }
+
+    set nome (nome: string) { this.props.nome = nome; }
+    set email (email: string) { this.props.email = email; }
+    set senha (senha: string) { this.props.senha = senha; }
+
 
     toModel (): UsuarioModel {
         return {

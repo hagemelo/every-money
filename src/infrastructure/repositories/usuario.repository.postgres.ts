@@ -39,8 +39,8 @@ export class UsuarioRepositoryPostgres extends RepositoryPostgres<UsuarioEntity,
         return usuarioEnt?.toDomain();
     }
 
-    async save(usuario: UsuarioDomain): Promise<UsuarioDomain> {
-        const usuarioEntity = UsuarioEntity.fromDomain(usuario)
+    async saveDomain(domain: UsuarioDomain): Promise<UsuarioDomain> {
+        const usuarioEntity = UsuarioEntity.fromDomain(domain)
         return this.repository.save(usuarioEntity).then(usuarioEntity => usuarioEntity.toDomain());
     }
 

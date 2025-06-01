@@ -1,4 +1,4 @@
 export enum TipoTransacaoModel {
-    Entrada,
-    Saida,
+    Entrada = "Entrada",
+    Saida = "Saida",
 }   

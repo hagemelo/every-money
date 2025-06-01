@@ -23,8 +23,8 @@ export class TransacaoRepositoryPostgres extends RepositoryPostgres<TransacaoEnt
     }
 
     
-    async save(entity: TransacaoDomain): Promise<TransacaoDomain> {
-        const transacaoEntity = TransacaoEntity.fromDomain(entity)
+    async saveDomain(domain: TransacaoDomain): Promise<TransacaoDomain> {
+        const transacaoEntity = TransacaoEntity.fromDomain(domain)
         return this.repository.save(transacaoEntity).then(transacaoEntity => transacaoEntity.toDomain());
     }
 

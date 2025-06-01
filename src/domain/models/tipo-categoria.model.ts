@@ -1,5 +1,5 @@
 export enum TipoCategoriaModel {
-    Entrada,
-    Saida,
-    Outros
+    Entrada = "Entrada",
+    Saida = "Saida",
+    Outros = "Outros"
 }

@@ -23,8 +23,9 @@ export class CreateAccountUseCase {
             throw new UnauthorizedException('Usuario nao encontrado');
         }
         const newConta = new ContaDomain(data.conta);
+        usuario.contas.push(newConta);
         newConta.addUsuario(usuario);
-        const resultNewConta = await this.contaRepository.save(newConta);
+        const resultNewConta = await this.contaRepository.saveDomain(newConta);
         if (!resultNewConta) {
             throw new UnprocessableEntityException('Erro ao salvar conta');
         }

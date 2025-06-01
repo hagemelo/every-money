@@ -14,6 +14,10 @@ export class TransacaoDomain extends EveryMoneyDomain implements TransacaoModel 
         private readonly props: TransacaoModel,
     ) {
         super();
+        this.props.descricao = props.descricao ?? '';
+        this.props.valor = props.valor ?? 0;
+        this.props.data = props.data ?? new Date();
+        this.props.tipo = props.tipo ?? TipoTransacaoModel.Entrada;
     }
 
     get id (): number { return this.props?.id; }
@@ -25,6 +29,12 @@ export class TransacaoDomain extends EveryMoneyDomain implements TransacaoModel 
     get conta (): ContaDomain { return new ContaDomain(this.props?.conta); }
     get createdAt (): Date { return this.props?.createdAt ?? new Date(); }
     get updatedAt (): Date { return this.props?.updatedAt ?? new Date(); }
+
+    set descricao (descricao: string) { this.props.descricao = descricao; }
+    set valor (valor: number) { this.props.valor = valor; }
+    set data (data: Date) { this.props.data = data; }
+    set tipo (tipo: TipoTransacaoModel) { this.props.tipo = tipo; }
+
 
     toModel (): TransacaoModel {
         return {

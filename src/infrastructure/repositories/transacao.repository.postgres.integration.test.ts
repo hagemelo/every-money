@@ -72,7 +72,7 @@ describe('TransacaoRepositoryPostgres', () => {
             const fakeCategoria = makeCategoriaEntityFakeNew({usuario})
             const categoria: CategoriaEntity = await categoriaFixture.createFixture(fakeCategoria)
             const transacao = makeTransacaoFake({conta, categoria})
-            const result = await transacaoRepository.save(transacao)
+            const result = await transacaoRepository.saveDomain(transacao)
             expect(result).toBeInstanceOf(TransacaoDomain)
             expect(result.data).toBe(transacao.data)
             expect(result.valor).toBe(transacao.valor)

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TipoCategoriaModel } from "@domain/models/tipo-categoria.model";
 import { ContaEntity } from "./conta.entity";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
@@ -7,8 +7,7 @@ import { EveryMoneyEntity } from "@domain/every-money.entity";
 @Entity('orcamento_tb')
 export class OrcamentoEntity extends EveryMoneyEntity {
     
-    @Column({name: 'orc_id'})
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name: 'orc_id'})
     id: number;
 
     @Column()
@@ -17,14 +16,14 @@ export class OrcamentoEntity extends EveryMoneyEntity {
     @Column()
     limite: number;
 
-    @Column()
+    @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
     
-    @Column()
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
     
     @Column({
-        type: 'enum', name: 'tipo_categoria', enum: TipoCategoriaModel, default: TipoCategoriaModel.Outros
+        type: 'varchar', name: 'tipo_categoria', enum: TipoCategoriaModel, default: TipoCategoriaModel.Outros
       })
     tipoCategoria: TipoCategoriaModel;
 

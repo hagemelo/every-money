@@ -1,8 +1,8 @@
 export enum TipoContaModel {
-    Mensal,
-    Corrente,
-    Poupanca,
-    Investimento,
-    Salario,
-    Outros
+    Mensal = "Mensal",
+    Corrente = "Corrente",
+    Poupanca = "Poupanca",
+    Investimento = "Investimento",
+    Salario = "Salario",
+    Outros = "Outros"
 }

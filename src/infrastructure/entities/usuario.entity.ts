@@ -1,5 +1,5 @@
 import { UsuarioDomain } from "@domain/usuario.domain";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
 import { ContaEntity } from "./conta.entity";
 import { EveryMoneyEntity } from "@domain/every-money.entity";
 import { CategoriaEntity } from "./categoria.entity";
@@ -34,8 +34,7 @@ export class UsuarioEntity extends EveryMoneyEntity {
 
     }
 
-    @Column({name: 'usuario_id'})
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name: 'usuario_id'})
     id: number;
 	
     @Column()
@@ -47,21 +46,21 @@ export class UsuarioEntity extends EveryMoneyEntity {
     @Column()
 	senha: string;
 
-    @Column()
+    @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
     
-    @Column()
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
     
     @OneToMany(() => ContaEntity, (conta) => conta.usuario)
-    contas: Relation<ContaEntity[]>
+    contas: ContaEntity[]
 
     @OneToMany(() => CategoriaEntity, (categoria) => categoria.usuario)
     categorias: Relation<CategoriaEntity[]>
 
     static fromDomain(usuarioDomain: UsuarioDomain): UsuarioEntity {
-        const contas = usuarioDomain.contas.map(conta => ContaEntity.fromDomain(conta))
-        const categorias = usuarioDomain.categorias.map(categoria => CategoriaEntity.fromDomain(categoria))
+        const contas = usuarioDomain.contas?.map(conta => ContaEntity.fromDomain(conta))
+        const categorias = usuarioDomain.categorias?.map(categoria => CategoriaEntity.fromDomain(categoria))
         const entity = new UsuarioEntity({...usuarioDomain.toModel(), contas, categorias})
         return entity;
     }

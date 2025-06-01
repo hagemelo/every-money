@@ -27,7 +27,7 @@ describe('AlterUserPasswordController', () => {
     app.useGlobalPipes(new ValidationPipe()); // If you use validation
 
     const dataSource = app.get(DataSource);
-    dataSource.setOptions({ logging: true });
+    dataSource.setOptions({ logging: false });
     await app.init();
 
     

@@ -1,6 +1,6 @@
 import { ClassificacaoCategoriaModel } from "@domain/models/classificacao-categoria.model";
 import { TipoCategoriaModel } from "@domain/models/tipo-categoria.model";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm"
 import { TransacaoEntity } from "./transacao.entity";
 import { CategoriaDomain } from "@domain/categoria.domain";
 import { EveryMoneyEntity } from "@domain/every-money.entity";
@@ -36,30 +36,29 @@ constructor(props?: ContaProps){
         }
     }
 
-    @Column({name: 'categoria_id'})
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name: 'categoria_id'})
     id: number
 
     @Column()
     nome: string
 
     @Column({
-    type: 'enum', name: 'tipo', enum: TipoCategoriaModel, default: TipoCategoriaModel.Outros
+    type: 'varchar', name: 'tipo', enum: TipoCategoriaModel, default: TipoCategoriaModel.Outros
     })
     tipo: TipoCategoriaModel;
 
     @Column({
-    type: 'enum', name: 'classificacao', enum: ClassificacaoCategoriaModel, default: ClassificacaoCategoriaModel.OutrosGastos
+    type: 'varchar', name: 'classificacao', enum: ClassificacaoCategoriaModel, default: ClassificacaoCategoriaModel.OutrosGastos
     })
     classificacao: ClassificacaoCategoriaModel;
 
-    @Column()
+    @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
     
-    @Column()
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
 
-    @OneToMany(() => TransacaoEntity, (transacao) => transacao.categoria, { cascade: true })
+    @OneToMany(() => TransacaoEntity, (transacao) => transacao.categoria)
     transacoes: Relation<TransacaoEntity[]>
 
     @ManyToOne(() => UsuarioEntity, (usuario) => usuario.categorias)

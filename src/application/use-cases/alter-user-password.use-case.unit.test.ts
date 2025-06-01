@@ -52,7 +52,7 @@ describe('AlterUserPasswordUseCase', () => {
             const novaSenha = faker.internet.password()
             const data: AlterUserPasswordData = {email, senha, novaSenha}
             jest.spyOn(usuarioRepository, 'findUserByEmailAndPassword').mockResolvedValue(fakeUsuario)
-            jest.spyOn(usuarioRepository, 'save').mockResolvedValue(fakeUsuario)
+            jest.spyOn(usuarioRepository, 'saveDomain').mockResolvedValue(fakeUsuario)
             const result = await alterUserPasswordUseCase.execute(data)
             expect(result).toBeInstanceOf(UsuarioDomain)
             expect(result.email).toEqual(fakeUsuario.email)

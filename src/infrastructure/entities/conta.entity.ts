@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation, UpdateDateColumn } from "typeorm";
 import { OrcamentoEntity } from "./orcamento.entity";
 import { UsuarioEntity } from "./usuario.entity";
 import { TipoContaModel } from "@domain/models/tipo-conta.model";
@@ -38,8 +38,7 @@ export class ContaEntity extends EveryMoneyEntity {
         }
     }
 
-    @Column({name: 'conta_id'})
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name: 'conta_id'})
     id: number;
 
     @Column()
@@ -52,31 +51,31 @@ export class ContaEntity extends EveryMoneyEntity {
     saldoPrevisto: number;
     
     @Column({
-        type: 'enum', name: 'tipo_conta', enum: TipoContaModel, default: TipoContaModel.Outros
+        type: 'varchar', name: 'tipo_conta', enum: TipoContaModel, default: TipoContaModel.Outros
       })
     tipoConta: TipoContaModel;
     
     @ManyToOne(() => UsuarioEntity, (usuario) => usuario.contas)
     @JoinColumn({ name: 'usuario_id' })
-    usuario: Relation<UsuarioEntity>;
+    usuario: UsuarioEntity;
     
-    @Column()
+    @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
     
-    @Column()
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
     
-    @OneToMany(() => OrcamentoEntity, (orcamento) => orcamento.conta, { cascade: true })
+    @OneToMany(() => OrcamentoEntity, (orcamento) => orcamento.conta)
     orcamentos: Relation<OrcamentoEntity[]>
 
-    @OneToMany(() => TransacaoEntity, (transacao) => transacao.conta, { cascade: true })
+    @OneToMany(() => TransacaoEntity, (transacao) => transacao.conta)
     transacoes: Relation<TransacaoEntity[]>
 
     static fromDomain(contaDomain: ContaDomain): ContaEntity {     
         
         const usuario = UsuarioEntity.fromDomain(contaDomain.usuario)
-        const orcamentos = contaDomain.orcamentos.map(orcamento => OrcamentoEntity.fromDomain(orcamento))
-        const transacoes = contaDomain.transacoes.map(transacao => TransacaoEntity.fromDomain(transacao))
+        const orcamentos = contaDomain.orcamentos?.map(orcamento => OrcamentoEntity.fromDomain(orcamento))
+        const transacoes = contaDomain.transacoes?.map(transacao => TransacaoEntity.fromDomain(transacao))
         const entity = new ContaEntity({...contaDomain.toModel(), usuario, orcamentos, transacoes});
         return entity;
     }

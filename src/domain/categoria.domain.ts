@@ -15,6 +15,9 @@ export class CategoriaDomain extends EveryMoneyDomain implements CategoriaModel 
         private readonly props: CategoriaModel,
     ) {
         super();
+        this.props.nome = props.nome ?? '';
+        this.props.tipo = props.tipo ?? TipoCategoriaModel.Outros;
+        this.props.classificacao = props.classificacao ?? ClassificacaoCategoriaModel.OutrosGastos;
     }
 
     get id (): number { return this.props?.id; }
@@ -22,8 +25,6 @@ export class CategoriaDomain extends EveryMoneyDomain implements CategoriaModel 
     get tipo (): TipoCategoriaModel { return this.props?.tipo; }
     get classificacao (): ClassificacaoCategoriaModel { return this.props?.classificacao; }
     get usuario (): UsuarioDomain { return new UsuarioDomain(this.props?.usuario); }
-    get createdAt (): Date { return this.props?.createdAt ?? new Date(); }
-    get updatedAt (): Date { return this.props?.updatedAt ?? new Date(); }
     get transacoes (): TransacaoDomain[] { return this.props?.transacoes?.map(transacao => new TransacaoDomain(transacao)) ?? []; }
 
     toModel (): CategoriaModel {

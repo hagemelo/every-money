@@ -76,7 +76,7 @@ describe('ContaRepositoryPostgres', () => {
             const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
             const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
             const fakeConta1 = makeContaFake({usuario})
-            const result = await contaRepository.save(fakeConta1)
+            const result = await contaRepository.saveDomain(fakeConta1)
             expect(result).toBeInstanceOf(ContaDomain)
             expect(result.nome).toBe(fakeConta1.nome)
             expect(result.saldoRealizado).toBe(fakeConta1.saldoRealizado)

@@ -33,8 +33,8 @@ export class ContaRepositoryPostgres extends RepositoryPostgres<ContaEntity, Con
         return contas.map(conta => conta.toDomain());
     }
 
-    async save(conta: ContaDomain): Promise<ContaDomain> {
-        const contaEntity = ContaEntity.fromDomain(conta)
+    async saveDomain(domain: ContaDomain): Promise<ContaDomain> {
+        const contaEntity = ContaEntity.fromDomain(domain)
         return this.repository.save(contaEntity).then(contaEntity => contaEntity.toDomain());
     }
 

@@ -53,7 +53,7 @@ describe('UsuarioRepositoryPostgres', () => {
             const usuarioDomain = usuario.toDomain()
             usuarioDomain.alterarSenha(novaSenha)
             
-            await usuarioRepository.save(usuarioDomain)
+            await usuarioRepository.saveDomain(usuarioDomain)
 
             const result = await usuarioRepository.findUserByEmailAndPassword(email, novaSenha)
             expect(result).toBeInstanceOf(UsuarioDomain)

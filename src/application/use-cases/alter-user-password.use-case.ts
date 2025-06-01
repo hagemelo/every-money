@@ -19,6 +19,6 @@ export class AlterUserPasswordUseCase {
         }
         usuario.alterarSenha(data.novaSenha);
 
-        return await this.usuarioRepository.save(usuario);
+        return await this.usuarioRepository.saveDomain(usuario);
     }
 }   
