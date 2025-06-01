@@ -8,6 +8,7 @@ import { AlterUserPasswordController } from './interface/usuario/alter-user-pass
 import jwtConfig from './modules/config/jwt.config';
 import databaseConfig from './modules/config/database.config';
 import { CreateAccountController } from './interface/conta/create-account.controller';
+import { ListAllAccountByUserIdController } from './interface/conta/list-all-account-by-user-id.controller';
 
 
 @Module({
@@ -17,6 +18,6 @@ import { CreateAccountController } from './interface/conta/create-account.contro
     envFilePath:  `.env.${process.env.NODE_ENV}` || 'development', 
     load: [jwtConfig, databaseConfig],
   }),],
-  controllers: [AlterUserPasswordController, CreateAccountController],
+  controllers: [AlterUserPasswordController, CreateAccountController, ListAllAccountByUserIdController],
 })
 export class EveryMoneyModule {}

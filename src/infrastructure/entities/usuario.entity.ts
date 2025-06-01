@@ -43,7 +43,7 @@ export class UsuarioEntity extends EveryMoneyEntity {
     @Column()
     email: string;
     
-    @Column()
+    @Column({ select: false })
 	senha: string;
 
     @CreateDateColumn({ name: 'created_at' })

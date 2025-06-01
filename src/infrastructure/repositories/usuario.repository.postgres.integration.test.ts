@@ -14,7 +14,6 @@ let testingModule: TestingModule
 let usuarioFixture: UsuarioFixture
 let usuarioRepository: UsuarioRepository
 let dataSource: DataSource
-
 describe('UsuarioRepositoryPostgres', () => {
     beforeAll(async () => {
       testingModule = await buildTestingModule()
@@ -38,7 +37,7 @@ describe('UsuarioRepositoryPostgres', () => {
             const result = await usuarioRepository.findUserByEmailAndPassword(email, senha)
             expect(result).toBeInstanceOf(UsuarioDomain)
             expect(result.email).toBe(email)
-            expect(result.senha).toBe(senha)
+            expect(result.nome).toBe(fakeUsuario.nome)
         })
     })
 
@@ -58,7 +57,7 @@ describe('UsuarioRepositoryPostgres', () => {
             const result = await usuarioRepository.findUserByEmailAndPassword(email, novaSenha)
             expect(result).toBeInstanceOf(UsuarioDomain)
             expect(result.email).toBe(email)
-            expect(result.senha).toBe(novaSenha)
+            expect(result.nome).toBe(usuarioDomain.nome)
         })
     })
 

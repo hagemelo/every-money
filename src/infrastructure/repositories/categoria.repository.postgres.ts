@@ -32,8 +32,6 @@ export class CategoriaRepositoryPostgres extends RepositoryPostgres<CategoriaEnt
 
     async saveDomain(domain: CategoriaDomain): Promise<CategoriaDomain> {
         const categoriaEntity = CategoriaEntity.fromDomain(domain)
-
-        console.dir(categoriaEntity)
         return this.repository.save(categoriaEntity).then(categoriaEntity => categoriaEntity.toDomain());
     }
 
