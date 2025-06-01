@@ -1,5 +1,3 @@
-import { CategoriaDomain } from "@domain/categoria.domain";
-import { CategoriaEntity } from "@infrastructure/entities/categoria.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";

@@ -41,6 +41,7 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
     toModel (): ContaModel {
         return {
             ...this.props,
+            usuario: this.usuario.toModel(),
             orcamentos: this.orcamentos.map(orcamento => orcamento.toModel()),
             transacoes: this.transacoes.map(transacao => transacao.toModel())
         };
