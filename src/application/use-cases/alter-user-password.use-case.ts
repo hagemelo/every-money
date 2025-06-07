@@ -1,4 +1,4 @@
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
+import { UsuarioRepository } from "@domain/repositories/usuario.repository";
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { UsuarioDomain } from "@domain/usuario.domain";
 import { AlterUserPasswordData } from "@domain/data/alter-user-password.data";

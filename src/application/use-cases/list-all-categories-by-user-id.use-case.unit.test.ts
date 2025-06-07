@@ -1,4 +1,4 @@
-import { CategoriaRepository } from "@domain/interfaces/categoria.repository"
+import { CategoriaRepository } from "@domain/repositories/categoria.repository"
 import { ListAllCategoriesByUserIdUseCase } from "./list-all-categories-by-user-id.use-case"
 import { createMock } from "@golevelup/ts-jest"
 import { makeUsuarioFake } from "@test/fake/usuario.fake"

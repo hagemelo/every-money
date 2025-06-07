@@ -2,7 +2,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
 import { TransacaoDomain } from "@domain/transacao.domain";
-import { TransacaoRepository } from "@domain/interfaces/transacao.repository";
+import { TransacaoRepository } from "@domain/repositories/transacao.repository";
 import { TransacaoEntity } from "@infrastructure/entities/transacao.entity";
 import { Injectable } from "@nestjs/common";
 import { Scope } from "@nestjs/common";

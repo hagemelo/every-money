@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { UsuarioRepository } from '@domain/interfaces/usuario.repository';
+import { UsuarioRepository } from '@domain/repositories/usuario.repository';
 import { UsuarioRepositoryPostgres } from './usuario.repository.postgres';
-import { ContaRepository } from '@domain/interfaces/conta.repository';
+import { ContaRepository } from '@domain/repositories/conta.repository';
 import { ContaRepositoryPostgres } from './conta.repository.postgres';
-import { CategoriaRepository } from '@domain/interfaces/categoria.repository';
+import { CategoriaRepository } from '@domain/repositories/categoria.repository';
 import { CategoriaRepositoryPostgres } from './categoria.repository.postgres';
 import { OrcamentoRepositoryPostgres } from './orcamento.repository.postgres';
-import { OrcamentoRepository } from '@domain/interfaces/orcamento.repository';
-import { TransacaoRepository } from '@domain/interfaces/transacao.repository';
+import { OrcamentoRepository } from '@domain/repositories/orcamento.repository';
+import { TransacaoRepository } from '@domain/repositories/transacao.repository';
 import { TransacaoRepositoryPostgres } from './transacao.repository.postgres';
 
 

@@ -1,4 +1,4 @@
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository"
+import { UsuarioRepository } from "@domain/repositories/usuario.repository"
 import { FindUserByEmailAndPasswordUseCase } from "./find-user-by-email-and-password.use-case"
 import { createMock } from "@golevelup/ts-jest"
 import { faker } from "@faker-js/faker/."

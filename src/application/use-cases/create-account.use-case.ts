@@ -1,9 +1,9 @@
 import { Inject, Injectable, UnprocessableEntityException } from "@nestjs/common";
 import { Scope } from "@nestjs/common";
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
+import { UsuarioRepository } from "@domain/repositories/usuario.repository";
 import { Transactional } from "typeorm-transactional";
 import { CreateAccountData } from "@domain/data/create-account.data";
-import { ContaRepository } from "@domain/interfaces/conta.repository";
+import { ContaRepository } from "@domain/repositories/conta.repository";
 import { UnauthorizedException } from "@nestjs/common";
 import { ContaDomain } from "@domain/conta.domain";
 

@@ -1,9 +1,9 @@
 import { Inject, Injectable, Scope, UnauthorizedException } from "@nestjs/common";
-import { CategoriaRepository } from "@domain/interfaces/categoria.repository";
+import { CategoriaRepository } from "@domain/repositories/categoria.repository";
 import { Transactional } from "typeorm-transactional";
 import { CategoriaDomain } from "@domain/categoria.domain";
 import { CreateCategoryData } from "@domain/data/create-category.data";
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
+import { UsuarioRepository } from "@domain/repositories/usuario.repository";
 
 @Injectable({ scope: Scope.TRANSIENT })
 export class CreateCategoryUseCase {

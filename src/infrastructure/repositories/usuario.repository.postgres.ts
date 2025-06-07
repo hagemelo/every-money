@@ -1,4 +1,4 @@
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
+import { UsuarioRepository } from "@domain/repositories/usuario.repository";
 import { UsuarioDomain } from "@domain/usuario.domain";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 import { InjectRepository } from "@nestjs/typeorm";

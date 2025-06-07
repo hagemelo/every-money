@@ -1,5 +1,5 @@
 import { UsuarioDomain } from "@domain/usuario.domain";
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
+import { UsuarioRepository } from "@domain/repositories/usuario.repository";
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Scope } from "@nestjs/common";
 

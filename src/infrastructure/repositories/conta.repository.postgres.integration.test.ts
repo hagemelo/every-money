@@ -1,7 +1,7 @@
 
 import { TestingModule } from "@nestjs/testing";
 
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
+import { UsuarioRepository } from "@domain/repositories/usuario.repository";
 import { UsuarioFixture } from "@infrastructure/database/fixtures/usuario.fixture";
 import { buildTestingModule } from "@test/testing.module";
 import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
@@ -9,7 +9,7 @@ import { faker } from "@faker-js/faker/.";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 import { DataSource } from "typeorm";
 import { ContaFixture } from "@infrastructure/database/fixtures/conta.fixture";
-import { ContaRepository } from "@domain/interfaces/conta.repository";
+import { ContaRepository } from "@domain/repositories/conta.repository";
 import { makeContaEntityFakeNew, makeContaFake } from "@test/fake/conta.fake";
 import { ContaEntity } from "@infrastructure/entities/conta.entity";
 import { ContaDomain } from "@domain/conta.domain";

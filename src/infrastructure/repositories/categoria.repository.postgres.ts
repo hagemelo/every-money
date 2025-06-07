@@ -3,7 +3,7 @@ import { CategoriaEntity } from "@infrastructure/entities/categoria.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
-import { CategoriaRepository } from "@domain/interfaces/categoria.repository";
+import { CategoriaRepository } from "@domain/repositories/categoria.repository";
 import { Injectable } from "@nestjs/common";
 import { Scope } from "@nestjs/common";
 

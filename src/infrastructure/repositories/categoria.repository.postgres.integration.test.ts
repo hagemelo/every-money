@@ -10,7 +10,7 @@ import { DataSource } from "typeorm";
 import { makeCategoriaEntityFakeNew, makeCategoriaFake } from "@test/fake/categoria.fake";
 import { CategoriaEntity } from "@infrastructure/entities/categoria.entity";
 import { CategoriaFixture } from "@infrastructure/database/fixtures/categoria.fixture";
-import { CategoriaRepository } from "@domain/interfaces/categoria.repository";
+import { CategoriaRepository } from "@domain/repositories/categoria.repository";
 import { CategoriaDomain } from "@domain/categoria.domain";
 
 let testingModule: TestingModule

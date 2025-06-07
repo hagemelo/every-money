@@ -1,4 +1,4 @@
-import { TransacaoRepository } from "@domain/interfaces/transacao.repository"
+import { TransacaoRepository } from "@domain/repositories/transacao.repository"
 import { TransacaoDomain } from "@domain/transacao.domain"
 import { faker } from "@faker-js/faker/."
 import { CategoriaFixture } from "@infrastructure/database/fixtures/categoria.fixture"

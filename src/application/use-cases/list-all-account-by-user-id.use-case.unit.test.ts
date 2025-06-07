@@ -1,4 +1,4 @@
-import { ContaRepository } from "@domain/interfaces/conta.repository"
+import { ContaRepository } from "@domain/repositories/conta.repository"
 import { ListAllAccountByUserIdUseCase } from "./list-all-account-by-user-id.use-case"
 import { createMock } from "@golevelup/ts-jest"
 import { makeContaFake } from "@test/fake/conta.fake"

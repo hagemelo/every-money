@@ -1,5 +1,5 @@
 import { UsuarioDomain } from "@domain/usuario.domain";
-import { EveryMoneyRepository } from "@domain/interfaces/every-money-repository";
+import { EveryMoneyRepository } from "@domain/repositories/every-money-repository";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 import { UsuarioModel } from "@domain/models/usuario.model";
 

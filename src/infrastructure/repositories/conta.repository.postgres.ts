@@ -1,6 +1,6 @@
 import { ContaDomain } from "@domain/conta.domain";
-import { ContaRepository } from "@domain/interfaces/conta.repository";
-import { UsuarioRepository } from "@domain/interfaces/usuario.repository";
+import { ContaRepository } from "@domain/repositories/conta.repository";
+import { UsuarioRepository } from "@domain/repositories/usuario.repository";
 import { UsuarioDomain } from "@domain/usuario.domain";
 import { ContaEntity } from "@infrastructure/entities/conta.entity";
 import { InjectRepository } from "@nestjs/typeorm";

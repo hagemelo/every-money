@@ -1,5 +1,5 @@
 import { ContaDomain } from "@domain/conta.domain";
-import { ContaRepository } from "@domain/interfaces/conta.repository";
+import { ContaRepository } from "@domain/repositories/conta.repository";
 import { Inject, Injectable } from "@nestjs/common";
 
 

@@ -1,5 +1,5 @@
 import { CategoriaDomain } from "@domain/categoria.domain";
-import { CategoriaRepository } from "@domain/interfaces/categoria.repository";
+import { CategoriaRepository } from "@domain/repositories/categoria.repository";
 import { Inject, Injectable } from "@nestjs/common";
 
 @Injectable()

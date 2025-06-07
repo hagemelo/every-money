@@ -11,7 +11,7 @@ import { ContaEntity } from "@infrastructure/entities/conta.entity";
 import { makeOrcamentoEntityFakeNew, makeOrcamentoFake } from "@test/fake/orcamento.fake";
 import { OrcamentoEntity } from "@infrastructure/entities/orcamento.entity";
 import { UsuarioFixture } from "@infrastructure/database/fixtures/usuario.fixture";
-import { OrcamentoRepository } from "@domain/interfaces/orcamento.repository";
+import { OrcamentoRepository } from "@domain/repositories/orcamento.repository";
 import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 import { OrcamentoDomain } from "@domain/orcamento.domain";

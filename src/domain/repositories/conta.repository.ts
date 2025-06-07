@@ -1,5 +1,5 @@
 import { ContaDomain } from "@domain/conta.domain"
-import { EveryMoneyRepository } from "@domain/interfaces/every-money-repository"
+import { EveryMoneyRepository } from "@domain/repositories/every-money-repository"
 import { ContaEntity } from "@infrastructure/entities/conta.entity"
 
 export  interface ContaRepository extends EveryMoneyRepository<ContaEntity, ContaDomain> {

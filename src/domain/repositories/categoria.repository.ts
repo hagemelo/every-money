@@ -1,4 +1,4 @@
-import { EveryMoneyRepository } from "@domain/interfaces/every-money-repository"
+import { EveryMoneyRepository } from "@domain/repositories/every-money-repository"
 import { CategoriaEntity } from "@infrastructure/entities/categoria.entity"
 import { CategoriaDomain } from "@domain/categoria.domain"
 
