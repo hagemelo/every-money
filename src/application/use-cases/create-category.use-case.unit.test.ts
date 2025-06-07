@@ -1,11 +1,6 @@
 import { UsuarioRepository } from "@domain/repositories/usuario.repository"
-import { CreateAccountUseCase } from "./create-account.use-case"
 import { createMock } from "@golevelup/ts-jest"
-import { ContaRepository } from "@domain/repositories/conta.repository"
 import { makeUsuarioFake } from "@test/fake/usuario.fake"
-import { makeContaFake } from "@test/fake/conta.fake"
-import { CreateAccountData } from "@domain/data/create-account.data"
-import { ContaDomain } from "@domain/conta.domain"
 import { CreateCategoryUseCase } from "./create-category.use-case"
 import { CategoriaRepository } from "@domain/repositories/categoria.repository"
 import { CreateCategoryData } from "@domain/data/create-category.data"
@@ -59,6 +54,22 @@ describe('CreateCategoryUseCase', () => {
             const expectedCategoria = categoria
             expectedCategoria.addUsuario(usuario)
             expect(error.message).toBe('Erro ao salvar categoria')
+            expect(categoriaRepository.saveDomain).toHaveBeenCalledWith(expectedCategoria)
+        })
+    })
+
+    describe('Quando categoriaRepository.save devolve null', () => {
+        it('deve lancar uma exception', async () => {
+            const usuario = makeUsuarioFake()
+            const categoria = makeCategoriaFake()
+            const data: CreateCategoryData = {usuario: usuario.toModel(), categoria: categoria.toModel()}
+            jest.spyOn(usuarioRepository, 'findUserBy').mockResolvedValue(usuario)
+            jest.spyOn(categoriaRepository, 'saveDomain').mockResolvedValue(null)
+            let error;
+            await useCase.execute(data).catch((e) => error = e)
+            const expectedCategoria = categoria
+            expectedCategoria.addUsuario(usuario)
+            expect(error.message).toBe('Erro ao criar categoria')
             expect(categoriaRepository.saveDomain).toHaveBeenCalledWith(expectedCategoria)
         })
     })

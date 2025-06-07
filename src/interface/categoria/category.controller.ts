@@ -25,6 +25,6 @@ export class CreateCategoryController {
   @Get('listar-categorias/usuario/:id')
   async listarCategorias(@Param('id') id: number): Promise<CategoriaModel[]> {
       const categorias = await this.listAllCategoriesByUserIdUseCase.execute(id);
-      return categorias?.map(categoria => categoria.toModel()) ?? [];
+      return categorias.map(categoria => categoria.toModel());
   }
 } 

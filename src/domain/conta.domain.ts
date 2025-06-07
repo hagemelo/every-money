@@ -20,16 +20,16 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
         this.props.tipoConta = props.tipoConta ?? TipoContaModel.Outros;
     }
 
-    get id (): number { return this.props?.id; }
-    get nome (): string { return this.props?.nome; }
-    get saldoRealizado (): number { return this.props?.saldoRealizado ?? 0; }
-    get saldoPrevisto (): number { return this.props?.saldoPrevisto ?? 0; }
-    get tipoConta (): TipoContaModel { return this.props?.tipoConta; }
-    get usuario (): UsuarioDomain { return this.props?.usuario ? new UsuarioDomain(this.props?.usuario) : null; }
-    get createdAt (): Date { return this.props?.createdAt ?? new Date(); }
-    get updatedAt (): Date { return this.props?.updatedAt ?? new Date(); }
-    get orcamentos (): OrcamentoDomain[] { return this.props?.orcamentos?.map(orcamento => new OrcamentoDomain(orcamento)) ?? []; }
-    get transacoes (): TransacaoDomain[] { return this.props?.transacoes?.map(transacao => new TransacaoDomain(transacao)) ?? []; }
+    get id (): number { return this.props.id; }
+    get nome (): string { return this.props.nome; }
+    get saldoRealizado (): number { return this.props.saldoRealizado; }
+    get saldoPrevisto (): number { return this.props.saldoPrevisto; }
+    get tipoConta (): TipoContaModel { return this.props.tipoConta; }
+    get usuario (): UsuarioDomain { return this.props.usuario ? new UsuarioDomain(this.props.usuario) : null; }
+    get createdAt (): Date { return this.props.createdAt ?? new Date(); }
+    get updatedAt (): Date { return this.props.updatedAt ?? new Date(); }
+    get orcamentos (): OrcamentoDomain[] { return this.props.orcamentos?.map(orcamento => new OrcamentoDomain(orcamento)) ?? []; }
+    get transacoes (): TransacaoDomain[] { return this.props.transacoes?.map(transacao => new TransacaoDomain(transacao)) ?? []; }
 
     set nome (nome: string) { this.props.nome = nome; }
     set saldoRealizado (saldoRealizado: number) { this.props.saldoRealizado = saldoRealizado; }

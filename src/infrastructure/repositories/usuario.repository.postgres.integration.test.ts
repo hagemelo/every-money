@@ -39,6 +39,20 @@ describe('UsuarioRepositoryPostgres', () => {
             expect(result.email).toBe(email)
             expect(result.nome).toBe(fakeUsuario.nome)
         })
+
+
+        it('não deve retornar um usuario quando o email ou senha for invalido', async () => {
+            const email = faker.internet.email()
+            const senha = faker.internet.password()
+            const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
+            await usuarioFixture.createFixture({...fakeUsuario})
+            const result = await usuarioRepository.findUserByEmailAndPassword(email, null)
+            expect(result).toBeNull()
+            const result2 = await usuarioRepository.findUserByEmailAndPassword(null, senha)
+            expect(result2).toBeNull()
+            const result3 = await usuarioRepository.findUserByEmailAndPassword(null, null)
+            expect(result3).toBeNull()
+        })
     })
 
     describe('Quando a senha do usuario alterada', () => {

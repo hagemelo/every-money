@@ -58,6 +58,22 @@ describe('CreateAccountUseCase', () => {
         })
     })
 
+    describe('Quando contaRepository.save devolve null', () => {
+        it('deve lancar uma exception', async () => {
+            const usuario = makeUsuarioFake()
+            const conta = makeContaFake()
+            const data: CreateAccountData = {usuario: usuario.toModel(), conta: conta.toModel()}
+            jest.spyOn(usuarioRepository, 'findUserBy').mockResolvedValue(usuario)
+            jest.spyOn(contaRepository, 'saveDomain').mockResolvedValue(null)
+            let error;
+            await useCase.execute(data).catch((e) => error = e)
+            const expectedConta = conta
+            expectedConta.addUsuario(usuario)
+            expect(error.message).toBe('Erro ao salvar conta')
+            expect(contaRepository.saveDomain).toHaveBeenCalledWith(expectedConta)
+        })
+    })
+
     describe('Quando a conta e salva com sucesso', () => {
         it('deve salvar a conta', async () => {
             const usuario = makeUsuarioFake()

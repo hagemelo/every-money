@@ -16,13 +16,13 @@ export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel 
         this.props.tipoCategoria = props.tipoCategoria ?? TipoCategoriaModel.Outros;
     }
 
-    get id (): number { return this.props?.id; }
-    get mesReferencia (): string { return this.props?.mesReferencia; }
-    get limite (): number { return this.props?.limite ?? 0; }
-    get tipoCategoria (): TipoCategoriaModel { return this.props?.tipoCategoria; }
-    get conta (): ContaDomain { return new ContaDomain(this.props?.conta); }
-    get createdAt (): Date { return this.props?.createdAt ?? new Date(); }
-    get updatedAt (): Date { return this.props?.updatedAt ?? new Date(); }
+    get id (): number { return this.props.id; }
+    get mesReferencia (): string { return this.props.mesReferencia; }
+    get limite (): number { return this.props.limite; }
+    get tipoCategoria (): TipoCategoriaModel { return this.props.tipoCategoria; }
+    get conta (): ContaDomain { return new ContaDomain(this.props.conta); }
+    get createdAt (): Date { return this.props.createdAt ?? new Date(); }
+    get updatedAt (): Date { return this.props.updatedAt ?? new Date(); }
 
     set mesReferencia (mesReferencia: string) { this.props.mesReferencia = mesReferencia; }
     set limite (limite: number) { this.props.limite = limite; }

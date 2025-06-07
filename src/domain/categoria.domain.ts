@@ -1,7 +1,6 @@
 import { CategoriaModel } from "./models/categoria.model";
 import { ClassificacaoCategoriaModel } from "./models/classificacao-categoria.model";
 import { TipoCategoriaModel } from "./models/tipo-categoria.model";
-import { TransacaoModel } from "./models/transacao.model";
 import { EveryMoneyDomain } from "./every-money.domain";
 import { UsuarioDomain } from "./usuario.domain";
 import { TransacaoDomain } from "./transacao.domain";
@@ -20,15 +19,17 @@ export class CategoriaDomain extends EveryMoneyDomain implements CategoriaModel 
         this.props.classificacao = props.classificacao ?? ClassificacaoCategoriaModel.OutrosGastos;
     }
 
-    get id (): number { return this.props?.id; }
-    get nome (): string { return this.props?.nome; }
-    get tipo (): TipoCategoriaModel { return this.props?.tipo; }
-    get classificacao (): ClassificacaoCategoriaModel { return this.props?.classificacao; }
-    get usuario (): UsuarioDomain { return new UsuarioDomain(this.props?.usuario); }
-    get transacoes (): TransacaoDomain[] { return this.props?.transacoes?.map(transacao => new TransacaoDomain(transacao)) ?? []; }
+    get id (): number { return this.props.id; }
+    get nome (): string { return this.props.nome; }
+    get tipo (): TipoCategoriaModel { return this.props.tipo; }
+    get classificacao (): ClassificacaoCategoriaModel { return this.props.classificacao; }
+    get usuario (): UsuarioDomain { return new UsuarioDomain(this.props.usuario); }
+    get transacoes (): TransacaoDomain[] { return this.props.transacoes?.map(transacao => new TransacaoDomain(transacao)) ?? []; }
 
     set usuario (usuario: UsuarioDomain) { this.props.usuario = usuario.toModel(); }
-
+    set nome (nome: string) { this.props.nome = nome; }
+    set tipo (tipo: TipoCategoriaModel) { this.props.tipo = tipo; }
+    set classificacao (classificacao: ClassificacaoCategoriaModel) { this.props.classificacao = classificacao; }
 
     toModel (): CategoriaModel {
         return {

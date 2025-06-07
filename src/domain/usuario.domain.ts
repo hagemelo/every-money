@@ -14,16 +14,16 @@ export class UsuarioDomain extends EveryMoneyDomain implements UsuarioModel {
         this.props.senha = props.senha ?? '';
     }
 
-    get id (): number { return this.props?.id; }
-    get nome (): string { return this.props?.nome; }
-    get email (): string { return this.props?.email; }
-    get senha (): string { return this.props?.senha; }
-    get createdAt (): Date { return this.props?.createdAt ?? new Date(); }
-    get updatedAt (): Date { return this.props?.updatedAt ?? new Date(); }    
+    get id (): number { return this.props.id; }
+    get nome (): string { return this.props.nome; }
+    get email (): string { return this.props.email; }
+    get senha (): string { return this.props.senha; }
+    get createdAt (): Date { return this.props.createdAt ?? new Date(); }
+    get updatedAt (): Date { return this.props.updatedAt ?? new Date(); }    
     get contas (): ContaDomain[] {
-        return this.props?.contas?.map(conta => new ContaDomain(conta)) ?? []; }
+        return this.props.contas?.map(conta => new ContaDomain(conta)) ?? []; }
     get categorias (): CategoriaDomain[] {
-        return this.props?.categorias?.map(categoria => new CategoriaDomain(categoria)) ?? []; }
+        return this.props.categorias?.map(categoria => new CategoriaDomain(categoria)) ?? []; }
 
     set nome (nome: string) { this.props.nome = nome; }
     set email (email: string) { this.props.email = email; }

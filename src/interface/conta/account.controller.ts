@@ -24,6 +24,6 @@ export class AccountController {
     @Get('listar-contas/usuario/:id')
     async listarContas(@Param('id') id: number): Promise<ContaModel[]> {
         const contas = await this.listAllAccountByUserIdUseCase.execute(id);
-        return contas?.map(conta => conta.toModel()) ?? [];
+        return contas.map(conta => conta.toModel());
     }
 } 

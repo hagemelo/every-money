@@ -15,9 +15,6 @@ export class AuthController {
       data.email,
       data.senha,
     );  
-    if (!user) {
-      return { message: 'Invalid credentials' };
-    }
     return this.tokenService.generateToken(user);
   }
 }

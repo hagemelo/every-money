@@ -16,7 +16,7 @@ import { CreateCategoryController } from './interface/categoria/category.control
   imports: [DatabaseModule, ApplicationModule, AuthModule, RepositoriesModule, 
     ConfigModule.forRoot({
     isGlobal: true,
-    envFilePath:  `.env.${process.env.NODE_ENV}` || 'development', 
+    envFilePath:  `.env.${process.env.NODE_ENV}`, 
     load: [jwtConfig, databaseConfig],
   }),],
   controllers: [AlterUserPasswordController, AccountController, CreateCategoryController],
