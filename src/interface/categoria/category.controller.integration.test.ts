@@ -13,6 +13,7 @@ import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { faker } from "@faker-js/faker/.";
 import { AuthData } from "@domain/data/auth.data";
 import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
+import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 
 
 describe('CategoryController', () => {
@@ -25,8 +26,9 @@ describe('CategoryController', () => {
     let email: string;
     let senha: string;
     let usuario: UsuarioDomain;
+    let usuarioSaved: UsuarioEntity;
     let categoriaFixture: CategoriaFixture;
-
+    
     beforeAll(async () => {
         initializeTransactionalContext();
         testingModule = await buildTestingModule()
@@ -52,7 +54,7 @@ describe('CategoryController', () => {
         const secretKey = process.env.JWT_SECRET || '#jequiladispag@$12';
         token = jwtService.sign(payload, { secret: secretKey });
         const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
-        const usuarioSaved = await usuarioFixture.createFixture({...fakeUsuario})
+        usuarioSaved = await usuarioFixture.createFixture({...fakeUsuario})
         usuario = usuarioSaved.toDomain()
     })
 
@@ -107,6 +109,44 @@ describe('CategoryController', () => {
                     .send(data)
                     .expect(401);
                 expect(response.body.message).toBeDefined();
+            });
+        });
+    })
+
+    describe('listar-categorias/usuario/:id', () => {
+        describe('Quando listar as categorias do usuario com sucesso', () => {
+            it('deve retornar listagem de categorias', async () => {
+
+                const fakeCategoria1 = makeCategoriaEntityFakeNew({ usuario: usuarioSaved})
+                await categoriaFixture.createFixture({...fakeCategoria1})
+                const fakeCategoria2 = makeCategoriaEntityFakeNew({ usuario: usuarioSaved})
+                await categoriaFixture.createFixture({...fakeCategoria2})
+                const response = await request(app.getHttpServer())
+                .get(`/categoria/listar-categorias/usuario/${usuario.id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+                expect(response.body).toHaveLength(2);
+            });
+    
+            it('deve retornar listagem de categorias vazia', async () => {
+                const id = faker.number.int()
+                const response = await request(app.getHttpServer())
+                .get(`/categoria/listar-categorias/usuario/${id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+                expect(response.body).toHaveLength(0);
+            });
+        });
+       
+        describe('Quando listar as categorias do usuario com falha', () => {
+    
+            it('deve retornar nao autorizado sem token', async () => {
+            const id = faker.number.int()
+            const response = await request(app.getHttpServer())
+                        .get(`/categoria/listar-categorias/usuario/${id}`)
+                        .set('Authorization', `Bearer ${null}`)
+                        .expect(401);
+            expect(response.body.message).toBeDefined();
             });
         });
     })
