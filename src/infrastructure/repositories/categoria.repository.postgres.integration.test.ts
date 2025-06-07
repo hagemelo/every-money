@@ -69,7 +69,6 @@ describe('CategoriaRepositoryPostgres', () => {
             const senha = faker.internet.password()
             const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
             const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
-            
             const categoria = makeCategoriaFake({usuario})
             const result = await categoriaRepository.saveDomain(categoria)
             expect(result).toBeInstanceOf(CategoriaDomain)

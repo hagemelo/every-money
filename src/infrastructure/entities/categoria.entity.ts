@@ -66,13 +66,13 @@ constructor(props?: ContaProps){
     usuario: Relation<UsuarioEntity>
     
     static fromDomain(categoriaDomain: CategoriaDomain): CategoriaEntity {     
-        const entity = new CategoriaEntity();
-        Object.assign(entity, categoriaDomain.toModel())
+        const usuario = UsuarioEntity.fromDomain(categoriaDomain.usuario)
+        const transacoes = categoriaDomain.transacoes?.map(transacao => TransacaoEntity.fromDomain(transacao))
+        const entity = new CategoriaEntity({...categoriaDomain.toModel(), usuario, transacoes});
         return entity;
     }
 
     toDomain(): CategoriaDomain {
-
         const categoria = {
             ...this,
             transacoes: this.transacoes?.map(transacao => transacao.toDomain()),

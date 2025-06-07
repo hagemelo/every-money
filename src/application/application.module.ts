@@ -4,16 +4,19 @@ import { FindUserByEmailAndPasswordUseCase } from './use-cases/find-user-by-emai
 import { AlterUserPasswordUseCase } from './use-cases/alter-user-password.use-case';
 import { CreateAccountUseCase } from './use-cases/create-account.use-case';
 import { ListAllAccountByUserIdUseCase } from './use-cases/list-all-account-by-user-id.use-case';
+import { CreateCategoryUseCase } from './use-cases/create-category.use-case';
 
 @Module({
   imports: [RepositoriesModule],
   providers: [FindUserByEmailAndPasswordUseCase, 
     AlterUserPasswordUseCase,
     CreateAccountUseCase,
-    ListAllAccountByUserIdUseCase],
+    ListAllAccountByUserIdUseCase,
+    CreateCategoryUseCase],
   exports: [FindUserByEmailAndPasswordUseCase, 
     AlterUserPasswordUseCase,
     CreateAccountUseCase,
-    ListAllAccountByUserIdUseCase],
+    ListAllAccountByUserIdUseCase,
+    CreateCategoryUseCase],
 })
 export class ApplicationModule {}

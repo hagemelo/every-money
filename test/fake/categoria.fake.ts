@@ -13,7 +13,8 @@ export const makeCategoriaFake = (props?: Partial<CategoriaModel>): CategoriaDom
     classificacao: props?.classificacao || faker.helpers.enumValue(ClassificacaoCategoriaModel),
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime(),
-    usuario: props?.usuario || makeUsuarioFake()
+    usuario: props?.usuario || makeUsuarioFake(),
+    transacoes: props?.transacoes || []
   })
 
   export const makeCategoriaEntityFake = (props?: Partial<CategoriaEntity>): CategoriaEntity => CategoriaEntity.fromDomain(new CategoriaDomain({

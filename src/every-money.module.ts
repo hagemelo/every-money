@@ -7,8 +7,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AlterUserPasswordController } from './interface/usuario/alter-user-password.controller';
 import jwtConfig from './modules/config/jwt.config';
 import databaseConfig from './modules/config/database.config';
-import { CreateAccountController } from './interface/conta/create-account.controller';
-import { ListAllAccountByUserIdController } from './interface/conta/list-all-account-by-user-id.controller';
+
+import { AccountController } from './interface/conta/account.controller';
+import { CreateCategoryController } from './interface/categoria/category.controller';
 
 
 @Module({
@@ -18,6 +19,6 @@ import { ListAllAccountByUserIdController } from './interface/conta/list-all-acc
     envFilePath:  `.env.${process.env.NODE_ENV}` || 'development', 
     load: [jwtConfig, databaseConfig],
   }),],
-  controllers: [AlterUserPasswordController, CreateAccountController, ListAllAccountByUserIdController],
+  controllers: [AlterUserPasswordController, AccountController, CreateCategoryController],
 })
 export class EveryMoneyModule {}

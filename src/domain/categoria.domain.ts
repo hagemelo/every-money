@@ -27,9 +27,13 @@ export class CategoriaDomain extends EveryMoneyDomain implements CategoriaModel 
     get usuario (): UsuarioDomain { return new UsuarioDomain(this.props?.usuario); }
     get transacoes (): TransacaoDomain[] { return this.props?.transacoes?.map(transacao => new TransacaoDomain(transacao)) ?? []; }
 
+    set usuario (usuario: UsuarioDomain) { this.props.usuario = usuario.toModel(); }
+
+
     toModel (): CategoriaModel {
         return {
             ...this.props,
+            usuario: this.usuario.toModel(),
             transacoes: this.transacoes.map(transacao => transacao.toModel())
         };
     }   
@@ -41,6 +45,11 @@ export class CategoriaDomain extends EveryMoneyDomain implements CategoriaModel 
             - this.props.transacoes.filter(transacao => transacao.tipo === TipoTransacaoModel.Saida)
             .reduce((total, transacao) => total + transacao.valor, 0)
         : 0;
+    }
+
+    addUsuario (usuario: UsuarioDomain): UsuarioDomain { 
+        this.usuario = usuario;
+        return usuario;
     }
 
 }
