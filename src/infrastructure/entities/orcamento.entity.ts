@@ -3,9 +3,35 @@ import { TipoCategoriaModel } from "@domain/models/tipo-categoria.model";
 import { ContaEntity } from "./conta.entity";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
 import { EveryMoneyEntity } from "@domain/every-money.entity";
+import { UsuarioEntity } from "./usuario.entity";
+import { ClassificacaoCategoriaModel } from "@domain/models/classificacao-categoria.model";
+
+
+type OrcamentoProps = {
+    id?: number;
+    mesReferencia: string;
+    limite: number;
+    tipoCategoria: TipoCategoriaModel;
+    conta: ContaEntity;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
 
 @Entity('orcamento_tb')
 export class OrcamentoEntity extends EveryMoneyEntity {
+
+    constructor(props?: OrcamentoProps){
+        super()
+        if(props){
+            this.id = props.id
+            this.mesReferencia = props.mesReferencia
+            this.limite = props.limite
+            this.tipoCategoria = props.tipoCategoria
+            this.conta = props.conta
+            this.createdAt = props.createdAt
+            this.updatedAt = props.updatedAt
+        }
+    }
     
     @PrimaryGeneratedColumn({name: 'orc_id'})
     id: number;
@@ -31,9 +57,9 @@ export class OrcamentoEntity extends EveryMoneyEntity {
     @JoinColumn({ name: 'conta_id' })
     conta: ContaEntity;
 
-    static fromDomain(contaDomain: OrcamentoDomain): OrcamentoEntity {     
-        const entity = new OrcamentoEntity();
-        Object.assign(entity, contaDomain.toModel())
+    static fromDomain(orcamentoDomain: OrcamentoDomain): OrcamentoEntity {     
+        const conta = ContaEntity.fromDomain(orcamentoDomain.conta)
+        const entity = new OrcamentoEntity({...orcamentoDomain.toModel(), conta});
         return entity;
     }
 

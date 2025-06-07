@@ -63,7 +63,7 @@ describe('OrcamentoRepositoryPostgres', () => {
             const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
             const fakeConta = makeContaEntityFakeNew({usuario})
             const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
-            const orcamento = makeOrcamentoFake({conta})
+            const orcamento = makeOrcamentoFake({conta: conta.toDomain()})
             const result = await orcamentoRepository.saveDomain(orcamento)
             expect(result).toBeInstanceOf(OrcamentoDomain)
             expect(result.mesReferencia).toBe(orcamento.mesReferencia)

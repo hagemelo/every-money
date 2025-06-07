@@ -6,6 +6,7 @@ import { CreateAccountUseCase } from './use-cases/create-account.use-case';
 import { ListAllAccountByUserIdUseCase } from './use-cases/list-all-account-by-user-id.use-case';
 import { CreateCategoryUseCase } from './use-cases/create-category.use-case';
 import { ListAllCategoriesByUserIdUseCase } from './use-cases/list-all-categories-by-user-id.use-case';
+import { CreateBudgetUseCase } from './use-cases/create-budget.use-case';
 
 @Module({
   imports: [RepositoriesModule],
@@ -14,12 +15,14 @@ import { ListAllCategoriesByUserIdUseCase } from './use-cases/list-all-categorie
     CreateAccountUseCase,
     ListAllAccountByUserIdUseCase,
     CreateCategoryUseCase,
-    ListAllCategoriesByUserIdUseCase],
+    ListAllCategoriesByUserIdUseCase,
+    CreateBudgetUseCase],
   exports: [FindUserByEmailAndPasswordUseCase, 
     AlterUserPasswordUseCase,
     CreateAccountUseCase,
     ListAllAccountByUserIdUseCase,
     CreateCategoryUseCase,
-    ListAllCategoriesByUserIdUseCase],
+    ListAllCategoriesByUserIdUseCase,
+    CreateBudgetUseCase],
 })
 export class ApplicationModule {}

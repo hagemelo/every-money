@@ -15,6 +15,7 @@ describe('OrcamentoDomain', () => {
             expect(orcamento.conta).not.toBeNull()
             expect(orcamento.createdAt).not.toBeNull()
             expect(orcamento.updatedAt).not.toBeNull()
+            expect(orcamento.conta).not.toBeNull()
         })
         
         it('deve devolver valores default com parametros null', () => {
@@ -29,7 +30,20 @@ describe('OrcamentoDomain', () => {
             expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
             expect(orcamento.createdAt).not.toBeNull()
             expect(orcamento.updatedAt).not.toBeNull()
+            expect(orcamento.conta).toBeNull()
         })
 
+
+        it('deve devolver valores default com parametros null, com apenas usuario null', () => {
+            const orcamento = new OrcamentoDomain({mesReferencia: null, 
+                limite: null, tipoCategoria: null,
+                conta: null, createdAt: null, updatedAt: null})
+            expect(orcamento.limite).toBe(0)
+            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
+            expect(orcamento.createdAt).not.toBeNull()
+            expect(orcamento.updatedAt).not.toBeNull()
+            expect(orcamento.conta).toBeNull()
+        })
+        
     })
 })
