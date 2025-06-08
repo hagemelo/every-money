@@ -38,6 +38,7 @@ export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel 
     }
 
     addConta (conta: ContaDomain): ContaDomain { 
+       
         this.conta = conta;
         return conta;
     }

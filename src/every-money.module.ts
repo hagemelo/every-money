@@ -10,6 +10,7 @@ import databaseConfig from './modules/config/database.config';
 
 import { AccountController } from './interface/conta/account.controller';
 import { CreateCategoryController } from './interface/categoria/category.controller';
+import { BudgetController } from './interface/orcamento/budget.controller';
 
 
 @Module({
@@ -19,6 +20,9 @@ import { CreateCategoryController } from './interface/categoria/category.control
     envFilePath:  `.env.${process.env.NODE_ENV}`, 
     load: [jwtConfig, databaseConfig],
   }),],
-  controllers: [AlterUserPasswordController, AccountController, CreateCategoryController],
+  controllers: [AlterUserPasswordController, 
+    AccountController, 
+    CreateCategoryController,
+    BudgetController],
 })
 export class EveryMoneyModule {}

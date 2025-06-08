@@ -73,9 +73,9 @@ export class ContaEntity extends EveryMoneyEntity {
 
     static fromDomain(contaDomain: ContaDomain): ContaEntity {     
         
-        const usuario = UsuarioEntity.fromDomain(contaDomain.usuario)
-        const orcamentos = contaDomain.orcamentos?.map(orcamento => OrcamentoEntity.fromDomain(orcamento))
-        const transacoes = contaDomain.transacoes?.map(transacao => TransacaoEntity.fromDomain(transacao))
+        const usuario = contaDomain.usuario ? UsuarioEntity.fromDomain(contaDomain.usuario): null;
+        const orcamentos = contaDomain.orcamentos?.map(orcamento => OrcamentoEntity.fromDomain(orcamento));
+        const transacoes = contaDomain.transacoes?.map(transacao => TransacaoEntity.fromDomain(transacao));
         const entity = new ContaEntity({...contaDomain.toModel(), usuario, orcamentos, transacoes});
         return entity;
     }
@@ -85,7 +85,7 @@ export class ContaEntity extends EveryMoneyEntity {
             ...this,
             orcamentos: this.orcamentos?.map(orcamento => orcamento.toDomain()),
             transacoes: this.transacoes?.map(transacao => transacao.toDomain()),
-            usuario: this.usuario.toDomain()
+            usuario: this.usuario?.toDomain()
         };
         return new ContaDomain(conta);
     }
