@@ -16,7 +16,7 @@ export class CreateTransactionUseCase {
     ) {}
 
     @Transactional()
-    async execute(data: CreateTransactionData): Promise<TransacaoDomain> {''
+    async execute(data: CreateTransactionData): Promise<TransacaoDomain> {
         const [conta, categoria] = await Promise.all([
             this.contaRepository.findContaComUsuarioById(data.contaId),
             this.categoriaRepository.findCategoriaComUsuarioById(data.categoriaId),
