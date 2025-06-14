@@ -16,23 +16,31 @@ export class CategoriaRepositoryPostgres extends RepositoryPostgres<CategoriaEnt
         private readonly repository: Repository<CategoriaEntity>,
       ) {
         super()
-      }
+    }
 
     getRepository(): Repository<CategoriaEntity> {
-        return this.repository;
+      return this.repository;
     }
 
     async findAllByUsuarioId(usuarioId: number): Promise<CategoriaDomain[]> {
-            const categorias = await this.repository.find({
-                relations: ['transacoes', 'usuario'],
-                where: { usuario: { id: usuarioId } },
-              });
-            return categorias.map(categoria => categoria.toDomain());
-        }
+      const categorias = await this.repository.find({
+          relations: ['transacoes', 'usuario'],
+          where: { usuario: { id: usuarioId } },
+        });
+      return categorias.map(categoria => categoria.toDomain());
+    }
+
+    async findCategoriaComUsuarioById(id: number): Promise<CategoriaDomain> {
+      const categoria = await this.repository.findOne({
+          relations: ['usuario'],
+          where: { id },
+        });
+      return categoria.toDomain();
+    }
 
     async saveDomain(domain: CategoriaDomain): Promise<CategoriaDomain> {
-        const categoriaEntity = CategoriaEntity.fromDomain(domain)
-        return this.repository.save(categoriaEntity).then(categoriaEntity => categoriaEntity.toDomain());
+      const categoriaEntity = CategoriaEntity.fromDomain(domain)
+      return this.repository.save(categoriaEntity).then(categoriaEntity => categoriaEntity.toDomain());
     }
 
 }

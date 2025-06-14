@@ -4,7 +4,8 @@ import { ContaEntity } from "@infrastructure/entities/conta.entity"
 
 export  interface ContaRepository extends EveryMoneyRepository<ContaEntity, ContaDomain> {
    
-    findAllByUsuarioId(usuarioId: number): Promise<ContaDomain[]>
+    findAllByUsuarioId(usuarioId: number): Promise<ContaDomain[]>;
+    findContaComUsuarioById(id: number): Promise<ContaDomain>;
 }
 
-export const ContaRepository = Symbol('ContaRepository')
+export const ContaRepository = Symbol('ContaRepository');

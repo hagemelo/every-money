@@ -4,7 +4,8 @@ import { CategoriaDomain } from "@domain/categoria.domain"
 
 export  interface CategoriaRepository extends EveryMoneyRepository<CategoriaEntity, CategoriaDomain> {
    
-    findAllByUsuarioId(usuarioId: number): Promise<CategoriaDomain[]>
+    findAllByUsuarioId(usuarioId: number): Promise<CategoriaDomain[]>;
+    findCategoriaComUsuarioById(id: number): Promise<CategoriaDomain>;
 }
 
-export const CategoriaRepository = Symbol('CategoriaRepository')
+export const CategoriaRepository = Symbol('CategoriaRepository');

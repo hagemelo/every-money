@@ -42,4 +42,14 @@ export class TransacaoDomain extends EveryMoneyDomain implements TransacaoModel 
         };
     }
 
+    addConta (conta: ContaDomain): ContaDomain { 
+        this.props.conta = conta;
+        return conta;
+    }
+
+    addCategoria (categoria: CategoriaDomain): CategoriaDomain { 
+        this.props.categoria = categoria;
+        return categoria;
+    }
+
 }
