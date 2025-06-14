@@ -1,2 +1,2 @@
-# every-money
+# every-money-backend
 Controle Financeiro Pessoal
