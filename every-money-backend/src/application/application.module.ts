@@ -7,22 +7,27 @@ import { ListAllAccountByUserIdUseCase } from './use-cases/list-all-account-by-u
 import { CreateCategoryUseCase } from './use-cases/create-category.use-case';
 import { ListAllCategoriesByUserIdUseCase } from './use-cases/list-all-categories-by-user-id.use-case';
 import { CreateBudgetUseCase } from './use-cases/create-budget.use-case';
+import { CreateTransactionUseCase } from './use-cases/create-transaction.use-case';
 
 @Module({
   imports: [RepositoriesModule],
-  providers: [FindUserByEmailAndPasswordUseCase, 
+  providers: [
     AlterUserPasswordUseCase,
     CreateAccountUseCase,
-    ListAllAccountByUserIdUseCase,
+    CreateBudgetUseCase,
     CreateCategoryUseCase,
+    CreateTransactionUseCase,
+    FindUserByEmailAndPasswordUseCase, 
+    ListAllAccountByUserIdUseCase,
     ListAllCategoriesByUserIdUseCase,
-    CreateBudgetUseCase],
-  exports: [FindUserByEmailAndPasswordUseCase, 
-    AlterUserPasswordUseCase,
+    ],
+  exports: [AlterUserPasswordUseCase,
     CreateAccountUseCase,
-    ListAllAccountByUserIdUseCase,
+    CreateBudgetUseCase,
     CreateCategoryUseCase,
-    ListAllCategoriesByUserIdUseCase,
-    CreateBudgetUseCase],
+    CreateTransactionUseCase,
+    FindUserByEmailAndPasswordUseCase, 
+    ListAllAccountByUserIdUseCase,
+    ListAllCategoriesByUserIdUseCase,],
 })
 export class ApplicationModule {}

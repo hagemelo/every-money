@@ -5,8 +5,36 @@ import { ContaEntity } from "./conta.entity"
 import { TransacaoDomain } from "@domain/transacao.domain"
 import { EveryMoneyEntity } from "@domain/every-money.entity"
 
+type TransacaoProps = {
+    id?: number;
+    descricao: string;
+    valor: number;
+    data?: Date;
+    tipo: TipoTransacaoModel;
+    categoria: CategoriaEntity;
+    conta: ContaEntity;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+
 @Entity('transacao_tb')
 export class TransacaoEntity extends EveryMoneyEntity{
+
+    constructor(props?: TransacaoProps){
+        super()
+        if(props){
+            this.id = props.id
+            this.descricao = props.descricao
+            this.valor = props.valor
+            this.data = props.data
+            this.tipo = props.tipo
+            this.categoria = props.categoria
+            this.conta = props.conta
+            this.createdAt = props.createdAt
+            this.updatedAt = props.updatedAt
+        }
+    }
 
     @PrimaryGeneratedColumn({name: 'trans_id'})
     id: number
@@ -42,10 +70,11 @@ export class TransacaoEntity extends EveryMoneyEntity{
     conta: ContaEntity;
 
     static fromDomain(transacaoDomain: TransacaoDomain): TransacaoEntity {     
-        const entity = new TransacaoEntity();
-        Object.assign(entity, transacaoDomain.toModel())
+        const categoria = CategoriaEntity.fromDomain(transacaoDomain.categoria)
+        const conta = ContaEntity.fromDomain(transacaoDomain.conta)
+        const entity = new TransacaoEntity({...transacaoDomain.toModel(), categoria, conta});
         return entity;
-    }
+    }   
 
     toDomain(): TransacaoDomain {
         const transacao = {

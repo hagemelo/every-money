@@ -35,7 +35,7 @@ export class CategoriaRepositoryPostgres extends RepositoryPostgres<CategoriaEnt
           relations: ['usuario'],
           where: { id },
         });
-      return categoria.toDomain();
+      return categoria?.toDomain();
     }
 
     async saveDomain(domain: CategoriaDomain): Promise<CategoriaDomain> {

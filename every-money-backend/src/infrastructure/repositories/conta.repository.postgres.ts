@@ -38,7 +38,7 @@ export class ContaRepositoryPostgres extends RepositoryPostgres<ContaEntity, Con
               relations: ['usuario'],
               where: { id },
             });
-          return conta.toDomain();
+          return conta?.toDomain();
     }
 
     async saveDomain(domain: ContaDomain): Promise<ContaDomain> {
