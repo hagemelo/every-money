@@ -4,6 +4,7 @@ import { TipoTransacaoModel } from "@domain/models/tipo-transacao.model"
 import { ContaEntity } from "./conta.entity"
 import { TransacaoDomain } from "@domain/transacao.domain"
 import { EveryMoneyEntity } from "@domain/every-money.entity"
+import { StatusTransacaoModel } from "@domain/models/status-transacao.model"
 
 type TransacaoProps = {
     id?: number;
@@ -15,6 +16,7 @@ type TransacaoProps = {
     conta: ContaEntity;
     createdAt?: Date;
     updatedAt?: Date;
+    status?: StatusTransacaoModel;
 }
 
 
@@ -33,6 +35,7 @@ export class TransacaoEntity extends EveryMoneyEntity{
             this.conta = props.conta
             this.createdAt = props.createdAt
             this.updatedAt = props.updatedAt
+            this.status = props.status
         }
     }
 
@@ -59,6 +62,10 @@ export class TransacaoEntity extends EveryMoneyEntity{
     })
     tipo: TipoTransacaoModel;
 
+    @Column({
+    type: 'varchar', name: 'status', enum: StatusTransacaoModel, default: StatusTransacaoModel.Avencer
+    })
+    status: StatusTransacaoModel;
     
     @ManyToOne(() => CategoriaEntity, (categoria) => categoria.transacoes)
     @JoinColumn({ name: 'categoria_id' })

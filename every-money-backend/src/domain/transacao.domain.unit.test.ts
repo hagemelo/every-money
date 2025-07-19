@@ -1,6 +1,8 @@
 import { makeTransacaoFake } from "@test/fake/transacao.fake"
 import { TransacaoDomain } from "./transacao.domain"
 import { TipoTransacaoModel } from "./models/tipo-transacao.model"
+import { faker } from "@faker-js/faker/."
+import { StatusTransacaoModel } from "./models/status-transacao.model"
 
 describe('TransacaoDomain', () => {
     
@@ -32,6 +34,36 @@ describe('TransacaoDomain', () => {
             expect(transacao.createdAt).not.toBeNull()
             expect(transacao.updatedAt).not.toBeNull()
             expect(transacao.tipo).toBe(TipoTransacaoModel.Entrada)
+        })
+
+        it('deve aportar que a transacao esta avencer', () => {
+            const transacao = makeTransacaoFake({data: faker.date.future(), status: StatusTransacaoModel.Atrasada})
+            transacao.checkStatus()
+            expect(transacao.status).toBe(StatusTransacaoModel.Avencer)
+        })
+
+        it('deve aportar que a transacao esta atrasada', () => {
+            const transacao = makeTransacaoFake({data: faker.date.past(), status: StatusTransacaoModel.Avencer})
+            transacao.checkStatus()
+            expect(transacao.status).toBe(StatusTransacaoModel.Atrasada)
+        })
+
+        it('deve aportar que a transacao esta paga', () => {
+            const transacao = makeTransacaoFake({status: StatusTransacaoModel.Avencer})
+            transacao.pagar()
+            expect(transacao.status).toBe(StatusTransacaoModel.Paga)
+        })
+
+        it('deve aportar que a transacao esta recebida', () => {
+            const transacao = makeTransacaoFake({status: StatusTransacaoModel.Avencer})
+            transacao.receber()
+            expect(transacao.status).toBe(StatusTransacaoModel.Recebida)
+        })
+
+        it('deve aportar que a transacao esta cancelada', () => {
+            const transacao = makeTransacaoFake({status: StatusTransacaoModel.Avencer})
+            transacao.cancelar()
+            expect(transacao.status).toBe(StatusTransacaoModel.Cancelada)
         })
     })
 })

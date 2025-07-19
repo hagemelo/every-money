@@ -1,5 +1,6 @@
 import { CategoriaModel } from "./categoria.model";
 import { ContaModel } from "./conta.model";
+import { StatusTransacaoModel } from "./status-transacao.model";
 import { TipoTransacaoModel } from "./tipo-transacao.model";
 
 export type TransacaoModel = {
@@ -12,4 +13,5 @@ export type TransacaoModel = {
     tipo: TipoTransacaoModel;
     categoria: CategoriaModel;
     conta: ContaModel;
+    status?: StatusTransacaoModel;
 }

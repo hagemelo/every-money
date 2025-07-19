@@ -6,6 +6,7 @@ import { TipoTransacaoModel } from "@domain/models/tipo-transacao.model";
 import { TransacaoDomain } from "@domain/transacao.domain";
 import { makeCategoriaEntityFake, makeCategoriaFake } from "./categoria.fake";
 import { makeContaEntityFake, makeContaFake } from "./conta.fake";
+import { StatusTransacaoModel } from "@domain/models/status-transacao.model";
 
 export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDomain => new TransacaoDomain({
     id: props?.id || faker.number.int({ max: 100000 }),
@@ -16,7 +17,8 @@ export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDom
     categoria: props?.categoria || makeCategoriaFake(),
     conta: props?.conta || makeContaFake(),
     createdAt: props?.createdAt || faker.date.anytime(),
-    updatedAt: props?.updatedAt || faker.date.anytime()
+    updatedAt: props?.updatedAt || faker.date.anytime(),
+    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel)
   })
 
   export const makeTransacaoEntityFake = (props?: Partial<TransacaoEntity>): TransacaoEntity => TransacaoEntity.fromDomain(new TransacaoDomain({
@@ -28,7 +30,8 @@ export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDom
     categoria: props?.categoria || makeCategoriaEntityFake(),
     conta: props?.conta || makeContaEntityFake(),
     createdAt: props?.createdAt || faker.date.anytime(),
-    updatedAt: props?.updatedAt || faker.date.anytime()
+    updatedAt: props?.updatedAt || faker.date.anytime(),
+    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel)
   }))
 
   export const makeTransacaoEntityFakeNew = (props?: Partial<TransacaoEntity>): TransacaoEntity => TransacaoEntity.fromDomain(new TransacaoDomain({
@@ -40,5 +43,6 @@ export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDom
     categoria: props?.categoria || makeCategoriaEntityFake(),
     conta: props?.conta || makeContaEntityFake(),
     createdAt: props?.createdAt || faker.date.anytime(),
-    updatedAt: props?.updatedAt || faker.date.anytime()
+    updatedAt: props?.updatedAt || faker.date.anytime(),
+    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel)
   }))
