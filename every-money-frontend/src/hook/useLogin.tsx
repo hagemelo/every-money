@@ -7,7 +7,7 @@ export const useLogin = () => {
     const loginService = useLoginService();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [senha, setSenha] = useState('');
     const [message, setMessage] = useState('');
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
 
@@ -15,12 +15,12 @@ export const useLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!email || !password) {
+        if (!email || !senha) {
         setMessage('Por favor, insira um email e senha.');
         return;
         }
     
-        const result = await loginService.login(email, password);
+        const result = await loginService.login({email, senha});
        
         if(!result){
             setMessage('Email ou senha inválidos.');
@@ -30,10 +30,10 @@ export const useLogin = () => {
         setMessage('Login realizado com sucesso!');
         setIsSuccessMessage(true);
         setEmail('');
-        setPassword('');
+        setSenha('');
         setTimeout(() => {
            navigate('/home');
-        }, 3000);
+        }, 1000);
      
        
         setTimeout(() => {
@@ -44,12 +44,12 @@ export const useLogin = () => {
 
     return {
     email,
-    password,
+    senha,
     message,
     isSuccessMessage,
     handleSubmit,
     setEmail,
-    setPassword,
+    setSenha,
     setMessage,
     setIsSuccessMessage,
   };

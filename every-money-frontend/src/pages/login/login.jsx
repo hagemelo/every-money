@@ -7,12 +7,12 @@ const Login = () => {
   const { LoginContainer, StyledCard, StyledHeading, StyledLabel, StyledInput, StyledButton, StyledMessage } = LoginStyles
   
   const {email,
-    password,
+    senha,
     message,
     isSuccessMessage,
     handleSubmit,
     setEmail,
-    setPassword} = useLogin();
+    setSenha} = useLogin();
 
     return (
     <LoginContainer>
@@ -45,15 +45,15 @@ const Login = () => {
           </div>
 
           <div>
-            <StyledLabel htmlFor="password">
+            <StyledLabel htmlFor="senha">
               Senha
             </StyledLabel>
             <StyledInput
               type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              id="senha"
+              name="senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               placeholder="••••••••"
               required
             />

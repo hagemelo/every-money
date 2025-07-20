@@ -1,16 +1,22 @@
 import React from 'react';
 import HomeStyles from './home.styles';
-
+import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
+import { useHome } from '../../hook/useHome.tsx';
 
 const Home = () => {
 
   const { HomeContainer } = HomeStyles
+  const {usuario} = useHome();
 
   return (
     <HomeContainer>
-      <h1>TEste de Home</h1>
+    
+      <PainelFinanceiroSidebar usuario={usuario}/>
+      <main className="main-content">
 
-             
+        <h1>Visão Geral</h1>
+      </main>
+
     </HomeContainer>
     )
 }
