@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLoginService } from '../share/context/context.tsx';
+import { useNavigate } from 'react-router-dom';
 
 
 export const useLogin = () => {
     const loginService = useLoginService();
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -30,9 +32,14 @@ export const useLogin = () => {
         setEmail('');
         setPassword('');
         setTimeout(() => {
+           navigate('/home');
+        }, 3000);
+     
+       
+        setTimeout(() => {
             setIsSuccessMessage(false);
             setMessage('');
-        }, 4000);
+        }, 5000);
     };
 
     return {

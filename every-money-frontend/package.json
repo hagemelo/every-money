@@ -4,8 +4,6 @@
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.15",
@@ -32,7 +30,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -55,6 +53,12 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-private-property-in-object": "^7.27.1",
-    "cross-env": "^7.0.3"
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "babel-jest": "^30.0.4",
+    "cross-env": "^7.0.3",
+    "jest": "^30.0.4"
   }
 }
