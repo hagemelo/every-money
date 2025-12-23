@@ -18,6 +18,16 @@ describe('CategoriaDomain', () => {
             expect(categoria.transacoes).not.toBeNull()
         })
 
+        it('deve devolver categorias com valores default', () => {
+            const categoria = new CategoriaDomain({nome: null, tipo:null, classificacao: null, usuario: null})
+            expect(categoria.nome).toBe('')
+            expect(categoria.tipo).toBe(TipoCategoriaModel.Outros)
+            expect(categoria.classificacao).toBe(ClassificacaoCategoriaModel.OutrosGastos)
+            expect(categoria.usuario).toBeNull()
+            expect(categoria.createdAt).not.toBeNull()
+            expect(categoria.updatedAt).not.toBeNull()
+        })
+
         it('deve instanciar a categoria com nome vazio', () => {
             const categoria = new CategoriaDomain({nome: null, tipo:null, classificacao: null, usuario: null})
             expect(categoria.nome).toBe('')

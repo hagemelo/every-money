@@ -27,7 +27,7 @@ import { DataSource } from 'typeorm'
             database: configService.get('database.database') || 'teste',
             entities: [join(__dirname, '../entities/*.entity.{ts,js}')],
             synchronize: true,
-            logging: true,
+            logging: false,
           }),
         inject: [ConfigService],
 

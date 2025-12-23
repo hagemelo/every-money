@@ -67,7 +67,7 @@ export class OrcamentoEntity extends EveryMoneyEntity {
 
         const orcamento = {
                     ...this,
-                    conta: this.conta.toDomain()
+                    conta: this.conta?.toDomain()
                 };
         return new OrcamentoDomain(orcamento);
     }

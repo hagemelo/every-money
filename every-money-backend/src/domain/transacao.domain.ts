@@ -39,7 +39,16 @@ export class TransacaoDomain extends EveryMoneyDomain implements TransacaoModel 
 
     toModel (): TransacaoModel {
         return {
-            ...this.props
+             id: this.id,
+             descricao: this.descricao,
+             valor: this.valor,
+             data: this.data,
+             createdAt: this.createdAt,
+             updatedAt: this.updatedAt,
+             tipo: this.tipo,
+             categoria: this.categoria?.toModel(),
+             conta: this.conta?.toModel(),
+             status: this.status
         };
     }
 

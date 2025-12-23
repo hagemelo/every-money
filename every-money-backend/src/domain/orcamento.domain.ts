@@ -27,13 +27,18 @@ export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel 
     set mesReferencia (mesReferencia: string) { this.props.mesReferencia = mesReferencia; }
     set limite (limite: number) { this.props.limite = limite; }
     set tipoCategoria (tipoCategoria: TipoCategoriaModel) { this.props.tipoCategoria = tipoCategoria; }
-    set conta (conta: ContaDomain) { this.props.conta = conta.toModel(); }
+    set conta (conta: ContaDomain) { this.props.conta = conta?.toModel(); }
 
 
     toModel (): OrcamentoModel {
         return {
-            ...this.props,
-            conta: this.conta.toModel()
+            id: this.id,
+            mesReferencia: this.mesReferencia,
+            limite:this.limite,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
+            tipoCategoria: this.tipoCategoria,
+            conta: this.conta?.toModel()
         };
     }
 

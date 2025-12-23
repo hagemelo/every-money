@@ -35,13 +35,19 @@ export class ContaDomain extends EveryMoneyDomain implements ContaModel {
     set saldoRealizado (saldoRealizado: number) { this.props.saldoRealizado = saldoRealizado; }
     set saldoPrevisto (saldoPrevisto: number) { this.props.saldoPrevisto = saldoPrevisto; }
     set tipoConta (tipoConta: TipoContaModel) { this.props.tipoConta = tipoConta; }
-    set usuario (usuario: UsuarioDomain) { this.props.usuario = usuario.toModel(); }
+    set usuario (usuario: UsuarioDomain) { this.props.usuario = usuario?.toModel(); }
 
 
     toModel (): ContaModel {
         return {
-            ...this.props,
+            id: this.id,
+            nome: this.nome,
+            saldoRealizado: this.saldoRealizado,
+            saldoPrevisto: this.saldoPrevisto,
+            tipoConta: this.tipoConta,
             usuario: this.usuario?.toModel(),
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
             orcamentos: this.orcamentos?.map(orcamento => orcamento.toModel()),
             transacoes: this.transacoes?.map(transacao => transacao.toModel())
         };

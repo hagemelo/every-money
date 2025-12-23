@@ -32,7 +32,12 @@ export class UsuarioDomain extends EveryMoneyDomain implements UsuarioModel {
 
     toModel (): UsuarioModel {
         return {
-            ...this.props,
+             id: this.id,
+            nome: this.nome,
+            email: this.email,
+            senha: this.senha,
+            createdAt: this.createdAt,
+            updatedAt: this.updatedAt,
             contas: this.contas.map(conta => conta.toModel()),
             categorias: this.categorias.map(categoria => categoria.toModel())
         };
