@@ -37,4 +37,31 @@ export class BackendApi {
         }
     }
 
+    async securetyGet(path: string, token: string): Promise<any> {
+
+        try{
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            }
+            const result = await api.get(path, { headers });
+            return result.data;
+        }catch(error){
+            console.error('Error get', error);
+            throw error;
+        }
+    }
+
+    async securetyPost(path: string, data: any, token: string): Promise<any> {
+        try{
+            const headers = {
+                'Authorization': `Bearer ${token}`
+            }
+            const result = await api.post(path, data, { headers });
+            return result.data;
+        }catch(error){
+            console.error('Error fetching data:', error);
+            throw error;
+        }
+    }
+
 }
