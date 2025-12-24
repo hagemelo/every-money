@@ -3,8 +3,8 @@ import { ContaModel } from "./conta.model";
 
 export type UsuarioModel = {
     id?: number;
-    nome: string;
-    email: string;
+    nome?: string;
+    email?: string;
     senha?: string;
     createdAt?: Date;
     updatedAt?: Date;

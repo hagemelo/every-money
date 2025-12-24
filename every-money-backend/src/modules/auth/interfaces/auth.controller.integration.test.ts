@@ -48,4 +48,28 @@ describe('AuthController (e2e)', () => {
       .expect(401);
     expect(response.body.message).toBeDefined();
   });
+
+  it('/auth/refresh (POST) - success', async () => {
+     const email = faker.internet.email()
+    const senha = faker.internet.password()
+    const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
+    await usuarioFixture.createFixture({...fakeUsuario})
+    const responseLogin = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({ email, senha })
+      .expect(201);
+
+    expect(responseLogin.body).toHaveProperty('refreshToken');
+
+    const {refreshToken} = responseLogin.body
+    const response = await request(app.getHttpServer())
+                .post('/auth/refresh')
+                .set('Authorization', `Bearer ${refreshToken}`)
+                .expect(201);
+    expect(response.body).toHaveProperty('accessToken');
+    expect(typeof response.body.accessToken).toBe('string');
+    expect(response.body).toHaveProperty('refreshToken');
+    expect(typeof response.body.refreshToken).toBe('string');
+
+  });
 });

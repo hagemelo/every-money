@@ -8,6 +8,7 @@ import { CreateCategoryUseCase } from './use-cases/create-category.use-case';
 import { ListAllCategoriesByUserIdUseCase } from './use-cases/list-all-categories-by-user-id.use-case';
 import { CreateBudgetUseCase } from './use-cases/create-budget.use-case';
 import { CreateTransactionUseCase } from './use-cases/create-transaction.use-case';
+import { FindUserByUseCase } from './use-cases/find-user-by.use-case';
 
 @Module({
   imports: [RepositoriesModule],
@@ -18,6 +19,7 @@ import { CreateTransactionUseCase } from './use-cases/create-transaction.use-cas
     CreateCategoryUseCase,
     CreateTransactionUseCase,
     FindUserByEmailAndPasswordUseCase, 
+    FindUserByUseCase,
     ListAllAccountByUserIdUseCase,
     ListAllCategoriesByUserIdUseCase,
     ],
@@ -27,6 +29,7 @@ import { CreateTransactionUseCase } from './use-cases/create-transaction.use-cas
     CreateCategoryUseCase,
     CreateTransactionUseCase,
     FindUserByEmailAndPasswordUseCase, 
+    FindUserByUseCase,
     ListAllAccountByUserIdUseCase,
     ListAllCategoriesByUserIdUseCase,],
 })

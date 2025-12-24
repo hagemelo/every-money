@@ -7,5 +7,6 @@ export type UserAuthenticatedData = {
 export type AuthenticatedData = {
     userAuthenticated: UserAuthenticatedData;
     accessToken: string;
+    refreshToken: string;
 };
     
