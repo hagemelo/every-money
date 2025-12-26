@@ -15,7 +15,6 @@ export class HomeService {
         const token = this.localStorageToken.getItem();
         const path = `/conta/listar-contas/usuario/${userId}`;
         const result: Conta[] = await this.backendApi.securetyGet(path, token!);
-        console.log(JSON.stringify(result, null, 2));
         return result;
     }
 }

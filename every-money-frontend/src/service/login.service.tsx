@@ -6,28 +6,16 @@ interface LoginCredentials {
     senha: string;
 }
 
-interface LoginResponse {
-    accessToken: string;
-    userAuthenticated: {
-        id: string;
-        name: string;
-        email: string;
-    };
-}
-
-interface LoginError {
-    code: string;
-    message: string;
-}
-
 export class LoginService {
     private localStorageToken: LocalStorageService;
     private localStorageName: LocalStorageService;
     private localStorageEmail: LocalStorageService;
     private localStorageId: LocalStorageService;
+    private localStorageRefreshToken: LocalStorageService;
 
     constructor(private backendApi: BackendApi) {
         this.localStorageToken = new LocalStorageService('token');
+        this.localStorageRefreshToken = new LocalStorageService('refreshToken');
         this.localStorageName = new LocalStorageService('userName');
         this.localStorageEmail = new LocalStorageService('userEmail');
         this.localStorageId = new LocalStorageService('userId');
@@ -43,6 +31,7 @@ export class LoginService {
             }
 
             this.localStorageToken.setItem(response.accessToken);
+            this.localStorageRefreshToken.setItem(response.refreshToken);
             this.localStorageName.setItem(response.userAuthenticated.name);
             this.localStorageEmail.setItem(response.userAuthenticated.email);
             this.localStorageId.setItem(response.userAuthenticated.id);
