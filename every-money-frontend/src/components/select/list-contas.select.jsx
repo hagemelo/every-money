@@ -17,11 +17,11 @@ function ListContas() {
             const localStorageId = new LocalStorageService('userId');
             const userId = localStorageId.getItem()
             const result = await homeService.loadContas(parseInt(userId));
-            console.log(result);
+      
             setContas(result);
             return result;
             } catch (err) {
-            console.log(err);
+ 
         } finally {
             setLoading(false);
         }
