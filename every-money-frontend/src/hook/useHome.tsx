@@ -19,25 +19,23 @@ export const useHome = () => {
     }
 
     async function  loadUserContas() {
-            try {
-                const localStorageId = new LocalStorageService('userId');
-                const userId = localStorageId.getItem() ?? '0';
-                const result = await homeService.loadContas(parseInt(userId));
-          
-                setContas(result);
-                return result;
-                } catch (err) {
-     
-            } finally {
-                setLoading(false);
-            }
-            }
+      try {
+          const localStorageId = new LocalStorageService('userId');
+          const userId = localStorageId.getItem() ?? '0';
+          const result = await homeService.loadContas(parseInt(userId));
     
-        useEffect(() => {
-            loadUserContas(); 
-        }, []);
+          setContas(result);
+          return result;
+          } catch (err) {
 
-    
+      } finally {
+          setLoading(false);
+      }
+    }
+
+    useEffect(() => {
+        loadUserContas(); 
+    }, []);
 
     const [usuario, setUsuario] = useState(localStorageUser);
     
