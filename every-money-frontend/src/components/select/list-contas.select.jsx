@@ -1,35 +1,12 @@
 import { useState } from "react";
 import { SelectWrapper, Label, Select } from "./list-contas.select.styles.jsx";
-import { useHomeService } from '../../share/context/context.tsx';
-import { LocalStorageService } from "../../share/storage/local.storage.service.tsx";
-import { useEffect } from "react";
 
+function ListContas(params) {
+    
+  const [conta, setConta] = useState("Selecione uma conta");
 
-function ListContas() {
+  const contasArray = Array.isArray(params?.contas) ? params.contas : [];
 
-    const homeService = useHomeService();
-    const [conta, setConta] = useState("Selecione uma conta");
-    const [loading, setLoading] = useState(false);
-    const [contas, setContas] = useState([]);
-
-    async function  loadUserContas() {
-        try {
-            const localStorageId = new LocalStorageService('userId');
-            const userId = localStorageId.getItem()
-            const result = await homeService.loadContas(parseInt(userId));
-      
-            setContas(result);
-            return result;
-            } catch (err) {
- 
-        } finally {
-            setLoading(false);
-        }
-        }
-
-    useEffect(() => {
-        loadUserContas(); 
-    }, []);
 
   return (
     <SelectWrapper>
@@ -37,11 +14,11 @@ function ListContas() {
       <Select 
         value={conta} 
         onChange={(e) => setConta(e.target.value)}
-        disabled={!contas || !contas.length}
+        disabled={!contasArray || !contasArray.length}
       >
         <option value="">Selecione uma conta</option>
-        {contas && contas.length > 0 ? (
-          contas.map((conta) => (
+        {contasArray && contasArray.length > 0 ? (
+          contasArray.map((conta) => (
             <option key={conta.id} value={conta.nome}>
               {conta.nome}
             </option>

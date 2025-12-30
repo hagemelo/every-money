@@ -8,8 +8,15 @@ import ListContas from '../../components/select/list-contas.select.jsx';
 const Home = () => {
 
   const { HomeContainer } = HomeStyles
-    const {usuario, contas, loading, error, loadContas} = useHome();
+  const {usuario, contas, loading, setContas} = useHome();
 
+  
+  useEffect(() => {
+  if (contas && contas.length > 0) {
+    // Faça algo com as contas carregadas
+    console.log('Contas carregadas:', contas);
+  }
+}, [contas]);
 
   return (
     <HomeContainer>
@@ -18,7 +25,7 @@ const Home = () => {
       <main className="main-content">
 
         <h1>Visão Geral</h1>
-        <ListContas contas={contas?contas:[]}/>
+        <ListContas contas={contas ?? []}/>
       </main>
 
     </HomeContainer>
