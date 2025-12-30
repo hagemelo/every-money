@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import HomeStyles from './home.styles';
 import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
@@ -9,14 +9,6 @@ const Home = () => {
 
   const { HomeContainer } = HomeStyles
   const {usuario, contas, loading, setContas} = useHome();
-
-  
-  useEffect(() => {
-  if (contas && contas.length > 0) {
-    // Faça algo com as contas carregadas
-    console.log('Contas carregadas:', contas);
-  }
-}, [contas]);
 
   return (
     <HomeContainer>
