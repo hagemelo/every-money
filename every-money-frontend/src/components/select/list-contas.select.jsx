@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { SelectWrapper, Label, Select } from "./list-contas.select.styles.jsx";
 
-function ListContas(params) {
+function ListContas({ contas = [], onContaChange }) {
     
   const [conta, setConta] = useState("Selecione uma conta");
 
-  const contasArray = Array.isArray(params?.contas) ? params.contas : [];
+  const contasArray = Array.isArray(contas) ? contas : [];
+
+  const handleContaChange = (e) => {
+    const novaConta = e.target.value;
+    setConta(novaConta);
+    if (onContaChange) {
+      onContaChange(novaConta);
+    }
+  };
 
 
   return (
@@ -13,7 +21,7 @@ function ListContas(params) {
       <Label>Conta</Label>
       <Select 
         value={conta} 
-        onChange={(e) => setConta(e.target.value)}
+        onChange={handleContaChange}
         disabled={!contasArray || !contasArray.length}
       >
         <option value="">Selecione uma conta</option>
