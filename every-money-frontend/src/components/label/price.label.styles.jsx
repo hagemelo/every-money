@@ -8,19 +8,19 @@ export const ValueContainer = styled.div`
 `;
 
 export const CurrencySymbol = styled.span`
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0,70rem;
+  font-weight: 300;
   color: #6b7280; /* Cinza mais claro para o cifrão */
   margin-right: 4px;
 `;
 
 export const Amount = styled.span`
-  font-size: 1.5rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: -1px;
 `;
 
 export const Decimal = styled.span`
-  font-size: 1.2rem;
+  font-size: 0.60rem;
   font-weight: 600;
 `;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CardContainer = styled.div`
   background-color: white;
-  padding: 24px;
+  padding: 10px;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   border-left: 5px solid ${props => props.borderColor || '#6366f1'};
@@ -23,24 +23,24 @@ export const CategoryBadge = styled.span`
   letter-spacing: 0.05em;
   color: #4f46e5;
   background-color: #eef2ff;
-  padding: 4px 8px;
+  padding: 4px 4px;
   border-radius: 4px;
   align-self: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
 `;
 
 export const Title = styled.h3`
-  font-size: 1.25rem;
+  font-size: 1.00rem;
   font-weight: bold;
   color: #1f2937;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 `;
 
 export const Content = styled.p`
   color: #4b5563;
   line-height: 1.6;
   font-size: 1rem;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 export const ActionLink = styled.a`
