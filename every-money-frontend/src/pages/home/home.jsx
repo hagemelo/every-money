@@ -4,6 +4,7 @@ import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.
 import { useHome } from '../../hook/useHome.tsx';
 import ListContas from '../../components/select/list-contas.select.jsx';
 import OrcamentoCard from '../../components/card/orcamento.card.jsx';
+import SaldoContaCard from '../../components/card/saldo-conta.card.jsx';
 
 const Home = () => {
 
@@ -11,18 +12,39 @@ const Home = () => {
 
   const [contaSelecionada, setContaSelecionada] = useState(null);
   const [orcamentos, setOrcamentos] = useState([]);
+
+  const [saldoPrevisto, setSaldoPrevisto] = useState([]);
+  const [saldoRealizado, setSaldoRealizado] = useState([]);
+
   const handleContaChange = (novaConta) => {
     setContaSelecionada(novaConta);
   };
 
   useEffect(() => {
     if (contaSelecionada) {
+      console.log('Passou aqui');
       const conta = contas.find((conta) => conta.nome === contaSelecionada);
       const orcamentos = conta.orcamentos?.map((orcamento) => ({
         ...orcamento,
         limite: Number(orcamento.limite),
       })) ?? [];
       setOrcamentos(orcamentos);
+
+      const saldoPrevisto = {
+        saldo: conta.saldoPrevisto,
+        nome: 'Saldo Previsto',
+        background: 'linear-gradient(135deg, #6bb3f7ff, #6bb3f7ff)'
+      };
+      const saldoRealizado = {
+        saldo: conta.saldoRealizado,
+        nome: 'Saldo Realizado',
+        background: 'linear-gradient(135deg, #918f8dff, #918f8dff)'
+      };
+
+      console.log(JSON.stringify(saldoPrevisto));
+      console.log(JSON.stringify(saldoRealizado));
+      setSaldoPrevisto(saldoPrevisto);
+      setSaldoRealizado(saldoRealizado);
     }
   }, [contaSelecionada]);
 
@@ -44,6 +66,13 @@ const Home = () => {
           ) : (
             <p>Nenhum orçamento encontrado</p>
           )
+        )}
+        <h3>Saldos</h3>
+        {contaSelecionada && (
+            <>
+                <SaldoContaCard saldoConta={saldoPrevisto} />
+                <SaldoContaCard saldoConta={saldoRealizado} />
+            </>
         )}
       </MainContent>
     </HomeContainer>
