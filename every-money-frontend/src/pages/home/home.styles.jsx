@@ -23,7 +23,7 @@ export const MainContent = styled.main`
   }
 `;
 
-export const OrcamentosGrid = styled.div`
+export const DisplayGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
@@ -33,7 +33,7 @@ export const OrcamentosGrid = styled.div`
 const HomeStyles = {
   HomeContainer,
   MainContent,
-  OrcamentosGrid
+  DisplayGrid
 };
 
 export default HomeStyles;

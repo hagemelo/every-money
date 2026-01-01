@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HomeContainer, MainContent, OrcamentosGrid } from './home.styles';
+import { HomeContainer, MainContent, DisplayGrid } from './home.styles';
 import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
 import { useHome } from '../../hook/useHome.tsx';
 import ListContas from '../../components/select/list-contas.select.jsx';
@@ -41,8 +41,6 @@ const Home = () => {
         background: 'linear-gradient(135deg, #918f8dff, #918f8dff)'
       };
 
-      console.log(JSON.stringify(saldoPrevisto));
-      console.log(JSON.stringify(saldoRealizado));
       setSaldoPrevisto(saldoPrevisto);
       setSaldoRealizado(saldoRealizado);
     }
@@ -58,21 +56,21 @@ const Home = () => {
         <h3>Orçamentos</h3>
         {contaSelecionada && (
           orcamentos && orcamentos.length > 0 ? (
-            <OrcamentosGrid>
+            <DisplayGrid>
               {orcamentos.map((orcamento) => (
                 <OrcamentoCard key={orcamento.id} orcamento={orcamento} />
               ))}
-            </OrcamentosGrid>
+            </DisplayGrid>
           ) : (
             <p>Nenhum orçamento encontrado</p>
           )
         )}
         <h3>Saldos</h3>
         {contaSelecionada && (
-            <>
-                <SaldoContaCard saldoConta={saldoPrevisto} />
-                <SaldoContaCard saldoConta={saldoRealizado} />
-            </>
+          <DisplayGrid>
+            <SaldoContaCard saldoConta={saldoPrevisto} />
+            <SaldoContaCard saldoConta={saldoRealizado} />
+          </DisplayGrid>
         )}
       </MainContent>
     </HomeContainer>
