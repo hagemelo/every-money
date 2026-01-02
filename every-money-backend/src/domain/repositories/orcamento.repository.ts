@@ -5,7 +5,7 @@ import { OrcamentoEntity } from "@infrastructure/entities/orcamento.entity"
 
 export  interface OrcamentoRepository extends EveryMoneyRepository<OrcamentoEntity, OrcamentoDomain> {
    
-   
+   findAllByUsuarioId(usuarioId: number): Promise<OrcamentoDomain[]> 
 }
 
 export const OrcamentoRepository = Symbol('OrcamentoRepository')

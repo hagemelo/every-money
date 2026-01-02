@@ -14,6 +14,10 @@ describe('ListAllAccountByUserIdUseCase', () => {
         useCase = new ListAllAccountByUserIdUseCase(contaRepository)
     })
 
+    afterEach(() => {
+        jest.clearAllMocks()
+    })
+
     describe('Quando contaRepository.findAllByUsuarioId lanca uma exception', () => {
         it('deve lancar uma exception', () => {
             const usuario = makeUsuarioFake()

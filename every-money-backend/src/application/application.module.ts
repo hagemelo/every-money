@@ -9,10 +9,9 @@ import { ListAllCategoriesByUserIdUseCase } from './use-cases/list-all-categorie
 import { CreateBudgetUseCase } from './use-cases/create-budget.use-case';
 import { CreateTransactionUseCase } from './use-cases/create-transaction.use-case';
 import { FindUserByUseCase } from './use-cases/find-user-by.use-case';
+import { ListAllBudgetByUserIdUseCase } from './use-cases/list-all-budget-by-user-id.use-case';
 
-@Module({
-  imports: [RepositoriesModule],
-  providers: [
+const useCases = [
     AlterUserPasswordUseCase,
     CreateAccountUseCase,
     CreateBudgetUseCase,
@@ -22,15 +21,12 @@ import { FindUserByUseCase } from './use-cases/find-user-by.use-case';
     FindUserByUseCase,
     ListAllAccountByUserIdUseCase,
     ListAllCategoriesByUserIdUseCase,
-    ],
-  exports: [AlterUserPasswordUseCase,
-    CreateAccountUseCase,
-    CreateBudgetUseCase,
-    CreateCategoryUseCase,
-    CreateTransactionUseCase,
-    FindUserByEmailAndPasswordUseCase, 
-    FindUserByUseCase,
-    ListAllAccountByUserIdUseCase,
-    ListAllCategoriesByUserIdUseCase,],
+    ListAllBudgetByUserIdUseCase,
+    ]
+
+@Module({
+  imports: [RepositoriesModule],
+  providers: [...useCases],
+  exports: [...useCases],
 })
 export class ApplicationModule {}

@@ -26,4 +26,13 @@ export class OrcamentoRepositoryPostgres extends RepositoryPostgres<OrcamentoEnt
        return this.repository.save(orcamentoEntity).then(orcamentoEntity => orcamentoEntity.toDomain());
     }
 
+    async findAllByUsuarioId(usuarioId: number): Promise<OrcamentoDomain[]> {
+      const orcamentos = await this.repository.find({
+            relations: ['conta'],
+            where: { conta: { usuario: { id: usuarioId } } },
+            select: ['id', 'mesReferencia', 'limite', 'tipoCategoria', 'createdAt', 'updatedAt',  'conta']
+          });
+      return orcamentos.map(orcamento => orcamento.toDomain());
+    }
+
 }

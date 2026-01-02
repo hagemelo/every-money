@@ -12,9 +12,10 @@ import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
 import { buildTestingModule } from "@test/testing.module";
 import { DataSource } from "typeorm";
 import { initializeTransactionalContext } from "typeorm-transactional";
-import { CreateAccountData } from "@domain/data/create-account.data";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
-import { makeOrcamentoFake } from "@test/fake/orcamento.fake";
+import { makeOrcamentoEntityFakeNew, makeOrcamentoFake } from "@test/fake/orcamento.fake";
+import { OrcamentoFixture } from "@infrastructure/database/fixtures/orcamento.fixture";
+import { ContaEntity } from "@infrastructure/entities/conta.entity";
 
 describe('BudgetController', () => {
     let app: INestApplication;
@@ -25,13 +26,17 @@ describe('BudgetController', () => {
     let email: string;
     let senha: string;
     let contaFixture: ContaFixture;
+    let orcamentoFixture: OrcamentoFixture;
     let conta: ContaDomain;
+    let  contaEntity: ContaEntity;
+    let userId: number;
   
     beforeAll(async () => {
       initializeTransactionalContext();
       testingModule = await buildTestingModule();
       usuarioFixture = testingModule.get(UsuarioFixture);
       contaFixture = testingModule.get(ContaFixture);
+      orcamentoFixture = testingModule.get(OrcamentoFixture);
       app = testingModule.createNestApplication();
       app.useGlobalPipes(new ValidationPipe());
   
@@ -53,9 +58,10 @@ describe('BudgetController', () => {
         token = jwtService.sign(payload, { secret: secretKey });
         const fakeUsuario = makeUsuarioEntityFakeNew({email, senha});
         const usuarioSaved = await usuarioFixture.createFixture({...fakeUsuario});
-        let  contaEntity = makeContaEntityFakeNew({usuario: usuarioSaved});
+        contaEntity = makeContaEntityFakeNew({usuario: usuarioSaved});
         contaEntity = await contaFixture.createFixture({...contaEntity});
         conta = contaEntity.toDomain();
+        userId = usuarioSaved.id;
     })
 
     describe('criar-orcamento', () => {
@@ -97,6 +103,42 @@ describe('BudgetController', () => {
                     .set('Authorization', `Bearer ${null}`)
                     .send(orcamento)
                     .expect(401);
+                expect(response.body.message).toBeDefined();
+            });
+        });
+    });
+
+    describe('listar-orcamentos/usuario/:id', () => {
+        describe('Quando listar as orcamentos do usuario com sucesso', () => {
+            it('deve retornar listagem de orcamentos', async () => {
+                const fakeOrcamento1 = makeOrcamentoEntityFakeNew({ conta: contaEntity})
+                await orcamentoFixture.createFixture({...fakeOrcamento1})
+                const fakeOrcamento2 = makeOrcamentoEntityFakeNew({ conta: contaEntity})
+                await orcamentoFixture.createFixture({...fakeOrcamento2})
+                const response = await request(app.getHttpServer())
+                .get(`/orcamento/listar-orcamentos/usuario/${userId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+                expect(response.body).toHaveLength(2);
+            });
+
+            it('deve retornar listagem de orcamentos vazia', async () => {
+                const id = faker.number.int()
+                const response = await request(app.getHttpServer())
+                .get(`/orcamento/listar-orcamentos/usuario/${id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+                expect(response.body).toHaveLength(0);
+            });
+        });
+
+        describe('Quando listar as orcamentos do usuario com falha', () => {
+            it('deve retornar nao autorizado sem token', async () => {
+                const id = faker.number.int()
+                const response = await request(app.getHttpServer())
+                            .get(`/orcamento/listar-orcamentos/usuario/${id}`)
+                            .set('Authorization', `Bearer ${null}`)
+                            .expect(401);
                 expect(response.body.message).toBeDefined();
             });
         });

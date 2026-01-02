@@ -127,14 +127,14 @@ describe('AccountController', () => {
                expect(response.body).toHaveLength(2);
            });
    
-           it('deve retornar listagem de contas vazia', async () => {
+          it('deve retornar listagem de contas vazia', async () => {
              const id = faker.number.int()
              const response = await request(app.getHttpServer())
              .get(`/conta/listar-contas/usuario/${id}`)
              .set('Authorization', `Bearer ${token}`)
              .expect(200);
              expect(response.body).toHaveLength(0);
-         });
+          });
         });
    
         describe('Quando listar as contas do usuario com falha', () => {
