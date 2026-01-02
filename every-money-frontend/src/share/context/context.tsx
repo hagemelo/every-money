@@ -1,5 +1,5 @@
 import { BackendApi } from "../../api/backend-api.tsx";
-import { HomeService } from "../../service/home.service.tsx";
+import { ContaService } from "../../service/conta.service.tsx";
 import { LoginService } from "../../service/login.service.tsx";
 import { LocalStorageService } from "../storage/local.storage.service.tsx";
 
@@ -20,7 +20,7 @@ export function useLoginService() {
     return new LoginService(backendApi);
 }
 
-export function useHomeService() {
+export function useContaService() {
     const { backendApi } = useBackendApi();
-    return new HomeService(backendApi);
+    return new ContaService(backendApi);
 }

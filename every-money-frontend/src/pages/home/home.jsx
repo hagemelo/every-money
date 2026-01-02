@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { HomeContainer, MainContent, DisplayGrid } from './home.styles';
+import { DisplayGrid } from './home.styles';
+import { MainContainer, MainContent } from '../../components/styles/main.styles.jsx';
 import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
 import { useHome } from '../../hook/useHome.tsx';
 import ListContas from '../../components/select/list-contas.select.jsx';
@@ -8,7 +9,7 @@ import SaldoContaCard from '../../components/card/saldo-conta.card.jsx';
 
 const Home = () => {
 
-  const {usuario, contas, loading, setContas} = useHome();
+  const {usuario, contas} = useHome();
 
   const [contaSelecionada, setContaSelecionada] = useState(null);
   const [orcamentos, setOrcamentos] = useState([]);
@@ -47,7 +48,7 @@ const Home = () => {
   }, [contaSelecionada]);
 
   return (
-    <HomeContainer>
+    <MainContainer>
       <PainelFinanceiroSidebar usuario={usuario} />
       <MainContent>
         <h1>Visão Geral</h1>
@@ -73,7 +74,7 @@ const Home = () => {
           </DisplayGrid>
         )}
       </MainContent>
-    </HomeContainer>
+    </MainContainer>
   )
 }
 

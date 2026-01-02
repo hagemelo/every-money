@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { LocalStorageService } from "../share/storage/local.storage.service.tsx";
-import { useContaService } from "../share/context/context.tsx";
 import { Conta } from '../share/domain/conta.tsx';
+import { useContaService } from '../share/context/context.tsx';
 
-export const useHome = () => {
+
+
+export const useAccount = () => {
 
     const contaService = useContaService();
     const localStorageName = new LocalStorageService('userName');
@@ -11,11 +13,12 @@ export const useHome = () => {
     const [contas, setContas] =useState<Conta[]>([]);
     const [loading, setLoading] = useState(false);
 
-    
     const localStorageUser = {
         name: localStorageName.getItem(),
         email: localStorageEmail.getItem()
     }
+
+    const [usuario, setUsuario] = useState(localStorageUser);
 
     async function  loadUserContas() {
       try {
@@ -36,14 +39,11 @@ export const useHome = () => {
         loadUserContas(); 
     }, []);
 
-    const [usuario, setUsuario] = useState(localStorageUser);
-    
     return {
         usuario,
-        setUsuario,
         contas,
         setContas,
-        loading,
+        setUsuario,
       };
-    };
-
+    
+}

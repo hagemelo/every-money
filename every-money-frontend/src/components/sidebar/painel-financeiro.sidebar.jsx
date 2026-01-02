@@ -4,6 +4,7 @@ import homeIcon from '../../assets/home128.png';
 import transactionsIcon from '../../assets/transaction128.png';
 import categoriesIcon from '../../assets/categories128.png';
 import accountIcon from '../../assets/account128.png';
+import budgetsIcon from '../../assets/budget-planning.png';
 import userIcon from '../../assets/user128.png';
 import { Link } from 'react-router-dom';
 
@@ -27,9 +28,16 @@ const PainelFinanceiroSidebar = ({usuario}) => {
                        
                     </NavItem>
                     <NavItem>
-                        <Link to="/contas">
+                        <Link to="/account">
                             <Icon src={accountIcon} alt="Contas" />
                             Contas
+                        </Link>
+                    </NavItem>
+
+                    <NavItem>
+                        <Link to="/orcamentos">
+                            <Icon src={budgetsIcon} alt="Orçamentos" />
+                            Orçamentos
                         </Link>
                     </NavItem>
                 

@@ -1,7 +1,7 @@
 import { BackendApi } from "../api/backend-api";
 import { Conta } from "../share/domain/conta";
 
-export class HomeService {
+export class ContaService {
 
     constructor(private backendApi: BackendApi) {}
 
