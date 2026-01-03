@@ -22,9 +22,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "db:migrations:generate": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d ./src/config/database/config.ts ./src/config/database/migrations/${npm_config_name}",
+    "db:migrations:generate": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d  ./src/infrastructure/database/migration/config.ts ./src/infrastructure/database/migration/migrations/${npm_config_name}",
+    "db:migrations:create": "cross-env NODE_ENV=development typeorm migration:create ./src/infrastructure/database/migration/migrations",
     "db:init": "cross-env NODE_ENV=development npm-run-all db:reset db:migrations:apply",
-    "db:migrations:apply": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/config/database/config.ts",
+    "db:migrations:apply": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/infrastructure/database/migration/config.ts",
     "db:create": "cross-env NODE_ENV=development ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:create -d ./src/config/database/config.ts --synchronize no",
     "db:drop": "cross-env NODE_ENV=development ts-node ./node_modules/typeorm-extension/bin/cli.cjs db:drop -d ./src/config/database/config.ts",
     "db:reset": "npm-run-all db:drop db:create"
@@ -78,6 +79,7 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "typeorm-ts-node-commonjs": "^0.3.20",
     "typescript": "^5.1.3"
   }
 }
