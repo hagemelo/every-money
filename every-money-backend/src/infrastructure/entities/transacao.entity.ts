@@ -10,7 +10,8 @@ type TransacaoProps = {
     id?: number;
     descricao: string;
     valor: number;
-    data?: Date;
+    data: Date;
+    mesReferencia: string;
     tipo: TipoTransacaoModel;
     categoria: CategoriaEntity;
     conta: ContaEntity;
@@ -36,6 +37,7 @@ export class TransacaoEntity extends EveryMoneyEntity{
             this.createdAt = props.createdAt
             this.updatedAt = props.updatedAt
             this.status = props.status
+            this.mesReferencia = props.mesReferencia
         }
     }
 
@@ -50,6 +52,9 @@ export class TransacaoEntity extends EveryMoneyEntity{
 
     @Column()
     data: Date;
+
+    @Column({ name: 'mes_referencia' })
+    mesReferencia: string;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

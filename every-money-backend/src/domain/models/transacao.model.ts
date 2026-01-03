@@ -7,7 +7,8 @@ export type TransacaoModel = {
     id?: number;
     descricao: string;
     valor: number;
-    data?: Date;
+    mesReferencia: string;
+    data: Date;
     createdAt?: Date;
     updatedAt?: Date;
     tipo: TipoTransacaoModel;

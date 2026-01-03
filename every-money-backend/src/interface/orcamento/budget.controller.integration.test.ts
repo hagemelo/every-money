@@ -16,6 +16,7 @@ import { OrcamentoDomain } from "@domain/orcamento.domain";
 import { makeOrcamentoEntityFakeNew, makeOrcamentoFake } from "@test/fake/orcamento.fake";
 import { OrcamentoFixture } from "@infrastructure/database/fixtures/orcamento.fixture";
 import { ContaEntity } from "@infrastructure/entities/conta.entity";
+import { getCurrentMonthReference } from "@application/helpers/get-current-month-reference";
 
 describe('BudgetController', () => {
     let app: INestApplication;
@@ -69,7 +70,7 @@ describe('BudgetController', () => {
             it('deve retornar um orcamento', async () => {
                 const orcamentoDomain: OrcamentoDomain = makeOrcamentoFake();
                 const orcamento = orcamentoDomain.toModel()
-            
+                orcamento.mesReferencia = getCurrentMonthReference();
                 const response = await request(app.getHttpServer())
                 .post(`/orcamento/criar-orcamento/conta/${conta.id}`)
                 .set('Authorization', `Bearer ${token}`)

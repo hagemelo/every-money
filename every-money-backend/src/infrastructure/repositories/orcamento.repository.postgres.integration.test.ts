@@ -15,6 +15,8 @@ import { OrcamentoRepository } from "@domain/repositories/orcamento.repository";
 import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
+import { getCurrentMonthReferenceFromDate } from "@application/helpers/get-current-month-reference";
+import { TipoCategoriaModel } from "@domain/models/tipo-categoria.model";
 
 let testingModule: TestingModule
 let usuarioFixture: UsuarioFixture
@@ -110,7 +112,7 @@ describe('OrcamentoRepositoryPostgres', () => {
     })
 
     describe('Quando a funcao findAllByUsuarioId for chamada', () => {
-        it('deve retornar todos as orcamentos deste usuario', async () => {
+        it('deve retornar todos os orcamentos deste usuario', async () => {
             let email = faker.internet.email()
             let senha = faker.internet.password()
             const fakeUsuarioAlvo = makeUsuarioEntityFakeNew({email, senha})
@@ -142,6 +144,91 @@ describe('OrcamentoRepositoryPostgres', () => {
             expect(result[0].limite).toBe(fakeOrcamento.limite)
             expect(result[1].mesReferencia).toBe(fakeOrcamento2.mesReferencia)
             expect(result[1].limite).toBe(fakeOrcamento2.limite)
+        })
+
+        it('deve retornar nenhum orcamento deste usuario', async () => {
+            let email = faker.internet.email()
+            let senha = faker.internet.password()
+            const fakeUsuarioAlvo = makeUsuarioEntityFakeNew({email, senha})
+            const usuarioAlvo: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuarioAlvo)
+            const fakeConta = makeContaEntityFakeNew({usuario: usuarioAlvo})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+            const fakeOrcamento = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 3)})
+             await orcamentoFixture.createFixture(fakeOrcamento)
+            const fakeOrcamento2 = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 1)})
+            await orcamentoFixture.createFixture(fakeOrcamento2)
+
+            const result = await orcamentoRepository.findAllByUsuarioId({usuarioId:  faker.number.int()})
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(0)
+           
+        })
+    })
+
+    describe('Quando a funcao lookupByMesReferenciaAndTipoCategoriaAndContaId for chamada', () => {
+        it('deve retornar todos os orcamentos com o mes, tipo e conta especificados', async () => {
+            let email = faker.internet.email()
+            let senha = faker.internet.password()
+            const fakeUsuarioAlvo = makeUsuarioEntityFakeNew({email, senha})
+            const usuarioAlvo: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuarioAlvo)
+            const fakeConta = makeContaEntityFakeNew({usuario: usuarioAlvo})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+
+            const createdAt= new Date(2025, 3);
+            const mesReferencia = getCurrentMonthReferenceFromDate(createdAt);
+            const tipoCategoria = TipoCategoriaModel.Entrada;
+
+
+            const fakeOrcamento = makeOrcamentoEntityFakeNew({conta, createdAt, mesReferencia, tipoCategoria})
+             await orcamentoFixture.createFixture(fakeOrcamento)
+            const fakeOrcamento2 = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 1), mesReferencia: getCurrentMonthReferenceFromDate(new Date(2025, 1)), tipoCategoria})
+            await orcamentoFixture.createFixture(fakeOrcamento2)
+            const fakeOrcamento3 = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 1), mesReferencia: getCurrentMonthReferenceFromDate(new Date(2025, 1))})
+            await orcamentoFixture.createFixture(fakeOrcamento3)
+
+
+            const result = await orcamentoRepository.lookupByMesReferenciaAndTipoCategoriaAndContaId({
+                mesReferencia,
+                tipoCategoria,
+                contaId: conta.id
+            })
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(1)
+            expect(result[0].mesReferencia).toBe(fakeOrcamento.mesReferencia)
+            expect(result[0].limite).toBe(fakeOrcamento.limite)
+           
+        })
+
+         it('deve retornar nenhum orcamento com o mes, tipo e conta especificados', async () => {
+            let email = faker.internet.email()
+            let senha = faker.internet.password()
+            const fakeUsuarioAlvo = makeUsuarioEntityFakeNew({email, senha})
+            const usuarioAlvo: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuarioAlvo)
+            const fakeConta = makeContaEntityFakeNew({usuario: usuarioAlvo})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+
+            const createdAt= new Date(2025, 3);
+            const mesReferencia = getCurrentMonthReferenceFromDate(createdAt);
+            const tipoCategoria = TipoCategoriaModel.Entrada;
+
+
+            const fakeOrcamento = makeOrcamentoEntityFakeNew({conta, createdAt, mesReferencia, tipoCategoria})
+             await orcamentoFixture.createFixture(fakeOrcamento)
+            const fakeOrcamento2 = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 1), mesReferencia: getCurrentMonthReferenceFromDate(new Date(2025, 1)), tipoCategoria})
+            await orcamentoFixture.createFixture(fakeOrcamento2)
+            const fakeOrcamento3 = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 1), mesReferencia: getCurrentMonthReferenceFromDate(new Date(2025, 1))})
+            await orcamentoFixture.createFixture(fakeOrcamento3)
+
+
+            const result = await orcamentoRepository.lookupByMesReferenciaAndTipoCategoriaAndContaId({
+                mesReferencia,
+                tipoCategoria,
+                contaId: faker.number.int()
+            })
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(0)
+           
+           
         })
     })
 

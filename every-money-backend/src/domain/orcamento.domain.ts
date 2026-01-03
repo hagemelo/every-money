@@ -1,8 +1,9 @@
-import { ContaModel } from "./models/conta.model";
+
 import { OrcamentoModel } from "./models/orcamento.model";
 import { TipoCategoriaModel } from "./models/tipo-categoria.model";
 import { EveryMoneyDomain } from "./every-money.domain";
 import { ContaDomain } from "./conta.domain";
+import { getCurrentMonthReference, getCurrentMonthReferenceFromDate } from "@application/helpers/get-current-month-reference";
 
 
 export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel {
@@ -11,9 +12,17 @@ export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel 
         private readonly props: OrcamentoModel,
     ) {
         super();
-        this.props.mesReferencia = props.mesReferencia ?? '';
         this.props.limite = props.limite ?? 0;
         this.props.tipoCategoria = props.tipoCategoria ?? TipoCategoriaModel.Outros;
+
+        if (!this.props.mesReferencia) {
+            const now = new Date();
+            const nowYear = now.getFullYear();
+            const nowMonth = now.getMonth();
+            const {ano = nowYear} = props;
+            const mesAlvo = (props.mes ?? nowMonth) - 1;
+            this.props.mesReferencia = getCurrentMonthReferenceFromDate(new Date(ano, mesAlvo, 1));
+        }
     }
 
     get id (): number { return this.props.id; }

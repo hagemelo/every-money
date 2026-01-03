@@ -1,6 +1,7 @@
 import { makeOrcamentoFake } from "@test/fake/orcamento.fake"
 import { OrcamentoDomain } from "./orcamento.domain"
 import { TipoCategoriaModel } from "./models/tipo-categoria.model"
+import { getCurrentMonthReferenceFromDate } from "@application/helpers/get-current-month-reference"
 
 
 describe('OrcamentoDomain', () => {
@@ -43,6 +44,41 @@ describe('OrcamentoDomain', () => {
             expect(orcamento.createdAt).not.toBeNull()
             expect(orcamento.updatedAt).not.toBeNull()
             expect(orcamento.conta).toBeNull()
+            expect(orcamento.mesReferencia).not.toBeNull()
+        })
+
+        it('deve devolver mes referência correto quando apenas o ano e fornecido', () => {
+            const ano = 2024;
+            const now = new Date();
+            const nowMonth = now.getMonth();
+            const orcamento = new OrcamentoDomain({mesReferencia: null, 
+                limite: null, tipoCategoria: null,
+                conta: null, createdAt: null, updatedAt: null, ano});
+
+            const expectedMesReferencia =  getCurrentMonthReferenceFromDate(new Date(ano, nowMonth-1, 1));
+            expect(orcamento.mesReferencia).toBe(expectedMesReferencia);
+            expect(orcamento.limite).toBe(0)
+            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
+            expect(orcamento.createdAt).not.toBeNull()
+            expect(orcamento.updatedAt).not.toBeNull()
+            expect(orcamento.conta).toBeNull()
+    
+        })
+
+         it('deve devolver mes referência correto quando apenas o mes e fornecido', () => {
+            const mes = 5;
+            const orcamento = new OrcamentoDomain({mesReferencia: null, 
+                limite: null, tipoCategoria: null,
+                conta: null, createdAt: null, updatedAt: null, mes});
+
+            const expectedMesReferencia =  getCurrentMonthReferenceFromDate(new Date(new Date().getFullYear(), mes-1, 1));
+            expect(orcamento.mesReferencia).toBe(expectedMesReferencia);
+            expect(orcamento.limite).toBe(0)
+            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
+            expect(orcamento.createdAt).not.toBeNull()
+            expect(orcamento.updatedAt).not.toBeNull()
+            expect(orcamento.conta).toBeNull()
+    
         })
         
     })

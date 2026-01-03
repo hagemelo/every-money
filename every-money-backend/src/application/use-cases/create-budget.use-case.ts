@@ -1,5 +1,5 @@
 import { ContaRepository } from "@domain/repositories/conta.repository";
-import { Inject, Injectable, Scope, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, NotAcceptableException, Scope, UnauthorizedException } from "@nestjs/common";
 import { OrcamentoRepository } from "@domain/repositories/orcamento.repository";
 import { Transactional } from "typeorm-transactional";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
@@ -20,12 +20,26 @@ export class CreateBudgetUseCase {
         if (!conta) {
             throw new UnauthorizedException('Conta nao encontrada');
         }
-        const newOrcamento = new OrcamentoDomain(orcamento);
+        const newOrcamento = new OrcamentoDomain({...orcamento, mesReferencia: undefined});
         newOrcamento.addConta(conta.toDomain());
+        await this.checkOrcamentoData(newOrcamento)
         const resultNewOrcamento = await this.orcamentoRepository.saveDomain(newOrcamento);
         if (!resultNewOrcamento) {
             throw new Error('Erro ao criar orcamento');
         }
         return resultNewOrcamento;
+    }
+
+    private async checkOrcamentoData (orcamento: OrcamentoDomain): Promise<void>{
+        
+        const alreadyExistOrcamentoToMesrefenciaAndTipoCategoria = await this.orcamentoRepository.lookupByMesReferenciaAndTipoCategoriaAndContaId({
+            mesReferencia: orcamento.mesReferencia,
+            tipoCategoria: orcamento.tipoCategoria,
+            contaId: orcamento.conta.id
+        });
+
+        if (alreadyExistOrcamentoToMesrefenciaAndTipoCategoria.length > 0) {
+            throw new NotAcceptableException('Já existe um orçamento para este mês e categoria');
+        }
     }
 }

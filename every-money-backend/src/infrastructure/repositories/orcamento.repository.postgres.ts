@@ -3,7 +3,7 @@ import { Repository } from "typeorm";
 import { RepositoryPostgres } from "./repository.postgres";
 import { OrcamentoEntity } from "@infrastructure/entities/orcamento.entity";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
-import { FindAllByUsuarioIdParams, OrcamentoRepository } from "@domain/repositories/orcamento.repository";
+import { FindAllByUsuarioIdParams, LookupByMesReferenciaAndTipoCategoriaParams, OrcamentoRepository } from "@domain/repositories/orcamento.repository";
 import { Injectable } from "@nestjs/common";
 import { Scope } from "@nestjs/common";
 
@@ -40,6 +40,17 @@ export class OrcamentoRepositoryPostgres extends RepositoryPostgres<OrcamentoEnt
             take: limit,
             skip: offset
           });
+      return orcamentos.map(orcamento => orcamento.toDomain());
+    }
+
+
+    async lookupByMesReferenciaAndTipoCategoriaAndContaId(params: LookupByMesReferenciaAndTipoCategoriaParams): Promise<OrcamentoDomain[]> {
+
+      const { mesReferencia, tipoCategoria, contaId } = params;
+      const orcamentos = await this.repository.find({
+            relations: ['conta'],
+            where: { mesReferencia, tipoCategoria, conta: { id: contaId } },
+      });
       return orcamentos.map(orcamento => orcamento.toDomain());
     }
 

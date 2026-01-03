@@ -18,12 +18,13 @@ describe('TransacaoDomain', () => {
             expect(transacao.conta).not.toBeNull()
             expect(transacao.createdAt).not.toBeNull()
             expect(transacao.updatedAt).not.toBeNull()
+            expect(transacao.mesReferencia).not.toBeNull()
         })
 
         it('deve devolver valores default com parametros null', () => {
             const transacao = new TransacaoDomain({id: null, 
                 descricao: null, valor: null, data: null, tipo: null,
-                categoria: null, conta: null, createdAt: null, updatedAt: null})
+                categoria: null, conta: null, createdAt: null, updatedAt: null, mesReferencia: null})
             transacao.descricao = 'Transacao Teste'
             transacao.valor = 100
             transacao.data = new Date()
@@ -33,6 +34,7 @@ describe('TransacaoDomain', () => {
             expect(transacao.data).not.toBeNull()
             expect(transacao.createdAt).not.toBeNull()
             expect(transacao.updatedAt).not.toBeNull()
+            expect(transacao.mesReferencia).not.toBeNull()
             expect(transacao.tipo).toBe(TipoTransacaoModel.Entrada)
         })
 

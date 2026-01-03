@@ -9,4 +9,6 @@ export type OrcamentoModel = {
     updatedAt?: Date;
     tipoCategoria: TipoCategoriaModel;
     conta: ContaModel;
+    mes?: number;
+    ano?: number;
 }

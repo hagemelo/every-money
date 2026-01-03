@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import { CategoriaDomain } from "@domain/categoria.domain";
 import { TransacaoEntity } from "@infrastructure/entities/transacao.entity";
 import { TransacaoModel } from "@domain/models/transacao.model";
 import { TipoTransacaoModel } from "@domain/models/tipo-transacao.model";
@@ -7,6 +6,7 @@ import { TransacaoDomain } from "@domain/transacao.domain";
 import { makeCategoriaEntityFake, makeCategoriaFake } from "./categoria.fake";
 import { makeContaEntityFake, makeContaFake } from "./conta.fake";
 import { StatusTransacaoModel } from "@domain/models/status-transacao.model";
+import { getCurrentMonthReferenceFromDate } from "@application/helpers/get-current-month-reference";
 
 export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDomain => new TransacaoDomain({
     id: props?.id || faker.number.int({ max: 100000 }),
@@ -18,7 +18,9 @@ export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDom
     conta: props?.conta || makeContaFake(),
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime(),
-    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel)
+    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel),
+    mesReferencia: props?.mesReferencia || getCurrentMonthReferenceFromDate(faker.date.anytime())
+    
   })
 
   export const makeTransacaoEntityFake = (props?: Partial<TransacaoEntity>): TransacaoEntity => TransacaoEntity.fromDomain(new TransacaoDomain({
@@ -31,7 +33,9 @@ export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDom
     conta: props?.conta || makeContaEntityFake(),
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime(),
-    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel)
+    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel),
+    mesReferencia: props?.mesReferencia || getCurrentMonthReferenceFromDate(faker.date.anytime())
+
   }))
 
   export const makeTransacaoEntityFakeNew = (props?: Partial<TransacaoEntity>): TransacaoEntity => TransacaoEntity.fromDomain(new TransacaoDomain({
@@ -44,5 +48,6 @@ export const makeTransacaoFake = (props?: Partial<TransacaoModel>): TransacaoDom
     conta: props?.conta || makeContaEntityFake(),
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime(),
-    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel)
+    status: props?.status || faker.helpers.enumValue(StatusTransacaoModel),
+    mesReferencia: props?.mesReferencia || getCurrentMonthReferenceFromDate(faker.date.anytime())
   }))
