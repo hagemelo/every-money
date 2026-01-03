@@ -54,25 +54,32 @@ const Home = () => {
         <h1>Visão Geral</h1>
         <ListContas contas={contas ?? []} onContaChange={handleContaChange} />
         
-        <h3>Orçamentos</h3>
-        {contaSelecionada && (
-          orcamentos && orcamentos.length > 0 ? (
-            <DisplayGrid>
-              {orcamentos.map((orcamento) => (
-                <OrcamentoCard key={orcamento.id} orcamento={orcamento} />
-              ))}
-            </DisplayGrid>
-          ) : (
-            <p>Nenhum orçamento encontrado</p>
-          )
-        )}
-        <h3>Saldos</h3>
-        {contaSelecionada && (
-          <DisplayGrid>
-            <SaldoContaCard saldoConta={saldoPrevisto} />
-            <SaldoContaCard saldoConta={saldoRealizado} />
-          </DisplayGrid>
-        )}
+        <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+          <div style={{ flex: 2 }}>
+            <h3>Orçamentos</h3>
+            {contaSelecionada && (
+              orcamentos && orcamentos.length > 0 ? (
+                <DisplayGrid>
+                  {orcamentos.map((orcamento) => (
+                    <OrcamentoCard key={orcamento.id} orcamento={orcamento} />
+                  ))}
+                </DisplayGrid>
+              ) : (
+                <p>Nenhum orçamento encontrado</p>
+              )
+            )}
+          </div>
+          <div style={{ flex: 1 }}>
+            <h3>Saldos</h3>
+            {contaSelecionada && (
+              <DisplayGrid>
+                <SaldoContaCard saldoConta={saldoPrevisto} />
+                <SaldoContaCard saldoConta={saldoRealizado} />
+              </DisplayGrid>
+            )}
+          </div>
+        </div>
+        
       </MainContent>
     </MainContainer>
   )
