@@ -1,0 +1,22 @@
+import { ValueContainer, CurrencySymbol, Amount, Decimal } from './price.label.styles.jsx';
+
+const PriceInTableLabel = ({ valor }) => {
+ 
+  const partes = valor?.toFixed(2)?.split('.') ?? 0;
+  const valores = Array.isArray(partes) ? partes : [partes, '00'];
+  return (
+    <ValueContainer>
+      <CurrencySymbol>R$</CurrencySymbol>
+      <Amount>
+        {valor && (
+          <>
+            {valores[0]}
+            <Decimal>,{valores[1]}</Decimal>
+          </>
+        )}
+      </Amount>
+    </ValueContainer>
+  );
+};
+
+export default PriceInTableLabel;

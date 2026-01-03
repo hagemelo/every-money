@@ -35,7 +35,7 @@ const PainelFinanceiroSidebar = ({usuario}) => {
                     </NavItem>
 
                     <NavItem>
-                        <Link to="/orcamentos">
+                        <Link to="/budget">
                             <Icon src={budgetsIcon} alt="Orçamentos" />
                             Orçamentos
                         </Link>

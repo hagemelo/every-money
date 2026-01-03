@@ -30,7 +30,8 @@ export class OrcamentoRepositoryPostgres extends RepositoryPostgres<OrcamentoEnt
       const orcamentos = await this.repository.find({
             relations: ['conta'],
             where: { conta: { usuario: { id: usuarioId } } },
-            select: ['id', 'mesReferencia', 'limite', 'tipoCategoria', 'createdAt', 'updatedAt',  'conta']
+            select: ['id', 'mesReferencia', 'limite', 'tipoCategoria', 'createdAt', 'updatedAt',  'conta'],
+            order: { createdAt: 'DESC', mesReferencia: 'ASC' }
           });
       return orcamentos.map(orcamento => orcamento.toDomain());
     }

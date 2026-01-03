@@ -2,6 +2,7 @@ import { BackendApi } from "../../api/backend-api.tsx";
 import { CategoriaService } from "../../service/categoria.service.tsx";
 import { ContaService } from "../../service/conta.service.tsx";
 import { LoginService } from "../../service/login.service.tsx";
+import { OrcamentoService } from "../../service/orcamento.service.tsx";
 import { LocalStorageService } from "../storage/local.storage.service.tsx";
 
 export function useLocalStorage(key: string) {
@@ -26,9 +27,12 @@ export function useContaService() {
     return new ContaService(backendApi);
 }
 
+export function useOrcamentoService() {
+    const { backendApi } = useBackendApi();
+    return new OrcamentoService(backendApi);
+}
 
 export function useCategoriaService() {
     const { backendApi } = useBackendApi();
     return new CategoriaService(backendApi);
 }
-

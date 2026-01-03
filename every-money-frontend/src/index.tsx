@@ -7,6 +7,7 @@ import Home from './pages/home/home';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import Account from './pages/account/account';
 import Category from './pages/category/category';
+import Budget from './pages/budget/budget';
 
 const rootDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(rootDiv);
@@ -19,6 +20,7 @@ root.render(
         <Route path="/home" element={<Home/>}/>
         <Route path="/account" element={<Account/>}/>
         <Route path="/category" element={<Category/>}/>
+        <Route path="/budget" element={<Budget/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
