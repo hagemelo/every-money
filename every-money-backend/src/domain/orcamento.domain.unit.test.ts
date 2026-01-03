@@ -55,7 +55,7 @@ describe('OrcamentoDomain', () => {
                 limite: null, tipoCategoria: null,
                 conta: null, createdAt: null, updatedAt: null, ano});
 
-            const expectedMesReferencia =  getCurrentMonthReferenceFromDate(new Date(ano, nowMonth-1, 1));
+            const expectedMesReferencia =  getCurrentMonthReferenceFromDate(new Date(ano, nowMonth, 1));
             expect(orcamento.mesReferencia).toBe(expectedMesReferencia);
             expect(orcamento.limite).toBe(0)
             expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)

@@ -20,7 +20,7 @@ export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel 
             const nowYear = now.getFullYear();
             const nowMonth = now.getMonth();
             const {ano = nowYear} = props;
-            const mesAlvo = (props.mes ?? nowMonth) - 1;
+            const mesAlvo = props.mes ? props.mes - 1 : nowMonth;
             this.props.mesReferencia = getCurrentMonthReferenceFromDate(new Date(ano, mesAlvo, 1));
         }
     }

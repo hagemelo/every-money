@@ -4,10 +4,11 @@ import { OrcamentoModel } from "@domain/models/orcamento.model";
 import { OrcamentoDomain } from "@domain/orcamento.domain";
 import { OrcamentoEntity } from "@infrastructure/entities/orcamento.entity";
 import { makeContaEntityFake, makeContaFake } from "./conta.fake";
+import { getCurrentMonthReferenceFromDate } from "@application/helpers/get-current-month-reference";
 
 export const makeOrcamentoFake = (props?: Partial<OrcamentoModel>): OrcamentoDomain => new OrcamentoDomain({
     id: props?.id || faker.number.int({ max: 100000 }),
-    mesReferencia: props?.mesReferencia || faker.date.anytime().getMonth().toString() + '/' + faker.date.anytime().getFullYear().toString(),
+    mesReferencia: props?.mesReferencia || getCurrentMonthReferenceFromDate(faker.date.anytime()),
     limite: props?.limite || faker.number.int({ max: 100000 }),
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime(),
@@ -17,7 +18,7 @@ export const makeOrcamentoFake = (props?: Partial<OrcamentoModel>): OrcamentoDom
 
   export const makeOrcamentoEntityFake = (props?: Partial<OrcamentoEntity>): OrcamentoEntity => OrcamentoEntity.fromDomain(new OrcamentoDomain({
     id: props?.id || faker.number.int({ max: 100000 }),
-    mesReferencia: props?.mesReferencia || faker.date.anytime().getMonth().toString() + '/' + faker.date.anytime().getFullYear().toString(),
+    mesReferencia: props?.mesReferencia || getCurrentMonthReferenceFromDate(faker.date.anytime()),
     limite: props?.limite || faker.number.int({ max: 100000 }),
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime(),
@@ -27,7 +28,7 @@ export const makeOrcamentoFake = (props?: Partial<OrcamentoModel>): OrcamentoDom
 
   export const makeOrcamentoEntityFakeNew = (props?: Partial<OrcamentoEntity>): OrcamentoEntity => OrcamentoEntity.fromDomain(new OrcamentoDomain({
     id: null,
-    mesReferencia: props?.mesReferencia || faker.date.anytime().getMonth().toString() + '/' + faker.date.anytime().getFullYear().toString(),
+    mesReferencia: props?.mesReferencia || getCurrentMonthReferenceFromDate(faker.date.anytime()),
     limite: props?.limite || faker.number.int({ max: 100000 }),
     createdAt: props?.createdAt || faker.date.anytime(),
     updatedAt: props?.updatedAt || faker.date.anytime(),
