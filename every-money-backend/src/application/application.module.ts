@@ -10,6 +10,8 @@ import { CreateBudgetUseCase } from './use-cases/create-budget.use-case';
 import { CreateTransactionUseCase } from './use-cases/create-transaction.use-case';
 import { FindUserByUseCase } from './use-cases/find-user-by.use-case';
 import { ListAllBudgetByUserIdUseCase } from './use-cases/list-all-budget-by-user-id.use-case';
+import { ListAllTransactionsByAccountIdUseCase } from './use-cases/list-all-transactions-by-account-id.use-case';
+import { ListAllTransactionsByContaIdMonthYearUseCase } from './use-cases/list-all-transactions-by-conta-id-month-year.use-case';
 
 const useCases = [
     AlterUserPasswordUseCase,
@@ -22,6 +24,8 @@ const useCases = [
     ListAllAccountByUserIdUseCase,
     ListAllCategoriesByUserIdUseCase,
     ListAllBudgetByUserIdUseCase,
+    ListAllTransactionsByAccountIdUseCase,
+    ListAllTransactionsByContaIdMonthYearUseCase
     ]
 
 @Module({

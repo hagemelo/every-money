@@ -1,4 +1,4 @@
-import { TransacaoRepository } from "@domain/repositories/transacao.repository"
+import { FindAllByContaIdAndMonthAndYearProps, TransacaoRepository } from "@domain/repositories/transacao.repository"
 import { TransacaoDomain } from "@domain/transacao.domain"
 import { faker } from "@faker-js/faker/."
 import { CategoriaFixture } from "@infrastructure/database/fixtures/categoria.fixture"
@@ -35,6 +35,7 @@ describe('TransacaoRepositoryPostgres', () => {
       transacaoFixture = testingModule.get(TransacaoFixture)
       transacaoRepository = await testingModule.resolve(TransacaoRepository)
       dataSource = testingModule.get(DataSource)
+      dataSource.setOptions({ logging: false });
     })
   
     afterEach(async () => {
@@ -99,27 +100,152 @@ describe('TransacaoRepositoryPostgres', () => {
     })
 
     describe('Quando a funcao findAll for chamada', () => {
-            it('deve retornar todos as orcamentos', async () => {
-                const email = faker.internet.email()
-                const senha = faker.internet.password()
-                const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
-                const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
-                const fakeConta = makeContaEntityFakeNew({usuario})
-                const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
-                const fakeCategoria = makeCategoriaEntityFakeNew({usuario})
-                const categoria: CategoriaEntity = await categoriaFixture.createFixture(fakeCategoria)
-                const fakeTransacao = makeTransacaoEntityFakeNew({conta, categoria})
-                const transacao: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao)
-                const fakeTransacao2 = makeTransacaoEntityFakeNew({conta, categoria})
-                const transacao2: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao2)
-                const result = await transacaoRepository.findAll()
-                expect(result).toBeInstanceOf(Array)
-                expect(result.length).toBe(2)
-                expect(result[0].data).toStrictEqual(fakeTransacao.data)
-                expect(result[0].valor).toStrictEqual(fakeTransacao.valor)
-                expect(result[1].data).toStrictEqual(fakeTransacao2.data)
-                expect(result[1].valor).toStrictEqual(fakeTransacao2.valor)
-            })
+        it('deve retornar todas as transacoes', async () => {
+            const email = faker.internet.email()
+            const senha = faker.internet.password()
+            const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
+            const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
+            const fakeConta = makeContaEntityFakeNew({usuario})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+            const fakeCategoria = makeCategoriaEntityFakeNew({usuario})
+            const categoria: CategoriaEntity = await categoriaFixture.createFixture(fakeCategoria)
+            const fakeTransacao = makeTransacaoEntityFakeNew({conta, categoria})
+            const transacao: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({conta, categoria})
+            const transacao2: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao2)
+            const result = await transacaoRepository.findAll()
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(2)
+            expect(result[0].data).toStrictEqual(fakeTransacao.data)
+            expect(result[0].valor).toStrictEqual(fakeTransacao.valor)
+            expect(result[1].data).toStrictEqual(fakeTransacao2.data)
+            expect(result[1].valor).toStrictEqual(fakeTransacao2.valor)
+        })
     })
 
+    describe('Quando a funcao findAllByContaId for chamada', () => {
+        it('deve retornar todas as transacoes', async () => {
+            const email = faker.internet.email()
+            const senha = faker.internet.password()
+            const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
+            const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
+            const fakeConta = makeContaEntityFakeNew({usuario})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+            const fakeCategoria = makeCategoriaEntityFakeNew({usuario})
+            const categoria: CategoriaEntity = await categoriaFixture.createFixture(fakeCategoria)
+            const fakeTransacao = makeTransacaoEntityFakeNew({conta, categoria, data: faker.date.future()})
+            const transacao: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({conta, categoria, data: faker.date.past()})
+            const transacao2: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao2)
+            const result = await transacaoRepository.findAllByContaId(conta.id)
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(2)
+            expect(result[0].data).toStrictEqual(fakeTransacao.data)
+            expect(result[0].valor).toStrictEqual(fakeTransacao.valor)
+            expect(result[1].data).toStrictEqual(fakeTransacao2.data)
+            expect(result[1].valor).toStrictEqual(fakeTransacao2.valor)
+        })
+    })
+
+    describe('Quando a funcao findAllByContaIdAndMonthAndYear for chamada', () => {
+        it('deve retornar todas as transacoes', async () => {
+            const email = faker.internet.email()
+            const senha = faker.internet.password()
+            const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
+            const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
+            const fakeConta = makeContaEntityFakeNew({usuario})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+            const fakeCategoria = makeCategoriaEntityFakeNew({usuario})
+            const categoria: CategoriaEntity = await categoriaFixture.createFixture(fakeCategoria)
+
+            const tagetMonth = 2
+            const tagetYear = 2025
+            const month = 10
+            const year = 2024
+
+            const fakeTransacao = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(tagetYear, tagetMonth, 3 )})
+            const transacao: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(tagetYear, tagetMonth, 2 )})
+            const transacao2: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao2)
+            const fakeTransacao3 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year, month )})
+            const transacao3: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao3)
+            const fakeTransacao4 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year, month )})
+            const transacao4: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao4)
+
+            const props: FindAllByContaIdAndMonthAndYearProps = {accountId: conta.id, month: tagetMonth+1, year: tagetYear}
+            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(props)
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(2)
+            expect(result[0].data).toStrictEqual(fakeTransacao.data)
+            expect(result[0].valor).toStrictEqual(fakeTransacao.valor)
+            expect(result[1].data).toStrictEqual(fakeTransacao2.data)
+            expect(result[1].valor).toStrictEqual(fakeTransacao2.valor)
+        })
+
+        it('deve retornar todas as transacoes do ano', async () => {
+            const email = faker.internet.email()
+            const senha = faker.internet.password()
+            const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
+            const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
+            const fakeConta = makeContaEntityFakeNew({usuario})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+            const fakeCategoria = makeCategoriaEntityFakeNew({usuario})
+            const categoria: CategoriaEntity = await categoriaFixture.createFixture(fakeCategoria)
+            
+            const tagetYear = 2025
+            const year = 2024
+
+            const fakeTransacao = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(tagetYear, 8, 3 )})
+            const transacao: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(tagetYear, 3, 2 )})
+            const transacao2: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao2)
+            const fakeTransacao3 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year )})
+            const transacao3: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao3)
+            const fakeTransacao4 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year )})
+            const transacao4: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao4)
+
+            const props: FindAllByContaIdAndMonthAndYearProps = {accountId: conta.id, month: undefined, year: tagetYear}
+            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(props)
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(2)
+            expect(result[0].data).toStrictEqual(fakeTransacao.data)
+            expect(result[0].valor).toStrictEqual(fakeTransacao.valor)
+            expect(result[1].data).toStrictEqual(fakeTransacao2.data)
+            expect(result[1].valor).toStrictEqual(fakeTransacao2.valor)
+        })
+
+         it('deve retornar todas as transacoes do mes', async () => {
+            const email = faker.internet.email()
+            const senha = faker.internet.password()
+            const fakeUsuario = makeUsuarioEntityFakeNew({email, senha})
+            const usuario: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuario)
+            const fakeConta = makeContaEntityFakeNew({usuario})
+            const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
+            const fakeCategoria = makeCategoriaEntityFakeNew({usuario})
+            const categoria: CategoriaEntity = await categoriaFixture.createFixture(fakeCategoria)
+
+            const tagetMonth = 2
+            const tagetYear = 2025
+            const month = 10
+            const year = 2024
+
+            const fakeTransacao = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(tagetYear, tagetMonth, 3 )})
+            const transacao: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(tagetYear, tagetMonth, 2 )})
+            const transacao2: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao2)
+            const fakeTransacao3 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year, month )})
+            const transacao3: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao3)
+            const fakeTransacao4 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year, month )})
+            const transacao4: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao4)
+
+            const props: FindAllByContaIdAndMonthAndYearProps = {accountId: conta.id, month: tagetMonth+1, year: undefined}
+            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(props)
+            expect(result).toBeInstanceOf(Array)
+            expect(result.length).toBe(2)
+            expect(result[0].data).toStrictEqual(fakeTransacao.data)
+            expect(result[0].valor).toStrictEqual(fakeTransacao.valor)
+            expect(result[1].data).toStrictEqual(fakeTransacao2.data)
+            expect(result[1].valor).toStrictEqual(fakeTransacao2.valor)
+        })
+    })
 })

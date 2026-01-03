@@ -17,6 +17,10 @@ import { makeTransacaoEntityFakeNew, makeTransacaoFake } from "@test/fake/transa
 import { CategoriaFixture } from "@infrastructure/database/fixtures/categoria.fixture";
 import { CategoriaDomain } from "@domain/categoria.domain";
 import { makeCategoriaEntityFakeNew } from "@test/fake/categoria.fake";
+import { ContaEntity } from "@infrastructure/entities/conta.entity";
+import { CategoriaEntity } from "@infrastructure/entities/categoria.entity";
+import { TransacaoEntity } from "@infrastructure/entities/transacao.entity";
+import { TransacaoFixture } from "@infrastructure/database/fixtures/transacao.fixture";
 
 describe('TransactionController', () => {
     let app: INestApplication;
@@ -30,11 +34,15 @@ describe('TransactionController', () => {
     let conta: ContaDomain;
     let categoriaFixture: CategoriaFixture;
     let categoria: CategoriaDomain;  
+    let contaEntity: ContaEntity;
+    let categoriaEntity: CategoriaEntity;
+    let transacaoFixture: TransacaoFixture; 
     
     beforeAll(async () => {
       initializeTransactionalContext();
       testingModule = await buildTestingModule();
       usuarioFixture = testingModule.get(UsuarioFixture);
+      transacaoFixture = testingModule.get(TransacaoFixture);
       contaFixture = testingModule.get(ContaFixture);
       categoriaFixture = testingModule.get(CategoriaFixture);
       app = testingModule.createNestApplication();
@@ -58,10 +66,10 @@ describe('TransactionController', () => {
         token = jwtService.sign(payload, { secret: secretKey });
         const fakeUsuario = makeUsuarioEntityFakeNew({email, senha});
         const usuarioSaved = await usuarioFixture.createFixture({...fakeUsuario});
-        let  contaEntity = makeContaEntityFakeNew({usuario: usuarioSaved});
+        contaEntity = makeContaEntityFakeNew({usuario: usuarioSaved});
         contaEntity = await contaFixture.createFixture({...contaEntity});
         conta = contaEntity.toDomain();
-        let  categoriaEntity = makeCategoriaEntityFakeNew({usuario: usuarioSaved});
+        categoriaEntity = makeCategoriaEntityFakeNew({usuario: usuarioSaved});
         categoriaEntity = await categoriaFixture.createFixture(categoriaEntity);
         categoria = categoriaEntity.toDomain();
     })
@@ -122,5 +130,82 @@ describe('TransactionController', () => {
             });
         });
     });
+
+    describe('listar-transacoes/conta/:id', () => {
+        it('deve listar transações por conta', async () => {
+            const fakeTransacao1 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity })
+            await transacaoFixture.createFixture(fakeTransacao1)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity })
+            await transacaoFixture.createFixture(fakeTransacao2)
+            const response = await request(app.getHttpServer())
+                .get(`/transacao/listar-transacoes/conta/${conta.id}`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+            
+            expect(Array.isArray(response.body)).toBe(true);
+        });
+
+        it('deve listar de transações vazia por conta', async () => {
+            const fakeTransacao1 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity })
+            await transacaoFixture.createFixture(fakeTransacao1)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity })
+            await transacaoFixture.createFixture(fakeTransacao2)
+
+            const accoutId = faker.number.int();
+            const response = await request(app.getHttpServer())
+                .get(`/transacao/listar-transacoes/conta/${accoutId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+            
+            expect(Array.isArray(response.body)).toBe(true);
+        });
+    });
+
+    describe('listar-transacoes/conta/:id/ano/:ano/mes/:mes', () => {
+        it('deve listar transações por conta e período', async () => {
+            const tagetMonth = 2
+            const tagetYear = 2025
+            const month = 10
+            const year = 2024
+
+            const fakeTransacao1 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity, data: new Date(tagetYear, tagetMonth, 30) })
+            await transacaoFixture.createFixture(fakeTransacao1)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity, data: new Date(tagetYear, tagetMonth, 13) })
+            await transacaoFixture.createFixture(fakeTransacao2)
+
+            const fakeTransacao3 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity, data: new Date(year, month) })
+            await transacaoFixture.createFixture(fakeTransacao3)
+            const fakeTransacao4 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity, data: new Date(year, month) })
+            await transacaoFixture.createFixture(fakeTransacao4)
+
+            const mesParam = tagetMonth +1;
+            const response = await request(app.getHttpServer())
+                .get(`/transacao/listar-transacoes/conta/${conta.id}/ano/${tagetYear}/mes/${mesParam}`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+        
+            expect(Array.isArray(response.body)).toBe(true);
+            expect(response.body.length).toBe(2);
+        });
+
+         it('deve listar de transações vazia por conta e período', async () => {
+
+            const month = 10
+            const year = 2024
+            const fakeTransacao1 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity, data: new Date(year) })
+            await transacaoFixture.createFixture(fakeTransacao1)
+            const fakeTransacao2 = makeTransacaoEntityFakeNew({ conta: contaEntity, categoria: categoriaEntity, data: new Date(year) })
+            await transacaoFixture.createFixture(fakeTransacao2)
+
+            const response = await request(app.getHttpServer())
+                .get(`/transacao/listar-transacoes/conta/${conta.id}/ano/2025/mes/1`)
+                .set('Authorization', `Bearer ${token}`)
+                .expect(200);
+        
+            expect(Array.isArray(response.body)).toBe(true);
+            expect(response.body.length).toBe(0);
+        });
+    });
+
 });
 

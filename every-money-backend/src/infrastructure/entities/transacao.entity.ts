@@ -86,8 +86,8 @@ export class TransacaoEntity extends EveryMoneyEntity{
     toDomain(): TransacaoDomain {
         const transacao = {
             ...this,
-            categoria: this.categoria.toDomain(),
-            conta: this.conta.toDomain()
+            categoria: this.categoria?.toDomain(),
+            conta: this.conta?.toDomain()
         };
         return new TransacaoDomain(transacao);
     }

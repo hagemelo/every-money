@@ -76,7 +76,7 @@ constructor(props?: ContaProps){
         const categoria = {
             ...this,
             transacoes: this.transacoes?.map(transacao => transacao.toDomain()),
-            usuario: this.usuario.toDomain()
+            usuario: this.usuario?.toDomain()
         };
         return new CategoriaDomain(categoria);
     }
