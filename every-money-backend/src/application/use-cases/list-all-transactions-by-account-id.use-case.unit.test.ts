@@ -22,7 +22,7 @@ describe('ListAllTransactionsByAccountIdUseCase', () => {
         it('deve lancar uma exception', () => {
             const accountId = faker.number.int();
             jest.spyOn(repository, 'findAllByContaId').mockRejectedValue(new Error('Erro ao listar transacoes da conta'))
-            expect(() => useCase.execute(accountId)).rejects.toThrow('Erro ao listar transacoes da conta')
+            expect(() => useCase.execute({accountId})).rejects.toThrow('Erro ao listar transacoes da conta')
         })
     })
 
@@ -30,7 +30,7 @@ describe('ListAllTransactionsByAccountIdUseCase', () => {
         it('deve retornar uma lista de transacoes', async () => {
             const accountId = faker.number.int();
             jest.spyOn(repository, 'findAllByContaId').mockResolvedValue([makeTransacaoFake(), makeTransacaoFake(), makeTransacaoFake()])
-            const result = await useCase.execute(accountId)
+            const result = await useCase.execute({accountId})
             expect(result).toBeInstanceOf(Array)
             expect(result).toHaveLength(3)
         })
@@ -40,7 +40,7 @@ describe('ListAllTransactionsByAccountIdUseCase', () => {
         it('deve retornar uma lista vazia', async () => {
             const accountId = faker.number.int();
             jest.spyOn(repository, 'findAllByContaId').mockResolvedValue(null)
-            const result = await useCase.execute(accountId)
+            const result = await useCase.execute({accountId})
             expect(result).toBeInstanceOf(Array)
             expect(result).toHaveLength(0)
         })

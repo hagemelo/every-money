@@ -117,9 +117,9 @@ describe('OrcamentoRepositoryPostgres', () => {
             const usuarioAlvo: UsuarioEntity = await usuarioFixture.createFixture(fakeUsuarioAlvo)
             const fakeConta = makeContaEntityFakeNew({usuario: usuarioAlvo})
             const conta: ContaEntity = await contaFixture.createFixture(fakeConta)
-            const fakeOrcamento = makeOrcamentoEntityFakeNew({conta})
+            const fakeOrcamento = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 3)})
              await orcamentoFixture.createFixture(fakeOrcamento)
-            const fakeOrcamento2 = makeOrcamentoEntityFakeNew({conta})
+            const fakeOrcamento2 = makeOrcamentoEntityFakeNew({conta, createdAt: new Date(2025, 1)})
             await orcamentoFixture.createFixture(fakeOrcamento2)
 
             email = faker.internet.email()
@@ -135,7 +135,7 @@ describe('OrcamentoRepositoryPostgres', () => {
             const fakeOrcamento5 = makeOrcamentoEntityFakeNew({conta: conta2})
             await orcamentoFixture.createFixture(fakeOrcamento5)
             
-            const result = await orcamentoRepository.findAllByUsuarioId(usuarioAlvo.id)
+            const result = await orcamentoRepository.findAllByUsuarioId({usuarioId: usuarioAlvo.id})
             expect(result).toBeInstanceOf(Array)
             expect(result.length).toBe(2)
             expect(result[0].mesReferencia).toBe(fakeOrcamento.mesReferencia)

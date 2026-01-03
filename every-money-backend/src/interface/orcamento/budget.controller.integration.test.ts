@@ -122,6 +122,19 @@ describe('BudgetController', () => {
                 expect(response.body).toHaveLength(2);
             });
 
+             it('deve retornar listagem de orcamentos com paginação', async () => {
+                const fakeOrcamento1 = makeOrcamentoEntityFakeNew({ conta: contaEntity})
+                await orcamentoFixture.createFixture({...fakeOrcamento1})
+                const fakeOrcamento2 = makeOrcamentoEntityFakeNew({ conta: contaEntity})
+                await orcamentoFixture.createFixture({...fakeOrcamento2})
+                const response = await request(app.getHttpServer())
+                .get(`/orcamento/listar-orcamentos/usuario/${userId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .query({ limit: 1, offset: 0 })
+                .expect(200);
+                expect(response.body).toHaveLength(1);
+            });
+
             it('deve retornar listagem de orcamentos vazia', async () => {
                 const id = faker.number.int()
                 const response = await request(app.getHttpServer())

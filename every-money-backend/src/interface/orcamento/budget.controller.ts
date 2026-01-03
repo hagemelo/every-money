@@ -1,8 +1,13 @@
 import { CreateBudgetUseCase } from "@application/use-cases/create-budget.use-case";
 import { ListAllBudgetByUserIdUseCase } from "@application/use-cases/list-all-budget-by-user-id.use-case";
 import { OrcamentoModel } from "@domain/models/orcamento.model";
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+
+type PaginationQuery = {
+    limit?: number
+    offset?: number
+}
 
 @Controller('orcamento')
 export class BudgetController {
@@ -21,8 +26,9 @@ export class BudgetController {
 
     @UseGuards(AuthGuard('jwt'))
     @Get('listar-orcamentos/usuario/:id')
-    async listarContas(@Param('id') id: number): Promise<OrcamentoModel[]> {
-        const orcamentos = await this.listAllBudgetByUserIdUseCase.execute(id);
+    async listarOrcamentos(@Param('id') id: number, @Query() query: PaginationQuery): Promise<OrcamentoModel[]> {
+
+        const orcamentos = await this.listAllBudgetByUserIdUseCase.execute({usuarioId: id, ...query});
         return orcamentos.map(orcamento => orcamento.toModel());
     }
 

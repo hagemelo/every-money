@@ -22,7 +22,7 @@ describe('ListAllBudgetByUserIdUseCase', () => {
         it('deve lancar uma exception', () => {
             const usuario = makeUsuarioFake()
             jest.spyOn(repository, 'findAllByUsuarioId').mockRejectedValue(new Error('Erro ao listar orcamentos do usuario'))
-            expect(() => useCase.execute(usuario.id)).rejects.toThrow('Erro ao listar orcamentos do usuario')
+            expect(() => useCase.execute({usuarioId: usuario.id})).rejects.toThrow('Erro ao listar orcamentos do usuario')
         })
     })
 
@@ -30,7 +30,7 @@ describe('ListAllBudgetByUserIdUseCase', () => {
         it('deve retornar uma lista de orcamentos', async () => {
             const usuario = makeUsuarioFake()
             jest.spyOn(repository, 'findAllByUsuarioId').mockResolvedValue([makeOrcamentoFake(), makeOrcamentoFake(), makeOrcamentoFake()])
-            const result = await useCase.execute(usuario.id)
+            const result = await useCase.execute({usuarioId: usuario.id})
             expect(result).toBeInstanceOf(Array)
             expect(result).toHaveLength(3)
         })
@@ -40,7 +40,7 @@ describe('ListAllBudgetByUserIdUseCase', () => {
         it('deve retornar uma lista vazia', async () => {
             const usuario = makeUsuarioFake()
             jest.spyOn(repository, 'findAllByUsuarioId').mockResolvedValue(null)
-            const result = await useCase.execute(usuario.id)
+            const result = await useCase.execute({usuarioId: usuario.id})
             expect(result).toBeInstanceOf(Array)
             expect(result).toHaveLength(0)
         })

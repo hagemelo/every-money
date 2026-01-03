@@ -1,7 +1,6 @@
-import { TransacaoRepository } from "@domain/repositories/transacao.repository";
+import { FindAllByContaIdParams, TransacaoRepository } from "@domain/repositories/transacao.repository";
 import { TransacaoDomain } from "@domain/transacao.domain";
 import { Inject, Injectable } from "@nestjs/common";
-
 
 
 @Injectable()
@@ -11,9 +10,9 @@ export class ListAllTransactionsByAccountIdUseCase {
         @Inject(TransacaoRepository) private readonly repository: TransacaoRepository
     ) {}
 
-    async execute(accountId: number): Promise<TransacaoDomain[]> {
+    async execute(params: FindAllByContaIdParams): Promise<TransacaoDomain[]> {
 
-        const transacoes = await this.repository.findAllByContaId(accountId);
+        const transacoes = await this.repository.findAllByContaId(params);
         return transacoes ?? [];
     }
 }

@@ -1,4 +1,4 @@
-import { FindAllByContaIdAndMonthAndYearProps, TransacaoRepository } from "@domain/repositories/transacao.repository"
+import {  FindAllByContaIdAndMonthAndYearParams, TransacaoRepository } from "@domain/repositories/transacao.repository"
 import { TransacaoDomain } from "@domain/transacao.domain"
 import { faker } from "@faker-js/faker/."
 import { CategoriaFixture } from "@infrastructure/database/fixtures/categoria.fixture"
@@ -137,7 +137,7 @@ describe('TransacaoRepositoryPostgres', () => {
             const transacao: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao)
             const fakeTransacao2 = makeTransacaoEntityFakeNew({conta, categoria, data: faker.date.past()})
             const transacao2: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao2)
-            const result = await transacaoRepository.findAllByContaId(conta.id)
+            const result = await transacaoRepository.findAllByContaId({accountId: conta.id})
             expect(result).toBeInstanceOf(Array)
             expect(result.length).toBe(2)
             expect(result[0].data).toStrictEqual(fakeTransacao.data)
@@ -172,8 +172,8 @@ describe('TransacaoRepositoryPostgres', () => {
             const fakeTransacao4 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year, month )})
             const transacao4: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao4)
 
-            const props: FindAllByContaIdAndMonthAndYearProps = {accountId: conta.id, month: tagetMonth+1, year: tagetYear}
-            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(props)
+            const params: FindAllByContaIdAndMonthAndYearParams = {accountId: conta.id, month: tagetMonth+1, year: tagetYear}
+            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(params)
             expect(result).toBeInstanceOf(Array)
             expect(result.length).toBe(2)
             expect(result[0].data).toStrictEqual(fakeTransacao.data)
@@ -204,8 +204,8 @@ describe('TransacaoRepositoryPostgres', () => {
             const fakeTransacao4 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year )})
             const transacao4: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao4)
 
-            const props: FindAllByContaIdAndMonthAndYearProps = {accountId: conta.id, month: undefined, year: tagetYear}
-            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(props)
+            const params: FindAllByContaIdAndMonthAndYearParams = {accountId: conta.id, month: undefined, year: tagetYear}
+            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(params)
             expect(result).toBeInstanceOf(Array)
             expect(result.length).toBe(2)
             expect(result[0].data).toStrictEqual(fakeTransacao.data)
@@ -238,8 +238,8 @@ describe('TransacaoRepositoryPostgres', () => {
             const fakeTransacao4 = makeTransacaoEntityFakeNew({conta, categoria, data: new Date(year, month )})
             const transacao4: TransacaoEntity = await transacaoFixture.createFixture(fakeTransacao4)
 
-            const props: FindAllByContaIdAndMonthAndYearProps = {accountId: conta.id, month: tagetMonth+1, year: undefined}
-            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(props)
+            const params: FindAllByContaIdAndMonthAndYearParams = {accountId: conta.id, month: tagetMonth+1, year: undefined}
+            const result = await transacaoRepository.findAllByContaIdAndMonthAndYear(params)
             expect(result).toBeInstanceOf(Array)
             expect(result.length).toBe(2)
             expect(result[0].data).toStrictEqual(fakeTransacao.data)
