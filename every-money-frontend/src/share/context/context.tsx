@@ -1,4 +1,5 @@
 import { BackendApi } from "../../api/backend-api.tsx";
+import { CategoriaService } from "../../service/categoria.service.tsx";
 import { ContaService } from "../../service/conta.service.tsx";
 import { LoginService } from "../../service/login.service.tsx";
 import { LocalStorageService } from "../storage/local.storage.service.tsx";
@@ -24,3 +25,10 @@ export function useContaService() {
     const { backendApi } = useBackendApi();
     return new ContaService(backendApi);
 }
+
+
+export function useCategoriaService() {
+    const { backendApi } = useBackendApi();
+    return new CategoriaService(backendApi);
+}
+

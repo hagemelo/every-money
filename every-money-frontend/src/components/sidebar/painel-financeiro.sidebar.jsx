@@ -48,7 +48,7 @@ const PainelFinanceiroSidebar = ({usuario}) => {
                         </Link>
                     </NavItem>
                     <NavItem>
-                        <Link to="/categories">
+                        <Link to="/category">
                             <Icon src={categoriesIcon} alt="Categorias" />
                             Categorias
                         </Link>

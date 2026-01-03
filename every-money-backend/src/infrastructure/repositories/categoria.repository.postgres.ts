@@ -26,6 +26,11 @@ export class CategoriaRepositoryPostgres extends RepositoryPostgres<CategoriaEnt
       const categorias = await this.repository.find({
           relations: ['transacoes', 'usuario'],
           where: { usuario: { id: usuarioId } },
+          order: {
+            tipo: 'ASC',
+            classificacao: 'ASC',
+            nome: 'ASC'
+          }
         });
       return categorias.map(categoria => categoria.toDomain());
     }

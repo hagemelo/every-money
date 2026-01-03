@@ -3,17 +3,17 @@ import { TableContainer } from "../styles/main.styles.jsx";
 import { useState, useMemo } from "react";
 
 
-const ContasTable = ({ contas = [], onContaSelect }) => {
-    const contasArray = Array.isArray(contas) ? contas : [];
+const CategoriasTable = ({ categorias = [], onCategoriaSelect }) => {
+    const categoriasArray = Array.isArray(categorias) ? categorias : [];
     const [filter, setFilter] = useState('');
     const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const filteredData = useMemo(() => 
-    contasArray.filter(item => 
+    categoriasArray.filter(item => 
       Object.values(item).some(val => String(val).toLowerCase().includes(filter.toLowerCase()))
-    ), [filter, contasArray]);
+    ), [filter, categoriasArray]);
 
     const sortedData = useMemo(() => {
     let items = [...filteredData];
@@ -35,10 +35,10 @@ const ContasTable = ({ contas = [], onContaSelect }) => {
         }));
     };
 
-    const handleContaSelect = (e) => {
-        const novaConta = e.target.value;
-        if (onContaSelect) {
-        onContaSelect(novaConta);
+    const handleCategoriaSelect = (e) => {
+        const novaCategoria = e.target.value;
+        if (onCategoriaSelect) {
+        onCategoriaSelect(novaCategoria);
         }
     };
     return (
@@ -53,20 +53,18 @@ const ContasTable = ({ contas = [], onContaSelect }) => {
                 <Table>
                     <thead>
                         <tr>
-                            <Th onClick={() => requestSort('nome')}>Conta {sortConfig.key === 'nome' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
-                            <Th onClick={() => requestSort('tipoConta')}>Tipo {sortConfig.key === 'tipoConta' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
-                            <Th onClick={() => requestSort('saldoPrevisto')}>Saldo Previsto {sortConfig.key === 'saldoPrevisto' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
-                            <Th onClick={() => requestSort('saldoRealizado')}>Saldo Realizado {sortConfig.key === 'saldoRealizado' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
+                            <Th onClick={() => requestSort('tipo')}>Tipo {sortConfig.key === 'tipo' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
+                            <Th onClick={() => requestSort('nome')}>Categoria {sortConfig.key === 'nome' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
+                            <Th onClick={() => requestSort('classificacao')}>Classificação {sortConfig.key === 'classificacao' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
                         </tr>
                     </thead>
                     <tbody> 
 
-                        {paginatedData && paginatedData.map(conta => (
-                            <Tr key={conta.id}>
-                                <Td>{conta.nome}</Td>
-                                <Td>{conta.tipoConta}</Td>
-                                <Td>{conta.saldoPrevisto}</Td>
-                                <Td>{conta.saldoRealizado}</Td>
+                        {paginatedData && paginatedData.map(categoria => (
+                            <Tr key={categoria.id}>
+                                <Td>{categoria.tipo}</Td>
+                                <Td>{categoria.nome}</Td>
+                                <Td>{categoria.classificacao}</Td>
                             </Tr>
                         ))}
                     </tbody>
@@ -81,4 +79,4 @@ const ContasTable = ({ contas = [], onContaSelect }) => {
         );
 }
 
-export default ContasTable;
+export default CategoriasTable;
