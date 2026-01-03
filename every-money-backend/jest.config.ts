@@ -26,7 +26,7 @@ module.exports = {
       '!<rootDir>/src/infrastructure/database/data-source/*',
       '!<rootDir>/src/infrastructure/database/database.module.ts',
          ],
-    modulePathIgnorePatterns: [""],
+    modulePathIgnorePatterns: ['<rootDir>/src/infrastructure/database/migration/*'],
     coverageDirectory: 'coverage',
     coverageProvider: 'babel',
     coverageThreshold: {
