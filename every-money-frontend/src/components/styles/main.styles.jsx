@@ -26,5 +26,5 @@ export const MainContent = styled.main`
 export const TableContainer = styled.div`
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 900px;
+  max-width: ${props => props.maxWidth ||'900px'} ;
 `;

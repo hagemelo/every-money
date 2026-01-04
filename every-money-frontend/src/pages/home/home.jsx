@@ -23,7 +23,6 @@ const Home = () => {
 
   useEffect(() => {
     if (contaSelecionada) {
-      console.log('Passou aqui');
       const conta = contas.find((conta) => conta.nome === contaSelecionada);
       const orcamentos = conta.orcamentos?.map((orcamento) => ({
         ...orcamento,

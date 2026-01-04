@@ -28,8 +28,8 @@ export class TransacaoDomain extends EveryMoneyDomain implements TransacaoModel 
     get valor (): number { return this.props.valor; }
     get data (): Date { return this.props.data; }
     get tipo (): TipoTransacaoModel { return this.props.tipo; }
-    get categoria (): CategoriaDomain { return new CategoriaDomain(this.props.categoria); }
-    get conta (): ContaDomain { return new ContaDomain(this.props.conta); }
+    get categoria (): CategoriaDomain { return this.props.categoria ? new CategoriaDomain(this.props.categoria) : null; }
+    get conta (): ContaDomain { return this.props.conta ? new ContaDomain(this.props.conta) : null; }
     get createdAt (): Date { return this.props.createdAt ?? new Date(); }
     get updatedAt (): Date { return this.props.updatedAt ?? new Date(); }
     get status (): StatusTransacaoModel { return this.props.status; }

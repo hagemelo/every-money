@@ -42,7 +42,7 @@ const PainelFinanceiroSidebar = ({usuario}) => {
                     </NavItem>
                 
                     <NavItem>
-                        <Link to="/transactions">
+                        <Link to="/transaction">
                             <Icon src={transactionsIcon} alt="Transações" />
                             Transações
                         </Link>
