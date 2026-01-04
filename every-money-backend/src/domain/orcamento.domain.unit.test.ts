@@ -25,10 +25,10 @@ describe('OrcamentoDomain', () => {
                 conta: null, createdAt: null, updatedAt: null})
             orcamento.mesReferencia = '202502'
             orcamento.limite = 100
-            orcamento.tipoCategoria = TipoCategoriaModel.Outros
+            orcamento.tipoCategoria = TipoCategoriaModel.Saida
             expect(orcamento.mesReferencia).toBe('202502')
             expect(orcamento.limite).toBe(100)
-            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
+            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Saida)
             expect(orcamento.createdAt).not.toBeNull()
             expect(orcamento.updatedAt).not.toBeNull()
             expect(orcamento.conta).toBeNull()
@@ -40,7 +40,7 @@ describe('OrcamentoDomain', () => {
                 limite: null, tipoCategoria: null,
                 conta: null, createdAt: null, updatedAt: null})
             expect(orcamento.limite).toBe(0)
-            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
+            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Saida)
             expect(orcamento.createdAt).not.toBeNull()
             expect(orcamento.updatedAt).not.toBeNull()
             expect(orcamento.conta).toBeNull()
@@ -58,7 +58,7 @@ describe('OrcamentoDomain', () => {
             const expectedMesReferencia =  getCurrentMonthReferenceFromDate(new Date(ano, nowMonth, 1));
             expect(orcamento.mesReferencia).toBe(expectedMesReferencia);
             expect(orcamento.limite).toBe(0)
-            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
+            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Saida)
             expect(orcamento.createdAt).not.toBeNull()
             expect(orcamento.updatedAt).not.toBeNull()
             expect(orcamento.conta).toBeNull()
@@ -74,7 +74,7 @@ describe('OrcamentoDomain', () => {
             const expectedMesReferencia =  getCurrentMonthReferenceFromDate(new Date(new Date().getFullYear(), mes-1, 1));
             expect(orcamento.mesReferencia).toBe(expectedMesReferencia);
             expect(orcamento.limite).toBe(0)
-            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Outros)
+            expect(orcamento.tipoCategoria).toBe(TipoCategoriaModel.Saida)
             expect(orcamento.createdAt).not.toBeNull()
             expect(orcamento.updatedAt).not.toBeNull()
             expect(orcamento.conta).toBeNull()

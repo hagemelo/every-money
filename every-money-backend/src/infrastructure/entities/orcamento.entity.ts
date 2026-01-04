@@ -39,7 +39,7 @@ export class OrcamentoEntity extends EveryMoneyEntity {
     @Column()
     mesReferencia: string
 
-    @Column()
+    @Column({ type: 'float8' })
     limite: number;
 
     @CreateDateColumn({ name: 'created_at' })
@@ -49,7 +49,7 @@ export class OrcamentoEntity extends EveryMoneyEntity {
     updatedAt: Date;
     
     @Column({
-        type: 'varchar', name: 'tipo_categoria', enum: TipoCategoriaModel, default: TipoCategoriaModel.Outros
+        type: 'varchar', name: 'tipo_categoria', enum: TipoCategoriaModel, default: TipoCategoriaModel.Saida
       })
     tipoCategoria: TipoCategoriaModel;
 

@@ -30,6 +30,10 @@ export class CreateTransactionUseCase {
             throw new NotAcceptableException('Conta e categoria devem pertencer ao mesmo usuario');
         }
 
+        if (data.transacao.tipo.toString() !== categoria.tipo.toString()) {
+            throw new NotAcceptableException('Tipo de transacao e categoria devem ser iguais');
+        }
+
         const newTransacao = new TransacaoDomain(data.transacao);
 
         newTransacao.addConta(conta);

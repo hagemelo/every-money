@@ -43,7 +43,7 @@ constructor(props?: ContaProps){
     nome: string
 
     @Column({
-    type: 'varchar', name: 'tipo', enum: TipoCategoriaModel, default: TipoCategoriaModel.Outros
+    type: 'varchar', name: 'tipo', enum: TipoCategoriaModel, default: TipoCategoriaModel.Saida
     })
     tipo: TipoCategoriaModel;
 

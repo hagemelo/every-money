@@ -15,7 +15,7 @@ export class CategoriaDomain extends EveryMoneyDomain implements CategoriaModel 
     ) {
         super();
         this.props.nome = props.nome ?? '';
-        this.props.tipo = props.tipo ?? TipoCategoriaModel.Outros;
+        this.props.tipo = props.tipo ?? TipoCategoriaModel.Saida;
         this.props.classificacao = props.classificacao ?? ClassificacaoCategoriaModel.OutrosGastos;
     }
 

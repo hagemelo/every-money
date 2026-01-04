@@ -25,6 +25,7 @@ describe('TransacaoDomain', () => {
             const transacao = new TransacaoDomain({id: null, 
                 descricao: null, valor: null, data: null, tipo: null,
                 categoria: null, conta: null, createdAt: null, updatedAt: null, mesReferencia: null})
+            expect(transacao.valor).toBe(0)
             transacao.descricao = 'Transacao Teste'
             transacao.valor = 100
             transacao.data = new Date()
@@ -36,6 +37,15 @@ describe('TransacaoDomain', () => {
             expect(transacao.updatedAt).not.toBeNull()
             expect(transacao.mesReferencia).not.toBeNull()
             expect(transacao.tipo).toBe(TipoTransacaoModel.Entrada)
+        })
+
+        it('deve devolver valor da transacao como 0 quando o valor for invalido', () => {
+            const transacao = new TransacaoDomain({id: null, 
+                descricao: null, valor: Number("texto_invalido"), data: null, tipo: null,
+                categoria: null, conta: null, createdAt: null, updatedAt: null, mesReferencia: null})
+            
+            expect(transacao.valor).toBe(0)
+        
         })
 
         it('deve aportar que a transacao esta avencer', () => {

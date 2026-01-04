@@ -24,7 +24,7 @@ export class CategoriaRepositoryPostgres extends RepositoryPostgres<CategoriaEnt
 
     async findAllByUsuarioId(usuarioId: number): Promise<CategoriaDomain[]> {
       const categorias = await this.repository.find({
-          relations: ['transacoes', 'usuario'],
+          relations: ['usuario'],
           where: { usuario: { id: usuarioId } },
           order: {
             tipo: 'ASC',

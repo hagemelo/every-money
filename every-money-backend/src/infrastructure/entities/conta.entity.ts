@@ -44,10 +44,10 @@ export class ContaEntity extends EveryMoneyEntity {
     @Column()
     nome: string;
     
-    @Column()
+    @Column({ type: 'float8' })
     saldoRealizado: number;
     
-    @Column()
+    @Column({ type: 'float8' })
     saldoPrevisto: number;
     
     @Column({

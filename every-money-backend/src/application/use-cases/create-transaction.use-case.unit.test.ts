@@ -9,6 +9,8 @@ import { CreateTransactionData } from "@domain/data/create-transaction.data";
 import { makeContaEntityFake, makeContaFake } from "@test/fake/conta.fake";
 import { makeCategoriaFake } from "@test/fake/categoria.fake";
 import { TransacaoDomain } from "@domain/transacao.domain";
+import { TipoTransacaoModel } from "@domain/models/tipo-transacao.model";
+import { TipoCategoriaModel } from "@domain/models/tipo-categoria.model";
 
 
 jest.mock('typeorm-transactional', () => ({
@@ -112,13 +114,36 @@ describe('CreateTransactionUseCase', () => {
         });
     });
 
-    describe('Quando transacaoRepository.saveDomain lanca uma exception', () => {
+     describe('Quando o Tipo de transacao e da categoria forem diferentes', () => {
         it('deve lancar uma exception', async () => {
-            const transacaoDomain = makeTransacaoFake();
+            const transacaoDomain = makeTransacaoFake({tipo: TipoTransacaoModel.Saida});
             const contaId = faker.number.int({ max: 100000 });
             const categoriaId = faker.number.int({ max: 100000 });
             const conta = makeContaFake();
-            const categoria = makeCategoriaFake({usuario: conta.usuario});
+            const categoria = makeCategoriaFake({usuario: conta.usuario, tipo: TipoCategoriaModel.Entrada});
+            const expectedTransacao = transacaoDomain;
+            expectedTransacao.addConta(conta);
+            expectedTransacao.addCategoria(categoria);
+
+            const data: CreateTransactionData = {transacao: transacaoDomain.toModel(), contaId: contaId, categoriaId: categoriaId};
+            jest.spyOn(categoriaRepository, 'findCategoriaComUsuarioById').mockResolvedValue(categoria);
+            jest.spyOn(contaRepository, 'findContaComUsuarioById').mockResolvedValue(conta);
+            let error;
+            await useCase.execute(data).catch((e) => error = e);
+            expect(error.message).toBe('Tipo de transacao e categoria devem ser iguais');
+            expect(contaRepository.findContaComUsuarioById).toHaveBeenCalledWith(contaId);
+            expect(categoriaRepository.findCategoriaComUsuarioById).toHaveBeenCalledWith(categoriaId);
+            expect(transacaoRepository.saveDomain).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('Quando transacaoRepository.saveDomain lanca uma exception', () => {
+        it('deve lancar uma exception', async () => {
+            const transacaoDomain = makeTransacaoFake({tipo: TipoTransacaoModel.Saida});
+            const contaId = faker.number.int({ max: 100000 });
+            const categoriaId = faker.number.int({ max: 100000 });
+            const conta = makeContaFake();
+            const categoria = makeCategoriaFake({usuario: conta.usuario, tipo: TipoCategoriaModel.Saida});
 
             const expectedTransacao = transacaoDomain;
             expectedTransacao.addConta(conta);
@@ -139,11 +164,11 @@ describe('CreateTransactionUseCase', () => {
 
     describe('Quando transacaoRepository.saveDomain devolve null', () => {
         it('deve lancar uma exception', async () => {
-            const transacaoDomain = makeTransacaoFake();
+            const transacaoDomain = makeTransacaoFake({tipo: TipoTransacaoModel.Entrada});
             const contaId = faker.number.int({ max: 100000 });
             const categoriaId = faker.number.int({ max: 100000 });
             const conta = makeContaFake();
-            const categoria = makeCategoriaFake({usuario: conta.usuario});
+            const categoria = makeCategoriaFake({usuario: conta.usuario, tipo: TipoCategoriaModel.Entrada});
             const expectedTransacao = transacaoDomain;
             expectedTransacao.addConta(conta);
             expectedTransacao.addCategoria(categoria);
@@ -162,11 +187,11 @@ describe('CreateTransactionUseCase', () => {
 
     describe('Quando a transacao e salva com sucesso', () => {
         it('deve salvar a transacao', async () => {
-            const transacaoDomain = makeTransacaoFake();
+            const transacaoDomain = makeTransacaoFake({tipo: TipoTransacaoModel.Entrada});
             const contaId = faker.number.int({ max: 100000 });
             const categoriaId = faker.number.int({ max: 100000 });
             const conta = makeContaFake();
-            const categoria = makeCategoriaFake({usuario: conta.usuario});
+            const categoria = makeCategoriaFake({usuario: conta.usuario, tipo: TipoCategoriaModel.Entrada});
             const expectedTransacao = transacaoDomain;
             expectedTransacao.addConta(conta);
             expectedTransacao.addCategoria(categoria);

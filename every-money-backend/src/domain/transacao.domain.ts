@@ -15,11 +15,12 @@ export class TransacaoDomain extends EveryMoneyDomain implements TransacaoModel 
     ) {
         super();
         this.props.descricao = props.descricao ?? '';
-        this.props.valor = props.valor ?? 0;
+        this.props.valor = Number(props.valor) || 0;
         this.props.data = props.data ?? new Date();
         this.props.tipo = props.tipo ?? TipoTransacaoModel.Entrada;
         this.props.status = props.status ?? StatusTransacaoModel.Avencer;
-        this.props.mesReferencia = this.props.mesReferencia ?? getCurrentMonthReferenceFromDate(this.props.data);
+        const data = new Date(props.data);
+        this.props.mesReferencia = this.props.mesReferencia ?? getCurrentMonthReferenceFromDate(data);
     }
 
     get id (): number { return this.props.id; }

@@ -47,7 +47,7 @@ export class TransacaoEntity extends EveryMoneyEntity{
     @Column()
     descricao: string
 
-    @Column()
+    @Column({ type: 'float8' })
     valor: number;
 
     @Column()

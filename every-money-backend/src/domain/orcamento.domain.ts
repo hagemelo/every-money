@@ -13,7 +13,7 @@ export class OrcamentoDomain extends EveryMoneyDomain implements OrcamentoModel 
     ) {
         super();
         this.props.limite = props.limite ?? 0;
-        this.props.tipoCategoria = props.tipoCategoria ?? TipoCategoriaModel.Outros;
+        this.props.tipoCategoria = props.tipoCategoria ?? TipoCategoriaModel.Saida;
 
         if (!this.props.mesReferencia) {
             const now = new Date();

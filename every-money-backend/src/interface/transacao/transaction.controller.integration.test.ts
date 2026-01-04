@@ -21,6 +21,8 @@ import { ContaEntity } from "@infrastructure/entities/conta.entity";
 import { CategoriaEntity } from "@infrastructure/entities/categoria.entity";
 import { TransacaoEntity } from "@infrastructure/entities/transacao.entity";
 import { TransacaoFixture } from "@infrastructure/database/fixtures/transacao.fixture";
+import { TipoCategoriaModel } from "@domain/models/tipo-categoria.model";
+import { TipoTransacaoModel } from "@domain/models/tipo-transacao.model";
 
 describe('TransactionController', () => {
     let app: INestApplication;
@@ -69,7 +71,7 @@ describe('TransactionController', () => {
         contaEntity = makeContaEntityFakeNew({usuario: usuarioSaved});
         contaEntity = await contaFixture.createFixture({...contaEntity});
         conta = contaEntity.toDomain();
-        categoriaEntity = makeCategoriaEntityFakeNew({usuario: usuarioSaved});
+        categoriaEntity = makeCategoriaEntityFakeNew({usuario: usuarioSaved, tipo: TipoCategoriaModel.Saida});
         categoriaEntity = await categoriaFixture.createFixture(categoriaEntity);
         categoria = categoriaEntity.toDomain();
     })
@@ -77,7 +79,7 @@ describe('TransactionController', () => {
     describe('criar-transacao', () => {
         describe('Quando uma transacao for criada com sucesso', () => {
             it('deve retornar uma transacao', async () => {
-                const transacaoDomain: TransacaoDomain = makeTransacaoEntityFakeNew().toDomain();
+                const transacaoDomain: TransacaoDomain = makeTransacaoEntityFakeNew({tipo: TipoTransacaoModel.Saida}).toDomain();
                 const transacao = transacaoDomain.toModel()
                 const response = await request(app.getHttpServer())
                 .post(`/transacao/criar-transacao/conta/${conta.id}/categoria/${categoria.id}`)
