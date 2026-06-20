@@ -45,6 +45,7 @@ export class LoginService {
 
     logout(): void {
         this.localStorageToken.removeItem();
+        this.localStorageRefreshToken.removeItem();
         this.localStorageName.removeItem();
         this.localStorageEmail.removeItem();
         this.localStorageId.removeItem();

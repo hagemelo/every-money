@@ -43,17 +43,42 @@ export const Content = styled.p`
   margin-bottom: 8px;
 `;
 
-export const ActionLink = styled.a`
+export const ActionLink = styled.button`
+  background: none;
+  border: none;
   color: #6366f1;
-  text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
   display: flex;
   align-items: center;
   margin-top: auto;
+  cursor: pointer;
+  padding: 0;
 
   &:hover {
     color: #4338ca;
     text-decoration: underline;
   }
+`;
+
+export const ProgressBarContainer = styled.div`
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0 4px;
+`;
+
+export const ProgressBarFill = styled.div`
+  height: 100%;
+  border-radius: 4px;
+  background: ${props => props.$color || '#10b981'};
+  width: ${props => Math.min(props.$percent, 100)}%;
+  transition: width 0.3s ease;
+`;
+
+export const ProgressText = styled.span`
+  font-size: 0.8rem;
+  color: #6b7280;
 `;

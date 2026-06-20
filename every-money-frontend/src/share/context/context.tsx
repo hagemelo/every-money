@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { BackendApi } from "../../api/backend-api.tsx";
 import { CategoriaService } from "../../service/categoria.service.tsx";
 import { ContaService } from "../../service/conta.service.tsx";
@@ -6,39 +7,34 @@ import { OrcamentoService } from "../../service/orcamento.service.tsx";
 import { TransacaoService } from "../../service/transacao.service.tsx";
 import { LocalStorageService } from "../storage/local.storage.service.tsx";
 
+const sharedBackendApi = new BackendApi();
+
 export function useLocalStorage(key: string) {
-    return {
-      localStorageService: new LocalStorageService(key),
-    };
+    return useMemo(() => ({
+        localStorageService: new LocalStorageService(key),
+    }), [key]);
 }
 
 export function useBackendApi() {
-    return {
-      backendApi: new BackendApi(),
-    };
+    return useMemo(() => ({ backendApi: sharedBackendApi }), []);
 }
 
 export function useLoginService() {
-    const { backendApi } = useBackendApi();
-    return new LoginService(backendApi);
+    return useMemo(() => new LoginService(sharedBackendApi), []);
 }
 
 export function useContaService() {
-    const { backendApi } = useBackendApi();
-    return new ContaService(backendApi);
+    return useMemo(() => new ContaService(sharedBackendApi), []);
 }
 
 export function useOrcamentoService() {
-    const { backendApi } = useBackendApi();
-    return new OrcamentoService(backendApi);
+    return useMemo(() => new OrcamentoService(sharedBackendApi), []);
 }
 
 export function useCategoriaService() {
-    const { backendApi } = useBackendApi();
-    return new CategoriaService(backendApi);
+    return useMemo(() => new CategoriaService(sharedBackendApi), []);
 }
 
 export function useTransacaoService() {
-    const { backendApi } = useBackendApi();
-    return new TransacaoService(backendApi);
+    return useMemo(() => new TransacaoService(sharedBackendApi), []);
 }

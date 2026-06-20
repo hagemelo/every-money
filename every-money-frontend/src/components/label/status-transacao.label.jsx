@@ -27,7 +27,6 @@ const StatusLabel = styled.span`
 
 const StatusTransacaoLabel = ({ status }) => {
 
-  console.log(JSON.stringify(status));
   const getCorPorStatus = (status) => {
     switch(status) {
       case 'A vencer':
@@ -44,9 +43,6 @@ const StatusTransacaoLabel = ({ status }) => {
         return 'preto';
     }
   };
-
-  const test = getCorPorStatus(status);
-  console.log('test: ', test);
 
   if (!status) return null;
   

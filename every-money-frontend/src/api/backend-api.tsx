@@ -66,10 +66,12 @@ export class BackendApi {
             }
             const result = await api.get(path, { headers });
             return result.data;
-        }catch(error){
-            console.log('Novo Error in securetyGet:', error);
-            await this.refreshToken();
-            return await this.securetyGet(path, retryCount + 1);
+        }catch(error: any){
+            if (error?.response?.status === 401) {
+                await this.refreshToken();
+                return await this.securetyGet(path, retryCount + 1);
+            }
+            throw error;
         }
     }
 
@@ -89,13 +91,12 @@ export class BackendApi {
                 'Authorization': `Bearer ${token}`
             }
             const result = await api.post(path, data, { headers });
-            if (result.status === 401) {
+            return result.data;
+        }catch(error: any){
+            if (error?.response?.status === 401) {
                 await this.refreshToken();
                 return await this.securetyPost(path, data, retryCount + 1);
             }
-            return result.data;
-        }catch(error){
-            console.error('Error fetching data:', error);
             throw error;
         }
     }

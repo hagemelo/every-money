@@ -14,7 +14,7 @@ export const Input = styled.input`
   border-radius: 8px;
   width: 300px;
   outline: none;
-  &:focus { border-color: #007bff; box-shadow: 0 0 5px rgba(0,123,255,0.2); }
+  &:focus { border-color: rgb(41, 162, 184); box-shadow: 0 0 5px rgba(41, 162, 184, 0.2); }
 `;
 
 export const TableWrapper = styled.div`
@@ -63,8 +63,8 @@ export const Button = styled.button`
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
-  background-color: ${props => props.disabled ? '#ccc' : '#007bff'};
+  background-color: ${props => props.disabled ? '#ccc' : 'rgb(41, 162, 184)'};
   color: white;
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  &:hover { background-color: ${props => props.disabled ? '#ccc' : '#0056b3'}; }
+  &:hover { background-color: ${props => props.disabled ? '#ccc' : 'rgb(21, 107, 122)'}; }
 `;

@@ -41,16 +41,22 @@ export const SidebarNav = styled.nav`
 `;
 
 export const NavItem = styled.li`
-  padding: 0.75rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
   cursor: pointer;
   color: #ccc;
 
+  a {
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+  }
+
   &.active,
   &:hover {
-    background-color:rgb(21, 107, 122);
+    background-color: rgb(21, 107, 122);
     color: white;
   }
 
@@ -62,11 +68,32 @@ export const NavItem = styled.li`
 
 export const SidebarFooter = styled.div`
   padding: 1.5rem;
-  border-top: 1px solid #333;
+  border-top: 1px solid rgba(255,255,255,0.2);
   display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color:rgb(21, 107, 122));
+  flex-direction: column;
+  gap: 8px;
+  background-color: rgb(21, 107, 122);
+
+  span {
+    display: block;
+    font-size: 0.85rem;
+  }
+`;
+
+export const LogoutButton = styled.button`
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  align-self: flex-start;
+
+  &:hover {
+    background: rgba(255,255,255,0.25);
+  }
 `;
 
 export const UserAvatar = styled.span`
@@ -85,6 +112,7 @@ const PainelFinanceiroSidebarStyles = {
     NavItem,
     SidebarFooter,
     UserAvatar,
+    LogoutButton,
 }
 
 export default PainelFinanceiroSidebarStyles;

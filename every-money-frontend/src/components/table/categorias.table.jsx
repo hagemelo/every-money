@@ -1,28 +1,28 @@
-import { Controls, Input, TableWrapper, Table, Th, Tr, Td,Pagination, Button } from "./table.styles.jsx";
+import { Controls, Input, TableWrapper, Table, Th, Tr, Td, Pagination, Button } from "./table.styles.jsx";
 import { TableContainer } from "../styles/main.styles.jsx";
 import { useState, useMemo } from "react";
 
-
-const CategoriasTable = ({ categorias = [], onCategoriaSelect }) => {
-    const categoriasArray = Array.isArray(categorias) ? categorias : [];
+const CategoriasTable = ({ categorias = [] }) => {
     const [filter, setFilter] = useState('');
     const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const filteredData = useMemo(() => 
-    categoriasArray.filter(item => 
-      Object.values(item).some(val => String(val).toLowerCase().includes(filter.toLowerCase()))
-    ), [filter, categoriasArray]);
+    const filteredData = useMemo(() => {
+        const items = Array.isArray(categorias) ? categorias : [];
+        return items.filter(item =>
+            Object.values(item).some(val => String(val).toLowerCase().includes(filter.toLowerCase()))
+        );
+    }, [filter, categorias]);
 
     const sortedData = useMemo(() => {
-    let items = [...filteredData];
-    items.sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;
-      return 0;
-    });
-    return items;
+        const items = [...filteredData];
+        items.sort((a, b) => {
+            if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;
+            if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;
+            return 0;
+        });
+        return items;
     }, [filteredData, sortConfig]);
 
     const paginatedData = sortedData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
@@ -30,24 +30,18 @@ const CategoriasTable = ({ categorias = [], onCategoriaSelect }) => {
 
     const requestSort = (key) => {
         setSortConfig(prev => ({
-        key,
-        direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
+            key,
+            direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
         }));
     };
 
-    const handleCategoriaSelect = (e) => {
-        const novaCategoria = e.target.value;
-        if (onCategoriaSelect) {
-        onCategoriaSelect(novaCategoria);
-        }
-    };
     return (
         <TableContainer>
             <Controls>
-                <Input 
-                    placeholder="Pesquisar em toda a tabela..." 
+                <Input
+                    placeholder="Pesquisar em toda a tabela..."
                     onChange={(e) => { setFilter(e.target.value); setCurrentPage(1); }}
-                    />
+                />
             </Controls>
             <TableWrapper>
                 <Table>
@@ -58,9 +52,8 @@ const CategoriasTable = ({ categorias = [], onCategoriaSelect }) => {
                             <Th onClick={() => requestSort('classificacao')}>Classificação {sortConfig.key === 'classificacao' && (sortConfig.direction === 'asc' ? '↑' : '↓')}</Th>
                         </tr>
                     </thead>
-                    <tbody> 
-
-                        {paginatedData && paginatedData.map(categoria => (
+                    <tbody>
+                        {paginatedData.map(categoria => (
                             <Tr key={categoria.id}>
                                 <Td>{categoria.tipo}</Td>
                                 <Td>{categoria.nome}</Td>
@@ -76,7 +69,7 @@ const CategoriasTable = ({ categorias = [], onCategoriaSelect }) => {
                 <Button onClick={() => setCurrentPage(p => p + 1)} disabled={currentPage >= totalPages}>Próximo</Button>
             </Pagination>
         </TableContainer>
-        );
-}
+    );
+};
 
 export default CategoriasTable;

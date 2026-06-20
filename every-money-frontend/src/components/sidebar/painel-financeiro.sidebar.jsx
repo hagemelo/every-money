@@ -6,12 +6,28 @@ import categoriesIcon from '../../assets/categories128.png';
 import accountIcon from '../../assets/account128.png';
 import budgetsIcon from '../../assets/budget-planning.png';
 import userIcon from '../../assets/user128.png';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLoginService } from '../../share/context/context.tsx';
 
-const PainelFinanceiroSidebar = ({usuario}) => {
+const NAV_ITEMS = [
+    { path: '/home', label: 'Visão Geral', icon: homeIcon },
+    { path: '/account', label: 'Contas', icon: accountIcon },
+    { path: '/budget', label: 'Orçamentos', icon: budgetsIcon },
+    { path: '/transaction', label: 'Transações', icon: transactionsIcon },
+    { path: '/category', label: 'Categorias', icon: categoriesIcon },
+];
 
-    const { StyledAside, SidebarHeader, Icon, SidebarNav, NavItem, SidebarFooter } = PainelFinanceiroSidebarStyles
-  
+const PainelFinanceiroSidebar = ({ usuario }) => {
+    const { StyledAside, SidebarHeader, Icon, SidebarNav, NavItem, SidebarFooter, LogoutButton } = PainelFinanceiroSidebarStyles;
+    const location = useLocation();
+    const navigate = useNavigate();
+    const loginService = useLoginService();
+
+    const handleLogout = () => {
+        loginService.logout();
+        navigate('/');
+    };
+
     return (
         <StyledAside>
             <SidebarHeader>
@@ -20,49 +36,26 @@ const PainelFinanceiroSidebar = ({usuario}) => {
             </SidebarHeader>
             <SidebarNav>
                 <ul>
-                    <NavItem className="active">
-                        <Link to="/home">
-                            <Icon src={homeIcon} alt="Visão Geral" />
-                            Visão Geral
-                        </Link>
-                       
-                    </NavItem>
-                    <NavItem>
-                        <Link to="/account">
-                            <Icon src={accountIcon} alt="Contas" />
-                            Contas
-                        </Link>
-                    </NavItem>
-
-                    <NavItem>
-                        <Link to="/budget">
-                            <Icon src={budgetsIcon} alt="Orçamentos" />
-                            Orçamentos
-                        </Link>
-                    </NavItem>
-                
-                    <NavItem>
-                        <Link to="/transaction">
-                            <Icon src={transactionsIcon} alt="Transações" />
-                            Transações
-                        </Link>
-                    </NavItem>
-                    <NavItem>
-                        <Link to="/category">
-                            <Icon src={categoriesIcon} alt="Categorias" />
-                            Categorias
-                        </Link>
-                    </NavItem>
-                   
+                    {NAV_ITEMS.map(item => (
+                        <NavItem key={item.path} className={location.pathname === item.path ? 'active' : ''}>
+                            <Link to={item.path}>
+                                <Icon src={item.icon} alt={item.label} />
+                                {item.label}
+                            </Link>
+                        </NavItem>
+                    ))}
                 </ul>
             </SidebarNav>
             <SidebarFooter>
                 <Icon src={userIcon} alt="Usuário" />
-                <span>{usuario.name}</span>
-                <span>{usuario.email}</span>
+                <div>
+                    <span>{usuario.name}</span>
+                    <span>{usuario.email}</span>
+                </div>
+                <LogoutButton onClick={handleLogout} title="Sair">Sair</LogoutButton>
             </SidebarFooter>
         </StyledAside>
-      )
-  }
-  
-  export default PainelFinanceiroSidebar;
+    );
+};
+
+export default PainelFinanceiroSidebar;
