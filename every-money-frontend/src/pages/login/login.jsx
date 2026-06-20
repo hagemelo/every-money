@@ -1,71 +1,153 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import LoginStyles from './login.styles';
-import {useLogin} from '../../hook/useLogin.tsx'
+import { useLogin } from '../../hook/useLogin.tsx';
+import Button from '../../components/button/button.jsx';
+import logoIcon from '../../assets/logo192.png';
+
+const FEATURES = [
+  'Orçamentos mensais',
+  'Controle de transações',
+  'Múltiplas contas',
+];
 
 const Login = () => {
+  const {
+    LoginPage,
+    BrandPanel,
+    BrandLogo,
+    BrandTitle,
+    BrandTagline,
+    FeatureList,
+    FeatureItem,
+    FormPanel,
+    FormCard,
+    MobileBrand,
+    FormHeader,
+    FormTitle,
+    FormSubtitle,
+    StyledForm,
+    FieldGroup,
+    StyledLabel,
+    InputWrapper,
+    StyledInput,
+    PasswordToggle,
+    FieldError,
+    ForgotPasswordLink,
+    SubmitButtonWrapper,
+  } = LoginStyles;
 
-  const { LoginContainer, StyledCard, StyledHeading, StyledLabel, StyledInput, StyledButton, StyledMessage } = LoginStyles
-  
-  const {email,
+  const {
+    email,
     senha,
-    message,
-    isSuccessMessage,
+    loading,
+    shake,
+    fieldErrors,
     handleSubmit,
-    setEmail,
-    setSenha} = useLogin();
+    handleEmailChange,
+    handleSenhaChange,
+    handleForgotPassword,
+  } = useLogin();
 
-    return (
-    <LoginContainer>
-      <StyledCard>
-        <StyledHeading>
-          Every Money
-        </StyledHeading>
+  const [showPassword, setShowPassword] = useState(false);
 
-        {/* Display messages to the user */}
-        {message && (
-            <StyledMessage isSuccess={isSuccessMessage}>
-                {message}
-            </StyledMessage>
-        )}
+  return (
+    <LoginPage>
+      <BrandPanel>
+        <BrandLogo src={logoIcon} alt="Every Money" />
+        <BrandTitle>Every Money</BrandTitle>
+        <BrandTagline>
+          Controle suas finanças com simplicidade e clareza.
+        </BrandTagline>
+        <FeatureList>
+          {FEATURES.map(feature => (
+            <FeatureItem key={feature}>{feature}</FeatureItem>
+          ))}
+        </FeatureList>
+      </BrandPanel>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <StyledLabel>
-              Email
-            </StyledLabel>
-            <StyledInput
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-              required
-            />
-          </div>
+      <FormPanel>
+        <FormCard $shake={shake}>
+          <MobileBrand>
+            <img src={logoIcon} alt="Every Money" />
+            <span>Every Money</span>
+          </MobileBrand>
 
-          <div>
-            <StyledLabel htmlFor="senha">
-              Senha
-            </StyledLabel>
-            <StyledInput
-              type="password"
-              id="senha"
-              name="senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
-          </div>
+          <FormHeader>
+            <FormTitle>Bem-vindo de volta</FormTitle>
+            <FormSubtitle>Acesse sua conta para continuar</FormSubtitle>
+          </FormHeader>
 
-          <StyledButton>
-            Entrar
-          </StyledButton>
-        </form>
-      </StyledCard>
-    </LoginContainer    >
-    )
-}
+          <StyledForm onSubmit={handleSubmit} noValidate>
+            <FieldGroup>
+              <StyledLabel htmlFor="email">Email</StyledLabel>
+              <StyledInput
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => handleEmailChange(e.target.value)}
+                placeholder="voce@exemplo.com"
+                autoComplete="email"
+                aria-invalid={!!fieldErrors.email}
+                aria-describedby={fieldErrors.email ? 'email-error' : undefined}
+                $invalid={!!fieldErrors.email}
+                disabled={loading}
+              />
+              {fieldErrors.email && (
+                <FieldError id="email-error" role="alert">
+                  {fieldErrors.email}
+                </FieldError>
+              )}
+            </FieldGroup>
+
+            <FieldGroup>
+              <StyledLabel htmlFor="senha">Senha</StyledLabel>
+              <InputWrapper>
+                <StyledInput
+                  type={showPassword ? 'text' : 'password'}
+                  id="senha"
+                  name="senha"
+                  value={senha}
+                  onChange={(e) => handleSenhaChange(e.target.value)}
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  aria-invalid={!!fieldErrors.senha}
+                  aria-describedby={fieldErrors.senha ? 'senha-error' : undefined}
+                  $invalid={!!fieldErrors.senha}
+                  $hasToggle
+                  disabled={loading}
+                />
+                <PasswordToggle
+                  type="button"
+                  onClick={() => setShowPassword(prev => !prev)}
+                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  tabIndex={-1}
+                >
+                  {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                </PasswordToggle>
+              </InputWrapper>
+              {fieldErrors.senha && (
+                <FieldError id="senha-error" role="alert">
+                  {fieldErrors.senha}
+                </FieldError>
+              )}
+            </FieldGroup>
+
+            <ForgotPasswordLink type="button" onClick={handleForgotPassword}>
+              Esqueceu sua senha?
+            </ForgotPasswordLink>
+
+            <SubmitButtonWrapper>
+              <Button type="submit" disabled={loading}>
+                {loading ? 'Entrando...' : 'Entrar'}
+              </Button>
+            </SubmitButtonWrapper>
+          </StyledForm>
+        </FormCard>
+      </FormPanel>
+    </LoginPage>
+  );
+};
 
 export default Login;
