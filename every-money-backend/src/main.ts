@@ -3,6 +3,7 @@ import { EveryMoneyModule } from './every-money.module';
 import { initializeTransactionalContext } from 'typeorm-transactional';
 import { VersioningType } from '@nestjs/common';  
 import { LoggingInterceptor } from './modules/access-log/logging.interceptor';
+import { setupSwagger } from './config/swagger.setup';
 
 async function bootstrap() {
   initializeTransactionalContext();
@@ -16,6 +17,7 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
   app.useGlobalInterceptors(new LoggingInterceptor())
+  setupSwagger(app);
   await app.listen(3000);
 }
 bootstrap();

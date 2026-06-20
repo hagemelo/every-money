@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "npm": "11.4.1",
+    "npm": "11.17.0",
     "node": "22.16.0"
   },
   "scripts": {
@@ -38,6 +38,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.1.1",
+    "@nestjs/swagger": "^11.4.4",
     "@nestjs/typeorm": "^11.0.0",
     "axios": "^1.7.9",
     "class-transformer": "^0.5.1",
