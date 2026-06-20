@@ -11,8 +11,13 @@ export class ListAllAccountByUserIdUseCase {
     ) {}
 
     async execute(userId: number): Promise<ContaDomain[]> {
+        const contas = await this.contaRepository.findAllByUsuarioId(userId) ?? [];
 
-        const contas = await this.contaRepository.findAllByUsuarioId(userId);
-        return contas ?? [];
+        contas.forEach(conta => {
+            conta.calcularSaldoRealizado();
+            conta.calcularSaldoPrevisto();
+        });
+
+        return contas;
     }
 }
