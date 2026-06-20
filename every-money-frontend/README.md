@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# Every Money — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicação web de **gestão financeira pessoal** do projeto Every Money. Permite visualizar saldos, criar transações, orçamentos, contas e categorias, com foco na **Visão Geral** como painel central do dia a dia.
 
-## Available Scripts
+## Funcionalidades
 
-In the project directory, you can run:
+- **Autenticação** — login com JWT (access + refresh token)
+- **Visão Geral (`/home`)** — saldos, orçamentos com barra de progresso, últimas transações do mês, seletor de conta e mês
+- **Transações** — listagem por conta/mês e criação via modal
+- **Orçamentos** — listagem global, filtro por conta e criação
+- **Contas** — listagem e criação
+- **Categorias** — listagem e criação
+- **Onboarding** — fluxos guiados quando não há conta ou categoria cadastrada
 
-### `npm start`
+## Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Camada | Tecnologia |
+|--------|------------|
+| Framework | React 19 + Create React App |
+| Linguagem | TypeScript (hooks/services) + JSX (páginas/componentes) |
+| Roteamento | React Router v7 |
+| HTTP | Axios |
+| Estilos | styled-components |
+| Testes | Jest + Testing Library |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Pré-requisitos
 
-### `npm test`
+- Node.js 18+
+- npm
+- [every-money-backend](https://github.com/) rodando (padrão: `http://localhost:3000`)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalação
 
-### `npm run build`
+```bash
+git clone <url-do-repositorio>
+cd every-money-frontend
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Variáveis de ambiente
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Crie ou use o arquivo `.env.development` na raiz do projeto:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```env
+PORT=8080
+REACT_APP_BACKEND_API=http://localhost:3000
+```
 
-### `npm run eject`
+| Variável | Descrição | Padrão |
+|----------|-----------|--------|
+| `PORT` | Porta do servidor de desenvolvimento | `8080` |
+| `REACT_APP_BACKEND_API` | URL base da API backend | `http://localhost:3000` |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Scripts
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Desenvolvimento (http://localhost:8080)
+npm start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Build de produção
+npm run build
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Testes
+npm test
+```
 
-## Learn More
+## Rotas
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Rota | Página | Autenticação |
+|------|--------|--------------|
+| `/` | Login | Pública |
+| `/home` | Visão Geral | Protegida |
+| `/account` | Contas | Protegida |
+| `/budget` | Orçamentos | Protegida |
+| `/category` | Categorias | Protegida |
+| `/transaction` | Transações | Protegida |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Rotas protegidas redirecionam para `/` quando não há token válido no `localStorage`.
 
-### Code Splitting
+## Estrutura do projeto
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+src/
+├── api/              # Cliente HTTP (BackendApi, refresh token)
+├── components/       # UI reutilizável (modal, forms, tabelas, cards)
+├── hook/             # Hooks por domínio (useHome, useContas, etc.)
+├── pages/            # Páginas por rota
+├── service/          # Camada de serviço REST
+├── share/
+│   ├── context/      # Factories dos services
+│   ├── domain/       # Tipos e enums
+│   ├── storage/      # localStorage
+│   └── utils/        # Datas, moeda, orçamento
+└── index.tsx         # Bootstrap, rotas e ToastProvider
+```
 
-### Analyzing the Bundle Size
+### Padrão de arquitetura
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+Page → Hook → Service → BackendApi → REST API
+```
 
-### Making a Progressive Web App
+## Integração com o backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+O frontend consome os endpoints REST do backend NestJS. Principais operações:
 
-### Advanced Configuration
+| Recurso | Leitura | Criação |
+|---------|---------|---------|
+| Auth | — | `POST /auth/login` |
+| Contas | `GET /conta/listar-contas/usuario/:id` | `POST /conta/criar-conta` |
+| Categorias | `GET /categoria/listar-categorias/usuario/:id` | `POST /categoria/criar-categoria` |
+| Transações | `GET /transacao/listar-transacoes/conta/:id` | `POST /transacao/criar-transacao/conta/:contaId/categoria/:categoriaId` |
+| Orçamentos | `GET /orcamento/listar-orcamentos/usuario/:id` | `POST /orcamento/criar-orcamento/conta/:contaId` |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Formato de `mesReferencia`
 
-### Deployment
+O backend utiliza o formato **`"Junho 2026"`** (mês por extenso em português + ano). O frontend converte automaticamente entre esse formato e o valor do input HTML `type="month"` (`2026-06`).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Desenvolvimento
 
-### `npm run build` fails to minify
+1. Suba o backend na porta `3000`
+2. Execute `npm start` neste projeto
+3. Acesse `http://localhost:8080` e faça login
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Dicas
+
+- Se aparecer erro de rede em loop, reinicie o frontend e faça logout/login para renovar os tokens
+- Orçamentos criados com formato de mês incorreto no banco podem não aparecer — recrie pelo formulário da aplicação
+- O build de produção gera os arquivos estáticos em `build/`
+
+## Licença
+
+Projeto privado — uso interno.
