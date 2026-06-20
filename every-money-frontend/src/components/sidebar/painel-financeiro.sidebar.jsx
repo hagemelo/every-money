@@ -1,61 +1,114 @@
-import PainelFinanceiroSidebarStyles from './painel-financeiro.sidebar.styles';
+import {
+  FiHome,
+  FiCreditCard,
+  FiPieChart,
+  FiRepeat,
+  FiTag,
+} from 'react-icons/fi';
+import {
+  StyledAside,
+  SidebarHeader,
+  BrandLogo,
+  SidebarNav,
+  NavGroupLabel,
+  NavItem,
+  SidebarFooter,
+  UserAvatar,
+  UserInfo,
+  LogoutButton,
+} from './painel-financeiro.sidebar.styles';
 import logoIcon from '../../assets/logo192.png';
-import homeIcon from '../../assets/home128.png';
-import transactionsIcon from '../../assets/transaction128.png';
-import categoriesIcon from '../../assets/categories128.png';
-import accountIcon from '../../assets/account128.png';
-import budgetsIcon from '../../assets/budget-planning.png';
-import userIcon from '../../assets/user128.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useLoginService } from '../../share/context/context.tsx';
 
-const NAV_ITEMS = [
-    { path: '/home', label: 'Visão Geral', icon: homeIcon },
-    { path: '/account', label: 'Contas', icon: accountIcon },
-    { path: '/budget', label: 'Orçamentos', icon: budgetsIcon },
-    { path: '/transaction', label: 'Transações', icon: transactionsIcon },
-    { path: '/category', label: 'Categorias', icon: categoriesIcon },
+const NAV_GROUPS = [
+  {
+    label: 'Principal',
+    items: [
+      { path: '/home', label: 'Visão Geral', icon: FiHome },
+    ],
+  },
+  {
+    label: 'Gestão',
+    items: [
+      { path: '/account', label: 'Contas', icon: FiCreditCard },
+      { path: '/budget', label: 'Orçamentos', icon: FiPieChart },
+      { path: '/transaction', label: 'Transações', icon: FiRepeat },
+      { path: '/category', label: 'Categorias', icon: FiTag },
+    ],
+  },
 ];
 
-const PainelFinanceiroSidebar = ({ usuario }) => {
-    const { StyledAside, SidebarHeader, Icon, SidebarNav, NavItem, SidebarFooter, LogoutButton } = PainelFinanceiroSidebarStyles;
-    const location = useLocation();
-    const navigate = useNavigate();
-    const loginService = useLoginService();
+function getInitials(name) {
+  if (!name) return '?';
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .map(part => part[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+}
 
-    const handleLogout = () => {
-        loginService.logout();
-        navigate('/');
-    };
+const PainelFinanceiroSidebar = ({ usuario, onNavigate }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const loginService = useLoginService();
 
-    return (
-        <StyledAside>
-            <SidebarHeader>
-                <Icon src={logoIcon} alt="Every Money" />
-                <h2>Every Money</h2>
-            </SidebarHeader>
-            <SidebarNav>
-                <ul>
-                    {NAV_ITEMS.map(item => (
-                        <NavItem key={item.path} className={location.pathname === item.path ? 'active' : ''}>
-                            <Link to={item.path}>
-                                <Icon src={item.icon} alt={item.label} />
-                                {item.label}
-                            </Link>
-                        </NavItem>
-                    ))}
-                </ul>
-            </SidebarNav>
-            <SidebarFooter>
-                <Icon src={userIcon} alt="Usuário" />
-                <div>
-                    <span>{usuario.name}</span>
-                    <span>{usuario.email}</span>
-                </div>
-                <LogoutButton onClick={handleLogout} title="Sair">Sair</LogoutButton>
-            </SidebarFooter>
-        </StyledAside>
-    );
+  const handleLogout = () => {
+    loginService.logout();
+    navigate('/');
+  };
+
+  const handleNavClick = () => {
+    onNavigate?.();
+  };
+
+  return (
+    <StyledAside>
+      <SidebarHeader>
+        <BrandLogo src={logoIcon} alt="Every Money" />
+        <h2>Every Money</h2>
+      </SidebarHeader>
+
+      <SidebarNav>
+        <ul>
+          {NAV_GROUPS.map(group => (
+            <li key={group.label}>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                <NavGroupLabel>{group.label}</NavGroupLabel>
+                {group.items.map(item => {
+                  const Icon = item.icon;
+                  return (
+                    <NavItem
+                      key={item.path}
+                      className={location.pathname === item.path ? 'active' : ''}
+                    >
+                      <Link to={item.path} onClick={handleNavClick}>
+                        <Icon />
+                        {item.label}
+                      </Link>
+                    </NavItem>
+                  );
+                })}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </SidebarNav>
+
+      <SidebarFooter>
+        <UserAvatar>{getInitials(usuario?.name)}</UserAvatar>
+        <UserInfo>
+          <span>{usuario?.name}</span>
+          <small>{usuario?.email}</small>
+        </UserInfo>
+        <LogoutButton onClick={handleLogout} title="Sair">
+          Sair
+        </LogoutButton>
+      </SidebarFooter>
+    </StyledAside>
+  );
 };
 
 export default PainelFinanceiroSidebar;

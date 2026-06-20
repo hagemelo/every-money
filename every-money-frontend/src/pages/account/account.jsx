@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { MainContainer, MainContent } from '../../components/styles/main.styles.jsx';
-import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
+import AppShell from '../../components/layout/app-shell.jsx';
 import { useAccount } from '../../hook/useAccount.tsx';
 import ContasTable from '../../components/table/contas.table.jsx';
 import Button from '../../components/button/button.jsx';
@@ -35,9 +34,7 @@ const Account = () => {
     };
 
     return (
-        <MainContainer>
-            <PainelFinanceiroSidebar usuario={usuario} />
-            <MainContent>
+        <AppShell usuario={usuario}>
                 <PageHeader>
                     <h1>Contas</h1>
                     <Button onClick={() => setModalConta(true)}>+ Nova Conta</Button>
@@ -69,8 +66,7 @@ const Account = () => {
                 >
                     <ContaForm onSubmit={handleCreateConta} />
                 </Modal>
-            </MainContent>
-        </MainContainer>
+        </AppShell>
     );
 };
 

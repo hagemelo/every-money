@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { MainContainer, MainContent } from '../../components/styles/main.styles.jsx';
-import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
+import AppShell from '../../components/layout/app-shell.jsx';
 import { useBudget } from '../../hook/useBudget.tsx';
 import OrcamentoTable from '../../components/table/orcamento.table.jsx';
 import ListContas from '../../components/select/list-contas.select.jsx';
@@ -55,9 +54,7 @@ const Budget = () => {
     };
 
     return (
-        <MainContainer>
-            <PainelFinanceiroSidebar usuario={usuario} />
-            <MainContent>
+        <AppShell usuario={usuario}>
                 <PageHeader>
                     <h1>Orçamentos</h1>
                     <Button onClick={() => setModalOrcamento(true)} disabled={!contas?.length}>
@@ -107,8 +104,7 @@ const Budget = () => {
                     )}
                     <OrcamentoForm mesReferenciaInicial={getMesReferencia()} onSubmit={handleCreateOrcamento} />
                 </Modal>
-            </MainContent>
-        </MainContainer>
+        </AppShell>
     );
 };
 

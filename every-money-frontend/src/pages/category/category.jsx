@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { MainContainer, MainContent } from '../../components/styles/main.styles.jsx';
-import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
+import AppShell from '../../components/layout/app-shell.jsx';
 import { useCategory } from '../../hook/useCategory.tsx';
 import CategoriasTable from '../../components/table/categorias.table.jsx';
 import Button from '../../components/button/button.jsx';
@@ -35,9 +34,7 @@ const Category = () => {
     };
 
     return (
-        <MainContainer>
-            <PainelFinanceiroSidebar usuario={usuario} />
-            <MainContent>
+        <AppShell usuario={usuario}>
                 <PageHeader>
                     <h1>Categorias</h1>
                     <Button onClick={() => setModalCategoria(true)}>+ Nova Categoria</Button>
@@ -69,8 +66,7 @@ const Category = () => {
                 >
                     <CategoriaForm onSubmit={handleCreateCategoria} />
                 </Modal>
-            </MainContent>
-        </MainContainer>
+        </AppShell>
     );
 };
 

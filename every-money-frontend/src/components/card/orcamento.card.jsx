@@ -18,8 +18,8 @@ const OrcamentoCard = ({ orcamento, gasto = 0 }) => {
 
   return (
     <CardContainer borderColor={color}>
-      <CategoryBadge>{orcamento.mesReferencia}</CategoryBadge>
-      <Title>Categoria: {orcamento.tipoCategoria}</Title>
+      <CategoryBadge>{orcamento.tipoCategoria}</CategoryBadge>
+      <Title>Limite mensal</Title>
       <Content>
         <PriceLabel valor={limite} />
       </Content>
@@ -27,7 +27,7 @@ const OrcamentoCard = ({ orcamento, gasto = 0 }) => {
         <ProgressBarFill $percent={percent} $color={color} />
       </ProgressBarContainer>
       <ProgressText>
-        {formatCurrency(gasto)} de {formatCurrency(limite)} ({Math.round(percent)}%)
+        {Math.round(percent)}% utilizado · {formatCurrency(gasto)} de {formatCurrency(limite)}
       </ProgressText>
     </CardContainer>
   );

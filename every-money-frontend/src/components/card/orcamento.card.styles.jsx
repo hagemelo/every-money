@@ -21,12 +21,12 @@ export const CategoryBadge = styled.span`
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #4f46e5;
-  background-color: #eef2ff;
-  padding: 4px 4px;
+  color: rgb(21, 107, 122);
+  background-color: rgb(225, 245, 248);
+  padding: 4px 8px;
   border-radius: 4px;
   align-self: flex-start;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 `;
 
 export const Title = styled.h3`

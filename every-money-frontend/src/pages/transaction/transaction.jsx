@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { MainContainer, MainContent } from '../../components/styles/main.styles.jsx';
-import PainelFinanceiroSidebar from '../../components/sidebar/painel-financeiro.sidebar.jsx';
+import AppShell from '../../components/layout/app-shell.jsx';
 import { useTransaction } from '../../hook/useTransaction.tsx';
 import ListContas from '../../components/select/list-contas.select.jsx';
 import TransacaoTable from '../../components/table/transacoes.table.jsx';
@@ -108,9 +107,7 @@ const Transaction = () => {
     };
 
     return (
-        <MainContainer>
-            <PainelFinanceiroSidebar usuario={usuario} />
-            <MainContent>
+        <AppShell usuario={usuario}>
                 <PageHeader>
                     <h1>Transações</h1>
                     <Button onClick={openModal} disabled={!contaSelecionada}>
@@ -177,8 +174,7 @@ const Transaction = () => {
                 >
                     <CategoriaForm onSubmit={handleCreateCategoria} />
                 </Modal>
-            </MainContent>
-        </MainContainer>
+        </AppShell>
     );
 };
 
