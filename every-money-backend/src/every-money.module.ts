@@ -12,10 +12,11 @@ import { AccountController } from './interface/conta/account.controller';
 import { CreateCategoryController } from './interface/categoria/category.controller';
 import { BudgetController } from './interface/orcamento/budget.controller';
 import { TransactionController } from './interface/transacao/transaction.controller';
+import { HealthyModule } from './modules/helthcheck/healthy.module';
 
 
 @Module({
-  imports: [DatabaseModule, ApplicationModule, AuthModule, RepositoriesModule, 
+  imports: [DatabaseModule, ApplicationModule, AuthModule, RepositoriesModule,  HealthyModule,
     ConfigModule.forRoot({
     isGlobal: true,
     envFilePath:  `.env.${process.env.NODE_ENV}`, 
