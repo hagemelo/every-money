@@ -13,6 +13,7 @@ import { CreateCategoryController } from './interface/categoria/category.control
 import { BudgetController } from './interface/orcamento/budget.controller';
 import { TransactionController } from './interface/transacao/transaction.controller';
 import { HealthyModule } from './modules/helthcheck/healthy.module';
+import { FinancialAssistantController } from './interface/ai/financial-assitant.controller';
 
 
 @Module({
@@ -27,6 +28,7 @@ import { HealthyModule } from './modules/helthcheck/healthy.module';
     AlterUserPasswordController, 
     BudgetController,
     CreateCategoryController,
-    TransactionController],
+    TransactionController,
+    FinancialAssistantController],
 })
 export class EveryMoneyModule {}

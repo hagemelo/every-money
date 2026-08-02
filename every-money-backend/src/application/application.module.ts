@@ -12,6 +12,7 @@ import { FindUserByUseCase } from './use-cases/find-user-by.use-case';
 import { ListAllBudgetByUserIdUseCase } from './use-cases/list-all-budget-by-user-id.use-case';
 import { ListAllTransactionsByAccountIdUseCase } from './use-cases/list-all-transactions-by-account-id.use-case';
 import { ListAllTransactionsByContaIdMonthYearUseCase } from './use-cases/list-all-transactions-by-conta-id-month-year.use-case';
+import { FinancialAssistantService } from './ai/services/financial-assitant.service';
 
 const useCases = [
     AlterUserPasswordUseCase,
@@ -28,9 +29,13 @@ const useCases = [
     ListAllTransactionsByContaIdMonthYearUseCase
     ]
 
+const aiServices = [
+  FinancialAssistantService
+]
+
 @Module({
   imports: [RepositoriesModule],
-  providers: [...useCases],
-  exports: [...useCases],
+  providers: [...useCases, ...aiServices],
+  exports: [...useCases, ...aiServices],
 })
 export class ApplicationModule {}
