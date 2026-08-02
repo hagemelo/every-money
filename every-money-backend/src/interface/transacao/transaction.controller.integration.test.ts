@@ -24,6 +24,20 @@ import { TransacaoFixture } from "@infrastructure/database/fixtures/transacao.fi
 import { TipoCategoriaModel } from "@domain/models/tipo-categoria.model";
 import { TipoTransacaoModel } from "@domain/models/tipo-transacao.model";
 
+const mockedStream = jest.fn();
+
+jest.mock('@application/ai/agents/financial-assitant.agent', () => ({
+    financialAssistantAgent: jest.fn(() => ({
+      stream: mockedStream,
+    })),
+  }));
+  
+  jest.mock('@application/ai/tools/list-all-categories-by-user-id.tool', () => ({
+    listAllCategoriesByUserIdTool: jest.fn(() => ({
+      id: 'list-all-categories-by-user-id-tool',
+    })),
+  }));
+
 describe('TransactionController', () => {
     let app: INestApplication;
     let testingModule: TestingModule;

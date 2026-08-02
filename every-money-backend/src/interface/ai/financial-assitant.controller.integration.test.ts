@@ -5,6 +5,15 @@ import request = require('supertest');
 import { FinancialAssistantService } from '@application/ai/services/financial-assitant.service';
 import { FinancialAssistantController } from './financial-assitant.controller';
 
+jest.mock('@nestjs/passport', () => ({
+  AuthGuard: jest.fn(() => class MockAuthGuard {
+    canActivate(context: any) {
+      context.switchToHttp().getRequest().user = { id: 42 };
+      return true;
+    }
+  }),
+}));
+
 jest.mock('@application/ai/services/financial-assitant.service', () => ({
   FinancialAssistantService: class FinancialAssistantService {},
 }));
@@ -48,6 +57,7 @@ describe('FinancialAssistantController (integration)', () => {
 
     expect(financialAssistantService.streamAgentResponse).toHaveBeenCalledWith(
       'Como economizar?',
+      expect.any(Number),
     );
   });
 
@@ -62,7 +72,8 @@ describe('FinancialAssistantController (integration)', () => {
       .expect('Content-Type', /text\/event-stream/);
 
     expect(financialAssistantService.streamAgentResponse).toHaveBeenCalledWith(
-      'Olá, Sou o assistente financeiro da pessoal, como posso ajudar você hoje?',
+      'Olá, sou seu assistente financeiro. Como posso ajudar você hoje?',
+      expect.any(Number),
     );
   });
 });

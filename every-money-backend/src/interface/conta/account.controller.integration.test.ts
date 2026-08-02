@@ -15,6 +15,20 @@ import { makeContaEntityFakeNew } from "@test/fake/conta.fake";
 import { ContaFixture } from "@infrastructure/database/fixtures/conta.fixture";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 
+const mockedStream = jest.fn();
+
+jest.mock('@application/ai/agents/financial-assitant.agent', () => ({
+    financialAssistantAgent: jest.fn(() => ({
+      stream: mockedStream,
+    })),
+  }));
+  
+  jest.mock('@application/ai/tools/list-all-categories-by-user-id.tool', () => ({
+    listAllCategoriesByUserIdTool: jest.fn(() => ({
+      id: 'list-all-categories-by-user-id-tool',
+    })),
+  }));
+
 describe('AccountController', () => {
     let app: INestApplication;
     let testingModule: TestingModule

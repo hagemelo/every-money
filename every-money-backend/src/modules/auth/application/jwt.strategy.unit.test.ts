@@ -19,11 +19,11 @@ describe('JwtStrategy', () => {
     describe('Quando validate e chamado', () => {
         it('deve validar o payload', async () => {
             jwtStrategy = new JwtStrategy(configService)
-            const payload = { email: 'email', senha: 'senha' }
+            const payload = { id: 42, email: 'email' }
             const result = await jwtStrategy.validate(payload)
             expect(result).toBeDefined()
             expect(result.username).toBe(payload.email)
-            expect(result.sub).toBe(payload.senha)
+            expect(result.id).toBe(payload.id)
         })
 
         it('deve validar o payload com secretKey', async () => {
@@ -31,11 +31,11 @@ describe('JwtStrategy', () => {
                 get: jest.fn().mockReturnValue(null)
             })
             jwtStrategy = new JwtStrategy(configService)
-            const payload = { email: 'email', senha: 'senha' }
+            const payload = { id: 42, email: 'email' }
             const result = await jwtStrategy.validate(payload)
             expect(result).toBeDefined()
             expect(result.username).toBe(payload.email)
-            expect(result.sub).toBe(payload.senha)
+            expect(result.id).toBe(payload.id)
         })
     })
 })

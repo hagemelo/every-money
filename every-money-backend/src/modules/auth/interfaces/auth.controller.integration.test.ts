@@ -7,6 +7,22 @@ import { makeUsuarioEntityFakeNew } from '@test/fake/usuario.fake';
 import { UsuarioFixture } from '@infrastructure/database/fixtures/usuario.fixture';
 import { DataSource } from 'typeorm';
 
+
+const mockedStream = jest.fn();
+
+jest.mock('@application/ai/agents/financial-assitant.agent', () => ({
+    financialAssistantAgent: jest.fn(() => ({
+      stream: mockedStream,
+    })),
+  }));
+  
+  jest.mock('@application/ai/tools/list-all-categories-by-user-id.tool', () => ({
+    listAllCategoriesByUserIdTool: jest.fn(() => ({
+      id: 'list-all-categories-by-user-id-tool',
+    })),
+  }));
+
+
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
   let testingModule: TestingModule

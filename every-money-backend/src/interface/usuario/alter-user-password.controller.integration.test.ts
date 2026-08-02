@@ -10,6 +10,20 @@ import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
 import { AuthData } from "@domain/data/auth.data";
 import { initializeTransactionalContext  } from "typeorm-transactional";
 
+const mockedStream = jest.fn();
+
+jest.mock('@application/ai/agents/financial-assitant.agent', () => ({
+    financialAssistantAgent: jest.fn(() => ({
+      stream: mockedStream,
+    })),
+  }));
+  
+  jest.mock('@application/ai/tools/list-all-categories-by-user-id.tool', () => ({
+    listAllCategoriesByUserIdTool: jest.fn(() => ({
+      id: 'list-all-categories-by-user-id-tool',
+    })),
+  }));
+
 describe('AlterUserPasswordController', () => {
   let app: INestApplication;
   let testingModule: TestingModule

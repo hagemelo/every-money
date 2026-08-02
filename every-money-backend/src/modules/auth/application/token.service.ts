@@ -3,7 +3,10 @@ import { Injectable } from "@nestjs/common";
 import { UsuarioDomain } from "@domain/usuario.domain";
 import { AccessTokenData } from "@domain/data/access-token.data";
 import { JwtService } from "@nestjs/jwt";
-import { AuthData } from "@domain/data/auth.data";
+type JwtPayload = {
+    id: number;
+    email: string;
+};
     
 @Injectable()
 export class TokenService {
@@ -20,7 +23,10 @@ export class TokenService {
         const refreshSecretKey = this.configService.get('jwt.refreshSecretKey') || 'secretKey';
         const refreshExpiresIn = this.configService.get('jwt.refreshExpiresIn') || '1h';
 
-        const  payload: AuthData = { email: usuarioDomain.email, senha: usuarioDomain.senha };
+        const payload: JwtPayload = {
+            id: usuarioDomain.id,
+            email: usuarioDomain.email,
+        };
 
         return {
             accessToken: this.jwtService.sign(payload, { secret: secretKey, expiresIn }),

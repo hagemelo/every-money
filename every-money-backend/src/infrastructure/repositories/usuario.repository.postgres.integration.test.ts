@@ -14,6 +14,22 @@ let testingModule: TestingModule
 let usuarioFixture: UsuarioFixture
 let usuarioRepository: UsuarioRepository
 let dataSource: DataSource
+
+
+
+const mockedStream = jest.fn();
+
+jest.mock('@application/ai/agents/financial-assitant.agent', () => ({
+    financialAssistantAgent: jest.fn(() => ({
+      stream: mockedStream,
+    })),
+  }));
+  
+  jest.mock('@application/ai/tools/list-all-categories-by-user-id.tool', () => ({
+    listAllCategoriesByUserIdTool: jest.fn(() => ({
+      id: 'list-all-categories-by-user-id-tool',
+    })),
+  }));
 describe('UsuarioRepositoryPostgres', () => {
     beforeAll(async () => {
       testingModule = await buildTestingModule()

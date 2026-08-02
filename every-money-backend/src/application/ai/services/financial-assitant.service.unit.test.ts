@@ -2,20 +2,32 @@ import { MessageEvent } from '@nestjs/common';
 import { firstValueFrom, toArray } from 'rxjs';
 import { financialAssistantAgent } from '../agents/financial-assitant.agent';
 import { FinancialAssistantService } from './financial-assitant.service';
+import { ListAllCategoriesByUserIdUseCase } from '@application/use-cases/list-all-categories-by-user-id.use-case';
+import { createMock } from '@golevelup/ts-jest';
+import { listAllCategoriesByUserIdTool } from '../tools/list-all-categories-by-user-id.tool';
+
+const mockedStream = jest.fn();
 
 jest.mock('../agents/financial-assitant.agent', () => ({
-  financialAssistantAgent: {
-    stream: jest.fn(),
-  },
+  financialAssistantAgent: jest.fn(() => ({
+    stream: mockedStream,
+  })),
 }));
 
-const mockedStream = financialAssistantAgent.stream as jest.Mock;
+jest.mock('../tools/list-all-categories-by-user-id.tool', () => ({
+  listAllCategoriesByUserIdTool: jest.fn(() => ({
+    id: 'list-all-categories-by-user-id-tool',
+  })),
+}));
 
 describe('FinancialAssistantService', () => {
   let service: FinancialAssistantService;
+  let listAllCategoriesByUserIdUseCase: ListAllCategoriesByUserIdUseCase;
 
   beforeEach(() => {
-    service = new FinancialAssistantService();
+    listAllCategoriesByUserIdUseCase = createMock<ListAllCategoriesByUserIdUseCase>();
+
+    service = new FinancialAssistantService(listAllCategoriesByUserIdUseCase);
     jest.clearAllMocks();
   });
 
@@ -23,14 +35,19 @@ describe('FinancialAssistantService', () => {
     mockedStream.mockResolvedValue({
       textStream: (async function* () {
         yield 'Olá, ';
-        yield 'como posso ajudar?';
+        yield 'como posso ajudar?';''
       })(),
     });
 
-    const observable = await service.streamAgentResponse('Quais são minhas despesas?');
+    const observable = await service.streamAgentResponse(
+      'Quais são minhas despesas?',
+      42,
+    );
     const events = await firstValueFrom(observable.pipe(toArray()));
 
-    expect(mockedStream).toHaveBeenCalledWith('Quais são minhas despesas?');
+    expect(mockedStream).toHaveBeenCalledWith('Quais são minhas despesas?', {
+      maxSteps: 2,
+    });
     expect(events).toEqual<MessageEvent[]>([
       { data: { text: 'Olá, ' } },
       { data: { text: 'como posso ajudar?' } },
@@ -47,8 +64,28 @@ describe('FinancialAssistantService', () => {
       })(),
     });
 
-    const observable = await service.streamAgentResponse('Analise meu orçamento');
+    const observable = await service.streamAgentResponse('Analise meu orçamento', 42);
 
     await expect(firstValueFrom(observable.pipe(toArray()))).rejects.toBe(streamError);
+  });
+
+  it('deve exigir a tool ao solicitar a listagem de categorias', async () => {
+    mockedStream.mockResolvedValue({
+      textStream: (async function* () {
+        yield 'Estas são suas categorias.';
+      })(),
+    });
+
+    const observable = await service.streamAgentResponse(
+      'Listar as categorias',
+      42,
+    );
+
+    await firstValueFrom(observable.pipe(toArray()));
+
+    expect(mockedStream).toHaveBeenCalledWith('Listar as categorias', {
+      maxSteps: 2,
+      toolChoice: 'required',
+    });
   });
 });
