@@ -3,6 +3,8 @@ import { TransacaoDomain } from "./transacao.domain"
 import { TipoTransacaoModel } from "./models/tipo-transacao.model"
 import { faker } from "@faker-js/faker/."
 import { StatusTransacaoModel } from "./models/status-transacao.model"
+import { CategoriaDomain } from "./categoria.domain"
+import { ContaDomain } from "./conta.domain"
 
 describe('TransacaoDomain', () => {
     
@@ -37,6 +39,50 @@ describe('TransacaoDomain', () => {
             expect(transacao.updatedAt).not.toBeNull()
             expect(transacao.mesReferencia).not.toBeNull()
             expect(transacao.tipo).toBe(TipoTransacaoModel.Entrada)
+        })
+
+        it('deve retornar uma instancia de CategoriaDomain quando houver categoria', () => {
+            const transacao = makeTransacaoFake()
+
+            expect(transacao.categoria).toBeInstanceOf(CategoriaDomain)
+            expect(transacao.categoria?.id).not.toBeNull()
+        })
+
+        it('deve retornar null quando nao houver categoria', () => {
+            const transacao = new TransacaoDomain({
+                id: null,
+                descricao: 'Transacao Teste',
+                valor: 100,
+                data: new Date(),
+                tipo: TipoTransacaoModel.Entrada,
+                categoria: null,
+                conta: null,
+                mesReferencia: '2026-08',
+            })
+
+            expect(transacao.categoria).toBeNull()
+        })
+
+        it('deve retornar uma instancia de ContaDomain quando houver conta', () => {
+            const transacao = makeTransacaoFake()
+
+            expect(transacao.conta).toBeInstanceOf(ContaDomain)
+            expect(transacao.conta?.id).not.toBeNull()
+        })
+
+        it('deve retornar null quando nao houver conta', () => {
+            const transacao = new TransacaoDomain({
+                id: null,
+                descricao: 'Transacao Teste',
+                valor: 100,
+                data: new Date(),
+                tipo: TipoTransacaoModel.Entrada,
+                categoria: null,
+                conta: null,
+                mesReferencia: '2026-08',
+            })
+
+            expect(transacao.conta).toBeNull()
         })
 
         it('deve devolver valor da transacao como 0 quando o valor for invalido', () => {

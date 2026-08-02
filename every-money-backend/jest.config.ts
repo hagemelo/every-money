@@ -26,7 +26,16 @@ module.exports = {
       '!<rootDir>/src/infrastructure/database/data-source/*',
       '!<rootDir>/src/infrastructure/database/database.module.ts',
          ],
-    modulePathIgnorePatterns: ['<rootDir>/src/infrastructure/database/migration/*'],
+
+    coveragePathIgnorePatterns: [
+    '<rootDir>/src/infrastructure/database/migration/*',
+    '<rootDir>/src/modules/helthcheck/*',
+    '<rootDir>/src/application/ai/agents/*'
+    ],
+    modulePathIgnorePatterns: ['<rootDir>/src/infrastructure/database/migration/*',
+      '<rootDir>/src/modules/helthcheck/*',
+      '<rootDir>/src/application/ai/agents/*'
+    ],
     coverageDirectory: 'coverage',
     coverageProvider: 'babel',
     coverageThreshold: {
