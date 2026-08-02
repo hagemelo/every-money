@@ -46,6 +46,7 @@ import { getMesReferencia, mesReferenciaEquals } from '../../share/utils/date.ut
 import { calcularGastoOrcamento } from '../../share/utils/budget.utils';
 import { formatCurrency } from '../../share/utils/currency.utils';
 import DateLabel from '../../components/label/date.label';
+import AiChat from '../../components/ai-chat/ai-chat.jsx';
 
 const KPI_BACKGROUNDS = {
   realizado: 'linear-gradient(135deg, rgb(21, 107, 122), rgb(15, 80, 92))',
@@ -252,6 +253,8 @@ const Home = () => {
               background={KPI_BACKGROUNDS.saidas}
             />
           </KpiGrid>
+
+          <AiChat contaId={contaId} mesReferencia={mesReferencia} />
 
           <HomeDashboard>
             <SectionCard>
