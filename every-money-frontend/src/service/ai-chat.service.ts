@@ -2,9 +2,15 @@ import { LocalStorageService } from '../share/storage/local.storage.service.tsx'
 
 const backendUrl = process.env.REACT_APP_BACKEND_API || 'http://localhost:3000';
 
-const getChatUrl = (message: string, contaId?: number, mesReferencia?: string) => {
+const getChatUrl = (
+  prompt: string,
+  threadId: string,
+  contaId?: number,
+  mesReferencia?: string,
+) => {
   const url = new URL('/ai/chat-stream', backendUrl);
-  url.searchParams.set('message', message);
+  url.searchParams.set('prompt', prompt);
+  url.searchParams.set('threadId', threadId);
 
   if (contaId) {
     url.searchParams.set('contaId', String(contaId));
@@ -38,7 +44,8 @@ export class AiChatService {
   private readonly tokenStorage = new LocalStorageService('token');
 
   async streamMessage(
-    message: string,
+    prompt: string,
+    threadId: string,
     context: { contaId?: number; mesReferencia?: string },
     onChunk: (chunk: string) => void,
     signal?: AbortSignal,
@@ -49,7 +56,12 @@ export class AiChatService {
       throw new Error('Sessão não encontrada. Faça login novamente.');
     }
 
-    const response = await fetch(getChatUrl(message, context.contaId, context.mesReferencia), {
+    const response = await fetch(getChatUrl(
+      prompt,
+      threadId,
+      context.contaId,
+      context.mesReferencia,
+    ), {
       method: 'GET',
       headers: {
         Accept: 'text/event-stream, application/json, text/plain',

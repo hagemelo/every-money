@@ -14,6 +14,7 @@ export const useAiChat = (context: { contaId?: number; mesReferencia?: string })
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState('');
   const abortControllerRef = useRef<AbortController | null>(null);
+  const threadIdRef = useRef(crypto.randomUUID());
 
   const cancelMessage = useCallback(() => {
     abortControllerRef.current?.abort();
@@ -23,6 +24,7 @@ export const useAiChat = (context: { contaId?: number; mesReferencia?: string })
 
   const clearMessages = useCallback(() => {
     cancelMessage();
+    threadIdRef.current = crypto.randomUUID();
     setMessages([]);
     setError('');
   }, [cancelMessage]);
@@ -53,6 +55,7 @@ export const useAiChat = (context: { contaId?: number; mesReferencia?: string })
     try {
       await aiChatService.streamMessage(
         content,
+        threadIdRef.current,
         context,
         chunk => {
           setMessages(current => current.map(message => (
