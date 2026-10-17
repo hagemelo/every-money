@@ -1,10 +1,12 @@
-// src/mastra/mastra.service.ts
-import { Injectable } from '@nestjs/common';
+
+import { Inject, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { MessageEvent } from '@nestjs/common';
-import { financialAssistantAgent } from '../agents/financial-assitant.agent';
+import { financialAssistantAgent } from '@application/ai/agents/financial-assitant.agent';
 import { ListAllCategoriesByUserIdUseCase } from '@application/use-cases/list-all-categories-by-user-id.use-case';
 import { listAllCategoriesByUserIdTool } from '../tools/list-all-categories-by-user-id.tool';
+import { FINANCIAL_ASSISTANT_MEMORY } from '@infrastructure/ia-memory/mastra-memory.provider';
+import type { Memory } from '@mastra/memory';
 
 function isCategoryRequest(prompt: string): boolean {
   const normalizedPrompt = prompt
@@ -21,12 +23,15 @@ function isCategoryRequest(prompt: string): boolean {
 export class FinancialAssistantService {
 
   constructor(
-   private readonly listAllCategoriesByUserIdUseCase: ListAllCategoriesByUserIdUseCase
+   private readonly listAllCategoriesByUserIdUseCase: ListAllCategoriesByUserIdUseCase,
+   @Inject(FINANCIAL_ASSISTANT_MEMORY)
+   private readonly memory: Memory,
   ) {}
  
   async streamAgentResponse(
     prompt: string,
     userId: number,
+    threadId: string,
   ): Promise<Observable<MessageEvent>> {
 
     const tool = listAllCategoriesByUserIdTool(
@@ -34,10 +39,14 @@ export class FinancialAssistantService {
       userId,
     );
 
-    const agent = financialAssistantAgent([tool]);
+    const agent = financialAssistantAgent([tool], this.memory);
     
     const responseStream = await agent.stream(prompt, {
       maxSteps: 2,
+      memory: {
+        thread: threadId,
+        resource: String(userId),
+      },
       ...(isCategoryRequest(prompt) && {
         toolChoice: 'required',
       }),

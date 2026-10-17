@@ -6,6 +6,7 @@ import {
   MessageEvent,
   Req,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
@@ -26,11 +27,13 @@ export class FinancialAssistantController {
   @Sse('chat-stream')
   async chatStream(
     @Query('prompt') prompt: string,
+    @Query('threadId', new ParseUUIDPipe()) threadId: string,
     @Req() request: AuthenticatedRequest,
   ): Promise<Observable<MessageEvent>> {
     return this.financialAssistantService.streamAgentResponse(
       prompt || 'Olá, sou seu assistente financeiro. Como posso ajudar você hoje?',
       request.user.id,
+      threadId,
     );
   }
 }

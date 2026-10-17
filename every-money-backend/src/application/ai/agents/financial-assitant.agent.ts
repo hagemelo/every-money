@@ -2,10 +2,11 @@
 import { Agent } from '@mastra/core/agent';
 import { openai } from '@ai-sdk/openai';
 import { Tool } from '@mastra/core/tools';
+import { Memory } from '@mastra/memory';
 
 
 
-export function financialAssistantAgent (tools: Tool[]) {
+export function financialAssistantAgent (tools: Tool<any, any>[], memory: Memory) {
 
   const instructions = `
     Você é um assistente financeiro especializado em análise de dados financeiros.
@@ -31,6 +32,7 @@ export function financialAssistantAgent (tools: Tool[]) {
     tools:  Object.fromEntries(
       tools.map((tool) => [tool.id, tool]),
     ),
+    memory,
   });
 
 } 

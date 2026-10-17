@@ -51,13 +51,17 @@ describe('FinancialAssistantController (integration)', () => {
 
     await request(app.getHttpServer())
       .get('/ai/chat-stream')
-      .query({ prompt: 'Como economizar?' })
+      .query({
+        prompt: 'Como economizar?',
+        threadId: '550e8400-e29b-41d4-a716-446655440000',
+      })
       .expect(200)
       .expect('Content-Type', /text\/event-stream/);
 
     expect(financialAssistantService.streamAgentResponse).toHaveBeenCalledWith(
       'Como economizar?',
       expect.any(Number),
+      '550e8400-e29b-41d4-a716-446655440000',
     );
   });
 
@@ -68,12 +72,14 @@ describe('FinancialAssistantController (integration)', () => {
 
     await request(app.getHttpServer())
       .get('/ai/chat-stream')
+      .query({ threadId: '550e8400-e29b-41d4-a716-446655440000' })
       .expect(200)
       .expect('Content-Type', /text\/event-stream/);
 
     expect(financialAssistantService.streamAgentResponse).toHaveBeenCalledWith(
       'Olá, sou seu assistente financeiro. Como posso ajudar você hoje?',
       expect.any(Number),
+      '550e8400-e29b-41d4-a716-446655440000',
     );
   });
 });

@@ -1,6 +1,6 @@
 import {  FindAllByContaIdAndMonthAndYearParams, TransacaoRepository } from "@domain/repositories/transacao.repository"
 import { TransacaoDomain } from "@domain/transacao.domain"
-import { faker } from "@faker-js/faker/."
+import { faker } from "@faker-js/faker"
 import { CategoriaFixture } from "@infrastructure/database/fixtures/categoria.fixture"
 import { ContaFixture } from "@infrastructure/database/fixtures/conta.fixture"
 import { TransacaoFixture } from "@infrastructure/database/fixtures/transacao.fixture"

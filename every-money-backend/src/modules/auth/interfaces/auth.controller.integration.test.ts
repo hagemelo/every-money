@@ -1,8 +1,8 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { buildTestingModule } from '@test/testing.module';
 import { TestingModule } from '@nestjs/testing';
-import { faker } from '@faker-js/faker/.';
+import { faker } from '@faker-js/faker';
 import { makeUsuarioEntityFakeNew } from '@test/fake/usuario.fake';
 import { UsuarioFixture } from '@infrastructure/database/fixtures/usuario.fixture';
 import { DataSource } from 'typeorm';

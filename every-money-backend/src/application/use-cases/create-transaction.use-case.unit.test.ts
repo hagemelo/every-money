@@ -4,7 +4,7 @@ import { CategoriaRepository } from "@domain/repositories/categoria.repository";
 import { TransacaoRepository } from "@domain/repositories/transacao.repository";
 import { createMock } from "@golevelup/ts-jest";
 import { makeTransacaoFake } from "@test/fake/transacao.fake";
-import { faker } from "@faker-js/faker/.";
+import { faker } from "@faker-js/faker";
 import { CreateTransactionData } from "@domain/data/create-transaction.data";
 import { makeContaEntityFake, makeContaFake } from "@test/fake/conta.fake";
 import { makeCategoriaFake } from "@test/fake/categoria.fake";

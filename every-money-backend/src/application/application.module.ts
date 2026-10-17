@@ -13,6 +13,7 @@ import { ListAllBudgetByUserIdUseCase } from './use-cases/list-all-budget-by-use
 import { ListAllTransactionsByAccountIdUseCase } from './use-cases/list-all-transactions-by-account-id.use-case';
 import { ListAllTransactionsByContaIdMonthYearUseCase } from './use-cases/list-all-transactions-by-conta-id-month-year.use-case';
 import { FinancialAssistantService } from './ai/services/financial-assitant.service';
+import { AiMemoryModule } from '@infrastructure/ia-memory/ia-memory.module';
 
 const useCases = [
     AlterUserPasswordUseCase,
@@ -34,7 +35,7 @@ const aiServices = [
 ]
 
 @Module({
-  imports: [RepositoriesModule],
+  imports: [RepositoriesModule, AiMemoryModule],
   providers: [...useCases, ...aiServices],
   exports: [...useCases, ...aiServices],
 })

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import type { SignOptions } from 'jsonwebtoken';
 import { JwtStrategy } from './application/jwt.strategy'; 
 import { TokenService } from './application/token.service';
 import {  ConfigModule, ConfigService } from '@nestjs/config';
@@ -17,11 +18,15 @@ import { JwtRefreshStrategy } from './application/jwt.refresh.strategy';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get<string>('JWT_EXPIRES_IN'),
+          expiresIn: configService.get<string>(
+            'JWT_EXPIRES_IN',
+          ) as SignOptions['expiresIn'],
         },
         refreshSecret: configService.get<string>('JWT_REFRESH_SECRET'),
         refreshSignOptions: {
-          expiresIn: configService.get<string>('JWT_REFRESH_EXPIRES_IN'),
+          expiresIn: configService.get<string>(
+            'JWT_REFRESH_EXPIRES_IN',
+          ) as SignOptions['expiresIn'],
         },
       }),
     }),

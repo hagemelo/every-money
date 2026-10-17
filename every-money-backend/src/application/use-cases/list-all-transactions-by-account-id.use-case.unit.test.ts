@@ -1,7 +1,7 @@
 import { ListAllTransactionsByAccountIdUseCase } from "./list-all-transactions-by-account-id.use-case"
 import { createMock } from "@golevelup/ts-jest"
 import { TransacaoRepository } from "@domain/repositories/transacao.repository"
-import { faker } from "@faker-js/faker/."
+import { faker } from "@faker-js/faker"
 import { makeTransacaoFake } from "@test/fake/transacao.fake"
 
 

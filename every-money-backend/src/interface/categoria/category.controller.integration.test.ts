@@ -1,5 +1,5 @@
 import { JwtService } from "@nestjs/jwt";
-import * as request from 'supertest';
+import request from 'supertest';
 import { TestingModule } from "@nestjs/testing";
 import { makeCategoriaEntityFakeNew } from "@test/fake/categoria.fake";
 import { buildTestingModule } from "@test/testing.module";
@@ -10,7 +10,7 @@ import { UsuarioDomain } from "@domain/usuario.domain";
 import { CategoriaFixture } from "@infrastructure/database/fixtures/categoria.fixture";
 import { UsuarioFixture } from "@infrastructure/database/fixtures/usuario.fixture";
 import { INestApplication, ValidationPipe } from "@nestjs/common";
-import { faker } from "@faker-js/faker/.";
+import { faker } from "@faker-js/faker";
 import { AuthData } from "@domain/data/auth.data";
 import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";

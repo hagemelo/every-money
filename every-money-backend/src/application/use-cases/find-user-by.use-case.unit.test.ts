@@ -1,7 +1,7 @@
 import { UsuarioRepository } from "@domain/repositories/usuario.repository"
 import { FindUserByUseCase } from "./find-user-by.use-case"
 import { createMock } from "@golevelup/ts-jest"
-import { faker } from "@faker-js/faker/."
+import { faker } from "@faker-js/faker"
 import { UsuarioModel } from "@domain/models/usuario.model"
 import { UnauthorizedException } from "@nestjs/common"
 import { makeUsuarioFake } from "@test/fake/usuario.fake"

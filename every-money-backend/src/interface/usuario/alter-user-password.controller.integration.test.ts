@@ -1,11 +1,11 @@
 import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { TestingModule } from "@nestjs/testing";
-import * as request from 'supertest';
+import request from 'supertest';
 import { UsuarioFixture } from "@infrastructure/database/fixtures/usuario.fixture";
 import { buildTestingModule } from "@test/testing.module";
 import { DataSource } from "typeorm";
 import { JwtService } from "@nestjs/jwt";
-import { faker } from "@faker-js/faker/.";
+import { faker } from "@faker-js/faker";
 import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
 import { AuthData } from "@domain/data/auth.data";
 import { initializeTransactionalContext  } from "typeorm-transactional";

@@ -4,7 +4,7 @@ import { TestingModule } from "@nestjs/testing";
 import { UsuarioFixture } from "@infrastructure/database/fixtures/usuario.fixture";
 import { buildTestingModule } from "@test/testing.module";
 import { makeUsuarioEntityFakeNew } from "@test/fake/usuario.fake";
-import { faker } from "@faker-js/faker/.";
+import { faker } from "@faker-js/faker";
 import { UsuarioEntity } from "@infrastructure/entities/usuario.entity";
 import { DataSource } from "typeorm";
 import { makeCategoriaEntityFakeNew, makeCategoriaFake } from "@test/fake/categoria.fake";

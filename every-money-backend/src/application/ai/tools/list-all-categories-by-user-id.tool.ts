@@ -1,11 +1,11 @@
 import { ListAllCategoriesByUserIdUseCase } from '@application/use-cases/list-all-categories-by-user-id.use-case';
-import { createTool, Tool } from '@mastra/core/tools'
+import { createTool } from '@mastra/core/tools'
 import { z } from 'zod'
 
 export function listAllCategoriesByUserIdTool(
   useCase: ListAllCategoriesByUserIdUseCase,
   userId: number,
-): Tool {
+){
 
 return createTool({
   id: 'list-all-categories-by-user-id-tool',

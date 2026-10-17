@@ -1,7 +1,7 @@
 import { AuthData } from "@domain/data/auth.data";
 import { UsuarioDomain } from "@domain/usuario.domain";
-import { faker } from "@faker-js/faker/.";
-import * as request from 'supertest';
+import { faker } from "@faker-js/faker";
+import request from 'supertest';
 import { UsuarioFixture } from "@infrastructure/database/fixtures/usuario.fixture";
 import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";

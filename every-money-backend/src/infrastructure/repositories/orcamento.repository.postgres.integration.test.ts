@@ -2,7 +2,7 @@
 import { TestingModule } from "@nestjs/testing";
 
 import { buildTestingModule } from "@test/testing.module";
-import { faker } from "@faker-js/faker/.";
+import { faker } from "@faker-js/faker";
 import { DataSource } from "typeorm";
 import { ContaFixture } from "@infrastructure/database/fixtures/conta.fixture";
 import { OrcamentoFixture } from "@infrastructure/database/fixtures/orcamento.fixture";

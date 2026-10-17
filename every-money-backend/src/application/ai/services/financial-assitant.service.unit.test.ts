@@ -5,6 +5,11 @@ import { FinancialAssistantService } from './financial-assitant.service';
 import { ListAllCategoriesByUserIdUseCase } from '@application/use-cases/list-all-categories-by-user-id.use-case';
 import { createMock } from '@golevelup/ts-jest';
 import { listAllCategoriesByUserIdTool } from '../tools/list-all-categories-by-user-id.tool';
+import type { Memory } from '@mastra/memory';
+
+jest.mock('@infrastructure/ia-memory/mastra-memory.provider', () => ({
+  FINANCIAL_ASSISTANT_MEMORY: Symbol('FINANCIAL_ASSISTANT_MEMORY'),
+}));
 
 const mockedStream = jest.fn();
 
@@ -27,7 +32,10 @@ describe('FinancialAssistantService', () => {
   beforeEach(() => {
     listAllCategoriesByUserIdUseCase = createMock<ListAllCategoriesByUserIdUseCase>();
 
-    service = new FinancialAssistantService(listAllCategoriesByUserIdUseCase);
+    service = new FinancialAssistantService(
+      listAllCategoriesByUserIdUseCase,
+      createMock<Memory>(),
+    );
     jest.clearAllMocks();
   });
 
@@ -42,11 +50,16 @@ describe('FinancialAssistantService', () => {
     const observable = await service.streamAgentResponse(
       'Quais são minhas despesas?',
       42,
+      '550e8400-e29b-41d4-a716-446655440000',
     );
     const events = await firstValueFrom(observable.pipe(toArray()));
 
     expect(mockedStream).toHaveBeenCalledWith('Quais são minhas despesas?', {
       maxSteps: 2,
+      memory: {
+        thread: '550e8400-e29b-41d4-a716-446655440000',
+        resource: '42',
+      },
     });
     expect(events).toEqual<MessageEvent[]>([
       { data: { text: 'Olá, ' } },
@@ -64,7 +77,11 @@ describe('FinancialAssistantService', () => {
       })(),
     });
 
-    const observable = await service.streamAgentResponse('Analise meu orçamento', 42);
+    const observable = await service.streamAgentResponse(
+      'Analise meu orçamento',
+      42,
+      '550e8400-e29b-41d4-a716-446655440000',
+    );
 
     await expect(firstValueFrom(observable.pipe(toArray()))).rejects.toBe(streamError);
   });
@@ -79,12 +96,17 @@ describe('FinancialAssistantService', () => {
     const observable = await service.streamAgentResponse(
       'Listar as categorias',
       42,
+      '550e8400-e29b-41d4-a716-446655440000',
     );
 
     await firstValueFrom(observable.pipe(toArray()));
 
     expect(mockedStream).toHaveBeenCalledWith('Listar as categorias', {
       maxSteps: 2,
+      memory: {
+        thread: '550e8400-e29b-41d4-a716-446655440000',
+        resource: '42',
+      },
       toolChoice: 'required',
     });
   });

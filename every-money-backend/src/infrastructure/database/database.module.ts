@@ -12,7 +12,6 @@ import { join } from 'path';
 import { addTransactionalDataSource } from 'typeorm-transactional'
 import { DataSource } from 'typeorm'
 
-
 @Global()
 @Module({
     imports: [
@@ -41,6 +40,6 @@ import { DataSource } from 'typeorm'
       }),
         TypeOrmModule.forFeature([CategoriaEntity , ContaEntity, OrcamentoEntity, TransacaoEntity, UsuarioEntity]),
       ],
-    exports: [TypeOrmModule],
+      exports: [TypeOrmModule],
 })
 export class DatabaseModule {}

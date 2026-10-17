@@ -1,7 +1,7 @@
 import { makeTransacaoFake } from "@test/fake/transacao.fake"
 import { TransacaoDomain } from "./transacao.domain"
 import { TipoTransacaoModel } from "./models/tipo-transacao.model"
-import { faker } from "@faker-js/faker/."
+import { faker } from "@faker-js/faker"
 import { StatusTransacaoModel } from "./models/status-transacao.model"
 import { CategoriaDomain } from "./categoria.domain"
 import { ContaDomain } from "./conta.domain"

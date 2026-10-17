@@ -1,7 +1,7 @@
 import { ContaDomain } from "@domain/conta.domain";
 import { AuthData } from "@domain/data/auth.data";
-import { faker } from "@faker-js/faker/.";
-import * as request from 'supertest';
+import { faker } from "@faker-js/faker";
+import request from 'supertest';
 import { ContaFixture } from "@infrastructure/database/fixtures/conta.fixture";
 import { UsuarioFixture } from "@infrastructure/database/fixtures/usuario.fixture";
 import { INestApplication, ValidationPipe } from "@nestjs/common";
