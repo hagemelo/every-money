@@ -3,6 +3,7 @@ import { firstValueFrom, toArray } from 'rxjs';
 import { financialAssistantAgent } from '../agents/financial-assitant.agent';
 import { FinancialAssistantService } from './financial-assitant.service';
 import { ListAllCategoriesByUserIdUseCase } from '@application/use-cases/list-all-categories-by-user-id.use-case';
+import { ListAllAccountByUserIdUseCase } from '@application/use-cases/list-all-account-by-user-id.use-case';
 import { createMock } from '@golevelup/ts-jest';
 import { listAllCategoriesByUserIdTool } from '../tools/list-all-categories-by-user-id.tool';
 import type { Memory } from '@mastra/memory';
@@ -25,15 +26,24 @@ jest.mock('../tools/list-all-categories-by-user-id.tool', () => ({
   })),
 }));
 
+jest.mock('../tools/financial-summary-by-user-id.tool', () => ({
+  financialSummaryByUserIdTool: jest.fn(() => ({
+    id: 'financial-summary-by-user-id-tool',
+  })),
+}));
+
 describe('FinancialAssistantService', () => {
   let service: FinancialAssistantService;
   let listAllCategoriesByUserIdUseCase: ListAllCategoriesByUserIdUseCase;
+  let listAllAccountByUserIdUseCase: ListAllAccountByUserIdUseCase;
 
   beforeEach(() => {
     listAllCategoriesByUserIdUseCase = createMock<ListAllCategoriesByUserIdUseCase>();
+    listAllAccountByUserIdUseCase = createMock<ListAllAccountByUserIdUseCase>();
 
     service = new FinancialAssistantService(
       listAllCategoriesByUserIdUseCase,
+      listAllAccountByUserIdUseCase,
       createMock<Memory>(),
     );
     jest.clearAllMocks();
@@ -107,7 +117,41 @@ describe('FinancialAssistantService', () => {
         thread: '550e8400-e29b-41d4-a716-446655440000',
         resource: '42',
       },
-      toolChoice: 'required',
+      toolChoice: {
+        type: 'tool',
+        toolName: 'list-all-categories-by-user-id-tool',
+      },
     });
+  });
+
+  it('deve exigir a tool de resumo ao solicitar um resumo financeiro', async () => {
+    mockedStream.mockResolvedValue({
+      textStream: (async function* () {
+        yield 'Seu resumo financeiro.';
+      })(),
+    });
+
+    const observable = await service.streamAgentResponse(
+      'Mostre um resumo das minhas finanças',
+      42,
+      '550e8400-e29b-41d4-a716-446655440000',
+    );
+
+    await firstValueFrom(observable.pipe(toArray()));
+
+    expect(mockedStream).toHaveBeenCalledWith(
+      'Mostre um resumo das minhas finanças',
+      {
+        maxSteps: 2,
+        memory: {
+          thread: '550e8400-e29b-41d4-a716-446655440000',
+          resource: '42',
+        },
+        toolChoice: {
+          type: 'tool',
+          toolName: 'financial-summary-by-user-id-tool',
+        },
+      },
+    );
   });
 });
